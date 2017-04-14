@@ -1,12 +1,5 @@
 ## Command line instructions
 
-### Git global setup
-
-```
-git config --global user.name "handy444"
-git config --global user.email "handyworkspace@gmail.com"
-```
-
 ### Create a new repository
 
 ```
@@ -32,5 +25,4 @@ git push -u origin master
 ### Maven
 
 ```
-./gradlew -q -p ztone.lang clean build uploadArchives && ./gradlew -q -p frame.network clean build uploadArchives && ./gradlew -q -p frame.bus clean build uploadArchives && ./gradlew -q -p frame.analytics clean build uploadArchives && ./gradlew -q -p frame.analytics.man clean build uploadArchives
-```
+./gradlew -q -p ztone.lang clean build uploadArchives
