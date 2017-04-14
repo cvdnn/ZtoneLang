@@ -17,11 +17,11 @@ allprojects {
         jcenter()
 
         maven {
-            url REMOTE_REPO_URL
+            url LOCAL_REPO_URL
         }
 
         maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            url REMOTE_REPO_URL
         }
     }
 }
