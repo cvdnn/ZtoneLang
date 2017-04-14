@@ -18,7 +18,7 @@ void generateBuildConfigurations(def android) {
     android.compileSdkVersion = 25
     android.buildToolsVersion = '25.0.2'
     android.defaultConfig.minSdkVersion = 14
-    android.defaultConfig.targetSdkVersion = 22
+    android.defaultConfig.targetSdkVersion = 23
 }
 
 // 保持Support包版本一致

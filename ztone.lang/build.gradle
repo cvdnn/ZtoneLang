@@ -39,8 +39,8 @@ uploadArchives {
         repository(id: RELEASE_REPO_ID, url: LOCAL_REPO_URL)
         snapshotRepository(id: SNAPSHOTS_REPO_ID, url: LOCAL_REPO_URL)
 
-        pom.groupId = 'com.capt'
-        pom.artifactId = 'frame-stone'
+        pom.groupId = POM_GROUP_ID
+        pom.artifactId = POM_ARTIFACT_ID
         pom.version = VERSION_FRAME_STONE
 //        pom.name = "xxx"
 //        pom.packaging = 'aar'
