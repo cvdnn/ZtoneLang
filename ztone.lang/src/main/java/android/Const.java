@@ -1,0 +1,24 @@
+package android;
+
+import java.nio.charset.Charset;
+
+/**
+ * Created by handy on 17-3-14.
+ */
+
+public class Const {
+    public static final int BUFFER_LENGTH = 2048;
+
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    public static final String ENCODING = "utf-8";
+    public static final Charset CHARSET_ENCODING = Charset.forName(ENCODING);
+
+    public static final String[] SQL_WILDCARD = new String[]{"_", "%"};
+    public static final String SQL_ESCAPE = "\\\\";
+
+    /**
+     * 系统预装路径
+     */
+    public static final String LIB_PATH_SYSTEM = "/system/lib/";
+}
