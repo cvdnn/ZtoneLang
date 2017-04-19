@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ztone.iml" filepath="$PROJECT_DIR$/Ztone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ztone.lang/ztone.lang.iml" filepath="$PROJECT_DIR$/ztone.lang/ztone.lang.iml" />
     </modules>
