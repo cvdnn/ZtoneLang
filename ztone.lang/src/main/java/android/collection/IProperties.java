@@ -30,6 +30,7 @@ import org.xml.sax.SAXParseException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -751,7 +752,10 @@ public class IProperties extends Hashtable<String, String> {
         if (Assert.notEmpty(propertiesPath)) {
             BufferedWriter outputWriter = null;
             try {
-                outputWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(propertiesPath), ENCODING));
+                File outFile = new File(propertiesPath);
+                outFile.getParentFile().mkdirs();
+
+                outputWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), ENCODING));
 
                 store(outputWriter, description);
 

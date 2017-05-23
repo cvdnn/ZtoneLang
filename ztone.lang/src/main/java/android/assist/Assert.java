@@ -15,7 +15,7 @@ public final class Assert {
 
     public static boolean as(int v, int make) {
 
-        return (v & make) == make;
+        return make != 0 && (v & make) == make;
     }
 
     /**

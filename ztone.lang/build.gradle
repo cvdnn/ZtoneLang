@@ -40,10 +40,7 @@ uploadArchives {
         snapshotRepository(id: SNAPSHOTS_REPO_ID, url: LOCAL_REPO_URL)
 
         pom.groupId = POM_GROUP_ID
-        pom.artifactId = POM_ARTIFACT_ID
-        pom.version = VERSION_FRAME_STONE
-//        pom.name = "xxx"
-//        pom.packaging = 'aar'
-
+        pom.artifactId = 'ztone-lang'
+        pom.version = '0.1.3'
     }
 }
