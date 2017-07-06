@@ -1,5 +1,6 @@
 package android.assist;
 
+import android.check.Validator;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -345,6 +346,7 @@ public final class Assert {
      */
     public static boolean isInstanceOf(Class<?> type, Object obj) {
 
+
         return type != null && type.isInstance(obj);
     }
 
@@ -361,6 +363,11 @@ public final class Assert {
 
     public static boolean exists(File file) {
         return file != null && file.exists();
+    }
+
+    public static boolean check(Validator v) {
+
+        return v != null && v.check();
     }
 
     public static boolean checkIndex(Collection<?> collection, int index) {
