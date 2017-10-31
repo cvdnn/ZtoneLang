@@ -365,6 +365,7 @@ public final class Assert {
         return file != null && file.exists();
     }
 
+    @Deprecated
     public static boolean check(Validator v) {
 
         return v != null && v.check();
