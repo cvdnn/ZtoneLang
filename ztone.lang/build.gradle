@@ -41,6 +41,6 @@ uploadArchives {
 
         pom.groupId = POM_GROUP_ID
         pom.artifactId = 'ztone-lang'
-        pom.version = '0.1.5'
+        pom.version = '0.2'
     }
 }
