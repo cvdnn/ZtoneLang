@@ -1,6 +1,7 @@
 package android.assist;
 
 import android.check.Validator;
+import android.collection.ByteArray;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -336,6 +337,14 @@ public final class Assert {
     public static boolean notEmpty(Bundle bundle) {
 
         return !isEmpty(bundle);
+    }
+
+    public static boolean isEmpty(ByteArray bytes) {
+        return bytes == null || bytes.isEmpty();
+    }
+
+    public static boolean notEmpty(ByteArray bytes) {
+        return !isEmpty(bytes);
     }
 
     /**

@@ -12,7 +12,7 @@ public class Setting {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
-    private Setting(Context context, String fileName) {
+    public Setting(Context context, String fileName) {
         if (context != null) {
             mPreferences = context.getApplicationContext().getSharedPreferences( //
                     Assert.notEmpty(fileName) ? fileName : DEFAULT_SHARED_PREFERENCES, Context.MODE_PRIVATE);

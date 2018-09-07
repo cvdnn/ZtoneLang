@@ -1,8 +1,8 @@
 /*
  * StreamHelper.java
- * 
+ *
  * Copyright 2011 sillar team, Inc. All rights reserved.
- * 
+ *
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package android.io;
@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.channels.FileChannel;
 
 import static android.Const.BUFFER_LENGTH;
 import static android.Const.ENCODING;
@@ -129,6 +130,16 @@ public class StreamUtils {
         if (w != null) {
             try {
                 w.close();
+            } catch (Exception e) {
+                Log.v(TAG, e);
+            }
+        }
+    }
+
+    public static void close(FileChannel chn) {
+        if (chn != null) {
+            try {
+                chn.close();
             } catch (Exception e) {
                 Log.v(TAG, e);
             }

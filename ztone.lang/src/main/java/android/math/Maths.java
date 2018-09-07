@@ -291,6 +291,56 @@ public class Maths {
         return new String(bytes);
     }
 
+    public static String toIntText(int a) {
+        String sr = "";
+        String sc = "";
+        int count = 0;        //二进制长度
+        int b = Math.abs(a);
+        while (b != 0) {
+            sr = (b % 2) + sr;
+            b = b / 2;
+            count++;
+        }
+        if (a == 0) {
+            for (int i = 0; i < 16 - count; i++) {  //16位的二进制
+                sc += "0";
+            }
+            return sc;
+        }
+        if (a > 0) {
+            for (int i = 0; i < 16 - count; i++) {  //16位的二进制
+                sc += "0";
+            }
+            return sc + sr;
+        } else {
+            for (int i = 0; i < 16 - count; i++) {  //16位的二进制
+                sc += "1";
+            }
+            for (int i = 0; i < sr.length(); i++) {    //取反
+                if (sr.charAt(i) == '1') {
+                    sc += '0';
+                } else
+                    sc += '1';
+            }
+            //加一
+            int m = sc.length();        //记录原SC的长度
+            for (int i = sc.length() - 1; i >= 0; i--) {
+                if (sc.charAt(i) == '1') {
+                    sc = sc.substring(0, i);
+                    for (int j = 0; j < m - i; j++)
+                        sc += '0';
+                } else {
+                    sc = sc.substring(0, i);
+                    sc += '1';
+                    for (int j = 0; j < m - i - 1; j++)
+                        sc += '0';
+                    break;
+                }
+            }
+            return sc;
+        }
+    }
+
     /**
      * 判断大小月及是否闰年,用来确定"日"的数据
      *
