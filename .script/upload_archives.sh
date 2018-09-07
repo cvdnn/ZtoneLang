@@ -5,7 +5,7 @@ _PROJECT_PATH='/workon/m2/mvn-repo'
 git status
 git add ./
 git commit -m "ZTONE_LANG"
-git push github master
+git push origin master
 
 if (( $# == 0 )) || [[ -z $1 ]]; then
     ./gradlew -q -p ztone.lang clean build uploadArchives
