@@ -20,25 +20,25 @@ import java.util.List;
 /**
  * PackageUtils
  * <ul>
- * <strong>Install package</strong>
+ * Install package
  * <li>{@link PackageUtils#installNormal(Context, String)}</li>
  * <li>{@link PackageUtils#installSilent(Context, String)}</li>
  * <li>{@link PackageUtils#install(Context, String)}</li>
  * </ul>
  * <ul>
- * <strong>Uninstall package</strong>
+ * Uninstall package
  * <li>{@link PackageUtils#uninstallNormal(Context, String)}</li>
  * <li>{@link PackageUtils#uninstallSilent(Context, String)}</li>
  * <li>{@link PackageUtils#uninstall(Context, String)}</li>
  * </ul>
  * <ul>
- * <strong>Is system application</strong>
+ * Is system application
  * <li>{@link PackageUtils#isSystemApplication(Context)}</li>
  * <li>{@link PackageUtils#isSystemApplication(Context, String)}</li>
  * <li>{@link PackageUtils#isSystemApplication(PackageManager, String)}</li>
  * </ul>
  * <ul>
- * <strong>Others</strong>
+ * Others
  * <li>{@link PackageUtils#getInstallLocation()} get system install location</li>
  * <li>{@link PackageUtils#isTopActivity(Context, String)} whether the app whost package's name is packageName is on the
  * top of the stack</li>
@@ -56,7 +56,7 @@ public class PackageUtils {
     }
 
     /**
-     * App installation location settings values, same to {@link #PackageHelper}
+     * App installation location settings values, same to PackageHelper
      */
     public static final int APP_INSTALL_AUTO = 0;
     public static final int APP_INSTALL_INTERNAL = 1;
@@ -103,9 +103,9 @@ public class PackageUtils {
     /**
      * install package silent by root
      * <ul>
-     * <strong>Attentions:</strong>
+     * Attentions:
      * <li>Don't call this on the ui thread, it may costs some times.</li>
-     * <li>You should add <strong>android.permission.INSTALL_PACKAGES</strong> in manifest, so no need to request root
+     * <li>You should add android.permission.INSTALL_PACKAGES in manifest, so no need to request root
      * permission, if you are system app.</li>
      * <li>Default pm install params is "-r".</li>
      * </ul>
@@ -123,9 +123,9 @@ public class PackageUtils {
     /**
      * install package silent by root
      * <ul>
-     * <strong>Attentions:</strong>
+     * Attentions:
      * <li>Don't call this on the ui thread, it may costs some times.</li>
-     * <li>You should add <strong>android.permission.INSTALL_PACKAGES</strong> in manifest, so no need to request root
+     * <li>You should add android.permission.INSTALL_PACKAGES in manifest, so no need to request root
      * permission, if you are system app.</li>
      * </ul>
      *
@@ -323,9 +323,9 @@ public class PackageUtils {
     /**
      * uninstall package silent by root
      * <ul>
-     * <strong>Attentions:</strong>
+     * Attentions:
      * <li>Don't call this on the ui thread, it may costs some times.</li>
-     * <li>You should add <strong>android.permission.DELETE_PACKAGES</strong> in manifest, so no need to request root
+     * <li>You should add android.permission.DELETE_PACKAGES in manifest, so no need to request root
      * permission, if you are system app.</li>
      * </ul>
      *
@@ -426,8 +426,8 @@ public class PackageUtils {
     /**
      * whether the app whost package's name is packageName is on the top of the stack
      * <ul>
-     * <strong>Attentions:</strong>
-     * <li>You should add <strong>android.permission.GET_TASKS</strong> in manifest</li>
+     * Attentions:
+     * <li>You should add android.permission.GET_TASKS in manifest</li>
      * </ul>
      *
      * @param context
@@ -480,9 +480,9 @@ public class PackageUtils {
     /**
      * get system install location<br/>
      * can be set by System Menu Setting->Storage->Prefered install location
+     * see IPackageManager.getInstallLocation()
      *
      * @return
-     * @see {@link IPackageManager#getInstallLocation()}
      */
     public static int getInstallLocation() {
         CommandResult commandResult = Shell.execute("LD_LIBRARY_PATH=/vendor/lib:/system/lib pm get-install-location", false, true);

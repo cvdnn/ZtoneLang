@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName '0.3.2'
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // dex 突破 65535 的限制
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            lintOptions {
+                abortOnError false
+            }
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    implementation 'com.squareup.okio:okio:1.14.0'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+// push to bintray
+ext {
+    bintrayOrg = 'ztone'
+    // bintray中创建的package name
+    bintrayName = 'ztone-lang'
+
+    libraryName = 'Ztone Lang'
+    publishedGroupId = 'android.ztone'
+    artifact = 'ztone-lang'
+    libraryVersion = android.defaultConfig.versionName
+
+    libraryDescription = 'Ztone Lang'
+
+    siteUrl = 'https://github.com/handy001/ZtoneLang'
+    gitUrl = 'https://github.com/handy001/ZtoneLang.git'
+}
+
+apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/pom_build.gradle'
+apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/push_bintray.gradle'

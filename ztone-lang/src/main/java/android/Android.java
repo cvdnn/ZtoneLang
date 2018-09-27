@@ -40,7 +40,6 @@ public final class Android {
 
     /**
      * September 2009: Android 1.6.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -65,7 +64,6 @@ public final class Android {
 
     /**
      * November 2009: Android 2.0
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -100,7 +98,6 @@ public final class Android {
 
     /**
      * November 2010: Android 2.3
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -117,7 +114,6 @@ public final class Android {
 
     /**
      * February 2011: Android 3.0.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -162,17 +158,14 @@ public final class Android {
 
     /**
      * June 2011: Android 3.2.
-     * <p>
      * <p>Update to Honeycomb MR1 to support 7 inch tablets, improve
      * screen compatibility mode, etc.</p>
-     * <p>
      * <p>As of this version, applications that don't say whether they
      * support XLARGE screens will be assumed to do so only if they target
      * {@link #HONEYCOMB} or later; it had been {@link #GINGERBREAD} or
      * later.  Applications that don't support a screen size at least as
      * large as the current screen will provide the user with a UI to
      * switch them in to screen size compatibility mode.</p>
-     * <p>
      * <p>This version introduces new screen size resource qualifiers
      * based on the screen size in dp: see
      * {@link android.content.res.Configuration#screenWidthDp},
@@ -184,7 +177,6 @@ public final class Android {
      * {@link android.content.pm.ApplicationInfo#largestWidthLimitDp} is
      * preferred over the older screen size buckets and for older devices
      * the appropriate buckets will be inferred from them.</p>
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -210,7 +202,6 @@ public final class Android {
 
     /**
      * October 2011: Android 4.0.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -261,7 +252,6 @@ public final class Android {
 
     /**
      * June 2012: Android 4.1.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -304,7 +294,6 @@ public final class Android {
 
     /**
      * November 2012: Android 4.2, Moar jelly beans!
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -329,7 +318,6 @@ public final class Android {
 
     /**
      * October 2013: Android 4.4, KitKat, another tasty treat.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -361,7 +349,6 @@ public final class Android {
 
     /**
      * June 2014: Android 4.4W. KitKat for watches, snacks on the run.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -380,7 +367,6 @@ public final class Android {
 
     /**
      * November 2014: Lollipop.  A flat one with beautiful shadows.  But still tasty.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -416,7 +402,6 @@ public final class Android {
 
     /**
      * M is for Marshmallow!
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -447,7 +432,6 @@ public final class Android {
 
     /**
      * N is for Nougat.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -504,7 +488,6 @@ public final class Android {
 
     /**
      * O.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -593,7 +576,6 @@ public final class Android {
 
     /**
      * O MR1.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>
@@ -607,7 +589,6 @@ public final class Android {
 
     /**
      * P.
-     * <p>
      * <p>Applications targeting this or a later release will get these
      * new changes in behavior:</p>
      * <ul>

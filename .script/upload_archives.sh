@@ -8,12 +8,12 @@ git commit -m "ZTONE_LANG"
 git push origin master
 
 if (( $# == 0 )) || [[ -z $1 ]]; then
-    ./gradlew -q -p ztone.lang clean build uploadArchives
+    ./gradlew -q -p ztone.lang clean build install bintrayUpload
 
 else
     _MODULE_NAME=$1
 
-    ./gradlew -q -p ${_MODULE_NAME} clean build uploadArchives
+    ./gradlew -q -p ${_MODULE_NAME} clean build install bintrayUpload
 fi
 
 git -C ${_PROJECT_PATH} status

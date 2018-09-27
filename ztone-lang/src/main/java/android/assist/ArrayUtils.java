@@ -14,7 +14,7 @@ public class ArrayUtils {
      * must be either a {@link Map.Entry} or an Array, containing at least two
      * elements, where the first element is used as key and the second as
      * value.
-     * <p>
+     * </p>
      * <p>This method can be used to initialize:
      * <pre>
      * // Create a Map mapping colors.
@@ -23,8 +23,8 @@ public class ArrayUtils {
      *     {"GREEN", "#00FF00"},
      *     {"BLUE", "#0000FF"}});
      * </pre>
-     * <p>
-     * <p>This method returns {@code null} for a {@code null} input array.
+     * </p>
+     * <p>This method returns {@code null} for a {@code null} input array.</p>
      *
      * @param array an array whose elements are either a {@link Map.Entry} or
      *              an Array containing at least two elements, may be {@code null}
