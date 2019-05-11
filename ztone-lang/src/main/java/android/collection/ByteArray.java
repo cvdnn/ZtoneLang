@@ -111,17 +111,22 @@ public final class ByteArray implements Parcelable {
         }
     }
 
+    @Deprecated
     public int getSize() {
+        return size();
+    }
+
+    public int size() {
         return bytes != null ? bytes.length : 0;
     }
 
     public boolean isEmpty() {
-        return getSize() == 0;
+        return size() == 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        int size = getSize();
+        int size = size();
         dest.writeInt(size);
         if (size > 0) {
             dest.writeByteArray(bytes);

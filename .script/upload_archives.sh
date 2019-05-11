@@ -16,7 +16,7 @@ else
     ./gradlew -q -p ${_MODULE_NAME} clean build install bintrayUpload
 fi
 
-git -C ${_PROJECT_PATH} status
-git -C ${_PROJECT_PATH} add ./
-git -C ${_PROJECT_PATH} commit -m "ZTONE_LANG"
-git -C ${_PROJECT_PATH} push github master
+#git -C ${_PROJECT_PATH} status
+#git -C ${_PROJECT_PATH} add ./
+#git -C ${_PROJECT_PATH} commit -m "ZTONE_LANG"
+#git -C ${_PROJECT_PATH} push github master
