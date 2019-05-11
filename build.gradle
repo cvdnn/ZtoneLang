@@ -1,4 +1,4 @@
-apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/ext_bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/gradle/configs.gradle'
 
 buildscript {
     repositories {
@@ -17,14 +17,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-
-        maven {
-            url LOCAL_REPO_URL
-        }
-
-        maven {
-            url REMOTE_REPO_URL
-        }
     }
 }
 

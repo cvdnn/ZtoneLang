@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
-        versionName '0.3.2'
+        versionName '0.3.6'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,7 +30,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 
     implementation 'com.squareup.okio:okio:1.14.0'
 
@@ -57,4 +57,4 @@ ext {
 }
 
 apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/pom_build.gradle'
-apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/push_bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/push_to_bintray.gradle'

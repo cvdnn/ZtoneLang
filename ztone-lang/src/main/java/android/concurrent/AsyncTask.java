@@ -29,4 +29,8 @@ public abstract class AsyncTask extends android.os.AsyncTask {
     protected final void onCancelled(Object o) {
         super.onCancelled(o);
     }
+
+    public final void start() {
+        super.execute();
+    }
 }

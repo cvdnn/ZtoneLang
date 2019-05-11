@@ -17,6 +17,10 @@ public final class ByteArray implements Parcelable {
         return bytes;
     }
 
+    public byte get(int i) {
+        return bytes[i];
+    }
+
     public ByteArray set(byte[] original) {
         bytes = original != null ? original : new byte[]{};
 
@@ -36,11 +40,49 @@ public final class ByteArray implements Parcelable {
         return this;
     }
 
+    /**
+     * @param original
+     * @param offset
+     * @param len
+     * @return
+     * @see android.collection.ByteArray.write();
+     */
+    @Deprecated
     public ByteArray appendFrom(byte[] original) {
-        return appendFrom(original, 0, original.length);
+        return write(original, 0, original.length);
     }
 
+    /**
+     * @param original
+     * @param offset
+     * @param len
+     * @return
+     * @see android.collection.ByteArray.write(byte[] original, int offset, int len);
+     */
+    @Deprecated
     public ByteArray appendFrom(byte[] original, int offset, int len) {
+
+        return write(original, offset, len);
+    }
+
+    public int read(byte[] original, int offset, int len) {
+        int inLen = 0;
+        if (bytes.length > offset) {
+            inLen = Math.min(Math.min(bytes.length - offset, original.length), len);
+
+            if (inLen > 0) {
+                System.arraycopy(bytes, offset, original, 0, inLen);
+            }
+        }
+
+        return inLen;
+    }
+
+    public ByteArray write(byte[] original) {
+        return write(original, 0, original.length);
+    }
+
+    public ByteArray write(byte[] original, int offset, int len) {
         if (Assert.notEmpty(original)) {
             byte[] newBytes = new byte[bytes.length + len];
 

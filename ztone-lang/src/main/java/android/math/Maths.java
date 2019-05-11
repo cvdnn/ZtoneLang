@@ -1,8 +1,8 @@
 /*
  * Maths.java
- * 
+ *
  * Copyright 2011 sillar team, Inc. All rights reserved.
- * 
+ *
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package android.math;
@@ -248,7 +248,7 @@ public class Maths {
      * @param str String 待转换的ASCII字符串
      * @return String 每个Byte之间空格分隔，如: [61 6C 6B]
      */
-    public static String toHEXText(String str) {
+    public static String toHexText(String str) {
         StringBuilder sb = new StringBuilder();
 
         if (Assert.notEmpty(str)) {
@@ -339,6 +339,27 @@ public class Maths {
             }
             return sc;
         }
+    }
+
+    public static int toInt(byte[] b) {
+        return b[3] & 0xFF |
+                (b[2] & 0xFF) << 8 |
+                (b[1] & 0xFF) << 16 |
+                (b[0] & 0xFF) << 24;
+    }
+
+
+    /**
+     * @param i
+     * @return
+     */
+    public static byte[] toArray(int i) {
+        return new byte[]{
+                (byte) ((i >> 24) & 0xFF),
+                (byte) ((i >> 16) & 0xFF),
+                (byte) ((i >> 8) & 0xFF),
+                (byte) (i & 0xFF)
+        };
     }
 
     /**
