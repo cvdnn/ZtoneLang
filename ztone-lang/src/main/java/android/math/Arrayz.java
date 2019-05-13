@@ -1,6 +1,16 @@
 package android.math;
 
 public final class Arrayz {
+
+    public static byte[] copyOf(byte[] original, int from, int len) {
+        int newLength = Math.min(original.length - from, len);
+
+        byte[] copy = new byte[newLength];
+        System.arraycopy(original, from, copy, 0, newLength);
+
+        return copy;
+    }
+
     /**
      * Reverse the object array.
      *
