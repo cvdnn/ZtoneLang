@@ -341,6 +341,10 @@ public class Maths {
         }
     }
 
+    public static short toShort(byte[] b) {
+        return (short) (b[1] & 0xFF | (b[0] & 0xFF) << 8);
+    }
+
     public static int toInt(byte[] b) {
         return b[3] & 0xFF |
                 (b[2] & 0xFF) << 8 |
