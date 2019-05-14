@@ -1,6 +1,23 @@
 package android.math;
 
+import android.assist.Assert;
+
 public final class Arrayz {
+
+    public static int indexOf(byte[] original, int from, int to, byte key) {
+        int index = -1;
+
+        if (Assert.notEmpty(original) && from >= 0 && to >= from && original.length - from >= to - from) {
+            for (int i = from; i < to; i++) {
+                if (original[i] == key) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        return index;
+    }
 
     public static byte[] copyOf(byte[] original, int from, int len) {
         int newLength = Math.min(original.length - from, len);
