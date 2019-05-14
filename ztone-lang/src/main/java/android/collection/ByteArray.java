@@ -78,6 +78,11 @@ public final class ByteArray implements Parcelable {
         return inLen;
     }
 
+    public ByteArray write(byte original) {
+
+        return write(new byte[]{original}, 0, 1);
+    }
+
     public ByteArray write(byte[] original) {
         return write(original, 0, original.length);
     }
