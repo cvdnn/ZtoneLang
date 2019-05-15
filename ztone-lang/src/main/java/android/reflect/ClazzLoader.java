@@ -10,7 +10,7 @@ package android.reflect;
 import android.assist.Assert;
 import android.content.Context;
 import android.log.Log;
-import android.support.v4.util.ArrayMap;
+import android.util.ArrayMap;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;

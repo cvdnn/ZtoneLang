@@ -1,6 +1,6 @@
 /*
  * FileHelper.java
- * 
+ *
  * Copyright 2011 handyworkgroup, Inc. All rights reserved.
  * handyworkgroup PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
@@ -8,7 +8,6 @@ package android.io;
 
 import android.assist.Assert;
 import android.log.Log;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
@@ -102,7 +101,7 @@ public final class FileUtils {
         return result;
     }
 
-    public static boolean write(@NonNull File file, String text, Charset charset) {
+    public static boolean write(File file, String text, Charset charset) {
         boolean result = false;
 
         if (file != null) {
@@ -136,12 +135,12 @@ public final class FileUtils {
         return result;
     }
 
-    public static boolean write(@NonNull InputStream in, @NonNull String filePath) {
+    public static boolean write(InputStream in, String filePath) {
 
         return write(in, filePath, -1, null);
     }
 
-    public static boolean write(@NonNull InputStream in, @NonNull final String filePath, final long contentLength,
+    public static boolean write(InputStream in, final String filePath, final long contentLength,
                                 final OnProgressChangeListener listener) {
         boolean result = false;
 
