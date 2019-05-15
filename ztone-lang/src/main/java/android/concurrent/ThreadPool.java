@@ -8,8 +8,8 @@ package android.concurrent;
 
 import android.assist.Assert;
 import android.reflect.TrackingUtils;
-import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;

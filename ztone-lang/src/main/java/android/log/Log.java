@@ -7,7 +7,6 @@ import android.assist.Shell.CommandResult;
 import android.concurrent.ThreadUtils;
 import android.io.FileUtils;
 import android.math.Maths;
-import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -239,7 +238,7 @@ public final class Log {
     }
 
     @Deprecated
-    private static void startLogcat(@NonNull final File logDir, final boolean isCleanLastLog) {
+    private static void startLogcat(final File logDir, final boolean isCleanLastLog) {
         if (logDir != null) {
             final long nowTime = System.currentTimeMillis();
             final String mLoggingFileName = getLogcatName(nowTime);
