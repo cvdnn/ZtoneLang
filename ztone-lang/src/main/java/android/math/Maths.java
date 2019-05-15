@@ -366,7 +366,7 @@ public class Maths {
         };
     }
 
-    public byte[] toArray(short s) {
+    public static byte[] toArray(short s) {
         return new byte[]{
                 (byte) ((s >> 8) & 0xFF),
                 (byte) (s & 0xFF)};

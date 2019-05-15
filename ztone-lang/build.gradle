@@ -7,7 +7,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
-        versionName '0.3.14'
+        versionName '0.3.15'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -41,6 +41,10 @@ dependencies {
 
 // push to bintray
 ext {
+    archiveSourceJar = false
+    archiveJavaDocJar = false
+    bintrayOverride = true
+
     bintrayOrg = 'ztone'
     // bintray中创建的package name
     bintrayName = 'ztone-lang'
