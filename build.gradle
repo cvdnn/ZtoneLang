@@ -23,3 +23,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def buildVersion() {
+    return new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+8")).toInteger()
+}
