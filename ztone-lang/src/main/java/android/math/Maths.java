@@ -352,6 +352,33 @@ public class Maths {
                 (b[0] & 0xFF) << 24;
     }
 
+    public static int toLong(byte[] b) {
+        return b[7] & 0xFF |
+                (b[6] & 0xFF) << 8 |
+                (b[5] & 0xFF) << 16 |
+                (b[4] & 0xFF) << 24 |
+                (b[3] & 0xFF) << 32 |
+                (b[2] & 0xFF) << 40 |
+                (b[1] & 0xFF) << 48 |
+                (b[0] & 0xFF) << 56;
+    }
+
+    /**
+     * @param l
+     * @return
+     */
+    public static byte[] toArray(long l) {
+        return new byte[]{
+                (byte) ((l >> 56) & 0xFF),
+                (byte) ((l >> 48) & 0xFF),
+                (byte) ((l >> 40) & 0xFF),
+                (byte) ((l >> 32) & 0xFF),
+                (byte) ((l >> 24) & 0xFF),
+                (byte) ((l >> 16) & 0xFF),
+                (byte) ((l >> 8) & 0xFF),
+                (byte) (l & 0xFF)
+        };
+    }
 
     /**
      * @param i
