@@ -366,6 +366,12 @@ public class Maths {
         };
     }
 
+    public byte[] toArray(short s) {
+        return new byte[]{
+                (byte) ((s >> 8) & 0xFF),
+                (byte) (s & 0xFF)};
+    }
+
     /**
      * 判断大小月及是否闰年,用来确定"日"的数据
      *
