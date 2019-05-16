@@ -44,8 +44,6 @@ public final class ByteArray implements Parcelable {
 
     /**
      * @param original
-     * @param offset
-     * @param len
      * @return
      * @see android.collection.ByteArray.write();
      */
