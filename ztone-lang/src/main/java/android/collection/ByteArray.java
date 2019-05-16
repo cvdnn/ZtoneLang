@@ -1,6 +1,8 @@
 package android.collection;
 
 import android.assist.Assert;
+import android.math.Arrayz;
+import android.math.Maths;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -96,6 +98,26 @@ public final class ByteArray implements Parcelable {
             }
 
             System.arraycopy(original, offset, newBytes, bytes.length, len);
+
+            bytes = newBytes;
+        }
+
+        return this;
+    }
+
+    public ByteArray lowWrite(byte[] original) {
+        return lowWrite(original, 0, original.length);
+    }
+
+    public ByteArray lowWrite(byte[] original, int offset, int len) {
+        if (Assert.notEmpty(original)) {
+            byte[] newBytes = new byte[bytes.length + len];
+
+            if (bytes.length > 0) {
+                System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
+            }
+
+            System.arraycopy(Arrayz.reverse(original), offset, newBytes, bytes.length, len);
 
             bytes = newBytes;
         }
