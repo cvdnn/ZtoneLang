@@ -125,27 +125,27 @@ public final class ByteArray implements Parcelable {
         return this;
     }
 
-    public ByteArray writeShort(short s) {
+    public ByteArray write(short s) {
         return write(Maths.toArray(s));
     }
 
-    public ByteArray lowWriteShort(short s) {
+    public ByteArray lowWrite(short s) {
         return lowWrite(Maths.toArray(s));
     }
 
-    public ByteArray writeInt(int i) {
+    public ByteArray write(int i) {
         return write(Maths.toArray(i));
     }
 
-    public ByteArray lowWriteInt(int i) {
+    public ByteArray lowWrite(int i) {
         return lowWrite(Maths.toArray(i));
     }
 
-    public ByteArray writeLong(long l) {
+    public ByteArray write(long l) {
         return write(Maths.toArray(l));
     }
 
-    public ByteArray lowWriteLong(long l) {
+    public ByteArray lowWrite(long l) {
         return lowWrite(Maths.toArray(l));
     }
 
