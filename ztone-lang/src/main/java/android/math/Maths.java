@@ -352,7 +352,7 @@ public class Maths {
                 (b[0] & 0xFF) << 24;
     }
 
-    public static int toLong(byte[] b) {
+    public static long toLong(byte[] b) {
         return b[7] & 0xFF |
                 (b[6] & 0xFF) << 8 |
                 (b[5] & 0xFF) << 16 |
