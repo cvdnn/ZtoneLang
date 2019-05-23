@@ -89,13 +89,14 @@ public final class ByteArray implements Parcelable {
 
     public ByteArray write(byte[] original, int offset, int len) {
         if (Assert.notEmpty(original)) {
-            byte[] newBytes = new byte[bytes.length + len];
+            int newLen = Math.min(original.length - offset, len);
+            byte[] newBytes = new byte[bytes.length + newLen];
 
             if (bytes.length > 0) {
                 System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
             }
 
-            System.arraycopy(original, offset, newBytes, bytes.length, len);
+            System.arraycopy(original, offset, newBytes, bytes.length, newLen);
 
             bytes = newBytes;
         }
@@ -109,13 +110,16 @@ public final class ByteArray implements Parcelable {
 
     public ByteArray lowWrite(byte[] original, int offset, int len) {
         if (Assert.notEmpty(original)) {
+            int newLen = Math.min(original.length - offset, len);
             byte[] newBytes = new byte[bytes.length + len];
 
             if (bytes.length > 0) {
                 System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
             }
 
-            System.arraycopy(Arrayz.reverse(original), offset, newBytes, bytes.length, len);
+            for (int i = 0; i < newLen; i++) {
+                newBytes[bytes.length + i] = original[offset + newLen - 1 - i];
+            }
 
             bytes = newBytes;
         }

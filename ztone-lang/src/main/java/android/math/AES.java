@@ -1,8 +1,8 @@
 /*
  * ASE.java
- * 
+ *
  * Copyright 2011 sillar team, Inc. All rights reserved.
- * 
+ *
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package android.math;
@@ -68,7 +68,7 @@ public class AES {
 
         if (Assert.notEmpty(seed) && Assert.notEmpty(encrypted)) {
             try {
-                result = new String(decrypt(getRawKey(seed.getBytes()), Maths.toByte(encrypted)));
+                result = new String(decrypt(getRawKey(seed.getBytes()), Maths.asByte(encrypted)));
             } catch (Exception e) {
                 Log.e(TAG, e);
             }

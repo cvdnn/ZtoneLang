@@ -2,6 +2,8 @@ package android;
 
 import java.nio.charset.Charset;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * Created by handy on 17-3-14.
  */
@@ -11,8 +13,8 @@ public class Const {
 
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    public static final String ENCODING = "utf-8";
-    public static final Charset CHARSET_ENCODING = Charset.forName(ENCODING);
+    public static final String ENCODING = UTF_8.name();
+    public static final Charset CHARSET_ENCODING = UTF_8;
 
     public static final String[] SQL_WILDCARD = new String[]{"_", "%"};
     public static final String SQL_ESCAPE = "\\\\";

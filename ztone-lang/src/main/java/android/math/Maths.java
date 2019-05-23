@@ -183,35 +183,57 @@ public class Maths {
         return value;
     }
 
-    public static String toHex(String txt) {
+    /**
+     * 字符串变换成ASCII码
+     * 例：
+     *    0 -> 0x30, A -> 0x41 ...
+     *
+     * @param chars
+     * @return
+     */
+    public static String toASCII(String chars) {
         String strHex = null;
-        if (Assert.notEmpty(txt)) {
-            strHex = toHex(txt.getBytes());
+        if (Assert.notEmpty(chars)) {
+            strHex = toHex(chars.getBytes());
         }
 
         return strHex;
+    }
+
+    @Deprecated
+    public static String toHex(String chars) {
+
+        return toASCII(chars);
     }
 
     public static String fromHex(String hex) {
         String strHex = null;
 
         if (Assert.notEmpty(hex)) {
-            strHex = new String(toByte(hex));
+            strHex = new String(asByte(hex));
         }
 
         return strHex;
     }
 
-    public static byte[] toByte(String hexString) {
+    /**
+     * 将十六进制字符串等同变换成十六进制byte数组
+     * 例：
+     *    1234 -> {0x12, 0x34}
+     *
+     * @param hex
+     * @return
+     */
+    public static byte[] asByte(String hex) {
         byte[] result = null;
 
-        if (Assert.notEmpty(hexString)) {
-            final int len = hexString.length() >> 1;
+        if (Assert.notEmpty(hex)) {
+            final int len = hex.length() >> 1;
             result = new byte[len];
 
             try {
                 for (int i = 0; i < len; i++) {
-                    result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2), HEX).byteValue();
+                    result[i] = Integer.valueOf(hex.substring(2 * i, 2 * i + 2), HEX).byteValue();
                 }
             } catch (Exception e) {
                 Log.d(TAG, e);
@@ -353,14 +375,14 @@ public class Maths {
     }
 
     public static long toLong(byte[] b) {
-        return b[7] & 0xFF |
-                (b[6] & 0xFF) << 8 |
-                (b[5] & 0xFF) << 16 |
-                (b[4] & 0xFF) << 24 |
-                (b[3] & 0xFF) << 32 |
-                (b[2] & 0xFF) << 40 |
-                (b[1] & 0xFF) << 48 |
-                (b[0] & 0xFF) << 56;
+        return (long) (b[7] & 0xFF) |
+                (long) (b[6] & 0xFF) << 8 |
+                (long) (b[5] & 0xFF) << 16 |
+                (long) (b[4] & 0xFF) << 24 |
+                (long) (b[3] & 0xFF) << 32 |
+                (long) (b[2] & 0xFF) << 40 |
+                (long) (b[1] & 0xFF) << 48 |
+                (long) (b[0] & 0xFF) << 56;
     }
 
     /**
