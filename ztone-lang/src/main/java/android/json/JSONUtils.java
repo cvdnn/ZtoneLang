@@ -30,7 +30,7 @@ public class JSONUtils {
             try {
                 jsonObject = new JSONObject(json);
             } catch (Exception e) {
-                Log.i(TAG, "new JSONObject error: %s", json);
+                Log.i(TAG, "new JSONObject error(%s): %s", e.getMessage(), json);
             }
         }
 
