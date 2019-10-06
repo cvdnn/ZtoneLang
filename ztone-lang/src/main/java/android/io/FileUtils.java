@@ -122,6 +122,8 @@ public final class FileUtils {
                     boutStream.flush();
 
                     file.setLastModified(System.currentTimeMillis());
+
+                    result = true;
                 } catch (Exception e) {
                     Log.d(TAG, e);
                 } finally {
