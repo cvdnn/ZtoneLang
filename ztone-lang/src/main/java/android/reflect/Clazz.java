@@ -1,8 +1,8 @@
 /*
  * ClazzLoader.java
- *
+ * 
  * Copyright 2011 sillar team, Inc. All rights reserved.
- *
+ * 
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package android.reflect;
@@ -25,11 +25,9 @@ import dalvik.system.DexFile;
 /**
  * @author sillar team
  * @version 1.0.0
- * @see android.reflect.Clazz
  * @since 1.0.0 Handy 2013-9-2
- * @deprecated
  */
-public final class ClazzLoader {
+public final class Clazz {
     private static final String TAG = "ClazzLoader";
 
     /**
@@ -90,7 +88,7 @@ public final class ClazzLoader {
                         while (entries.hasMoreElements()) {
                             String clazzName = entries.nextElement();
                             if (Assert.notEmpty(clazzName)) {
-                                Class<?> clazz = ClazzLoader.forName(clazzName);
+                                Class<?> clazz = Clazz.forName(clazzName);
                                 if (clazz != null && (clazz == null || clazzFilter.accept(clazzName, clazz))) {
                                     clazzMap.put(clazzName, clazz);
                                 }
@@ -134,7 +132,7 @@ public final class ClazzLoader {
             try {
                 Class<?> tempClazz = null;
 
-                ClassLoader classLoader = ClazzLoader.class.getClassLoader();
+                ClassLoader classLoader = Clazz.class.getClassLoader();
                 if (classLoader != null) {
                     tempClazz = classLoader.loadClass(className);
                 } else {
