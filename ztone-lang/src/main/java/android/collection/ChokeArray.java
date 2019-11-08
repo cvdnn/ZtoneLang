@@ -3,6 +3,8 @@ package android.collection;
 import android.log.Log;
 import android.util.SparseArray;
 
+import java.util.concurrent.TimeUnit;
+
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
     public ChokePoint<E> make(int key) {
@@ -26,5 +28,25 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         }
 
         return result;
+    }
+
+    public E poll(int key) {
+        E e = null;
+        try {
+            e = make(key).poll();
+        } catch (Exception exce) {
+        }
+
+        return e;
+    }
+
+    public E poll(int key, long timeout, TimeUnit unit) {
+        E e = null;
+        try {
+            e = make(key).poll(timeout, unit);
+        } catch (Exception exce) {
+        }
+
+        return e;
     }
 }
