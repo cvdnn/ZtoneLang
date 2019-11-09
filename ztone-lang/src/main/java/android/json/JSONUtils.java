@@ -34,6 +34,10 @@ public class JSONUtils {
             }
         }
 
+        if (jsonObject == null) {
+            jsonObject = new JSONObject();
+        }
+
         return jsonObject;
     }
 
