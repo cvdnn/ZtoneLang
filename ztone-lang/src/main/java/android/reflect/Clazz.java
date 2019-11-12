@@ -1,8 +1,8 @@
 /*
  * ClazzLoader.java
- * 
+ *
  * Copyright 2011 sillar team, Inc. All rights reserved.
- * 
+ *
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package android.reflect;
@@ -16,6 +16,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -233,8 +234,8 @@ public final class Clazz {
 
         if (clazz != null) {
             try {
-                boolean isInner = clazz.isAnnotationPresent(Inner.class);
-                if (isInner && o != null) {
+                // 内部非静态类实例化
+                if (clazz.isMemberClass() && (clazz.getModifiers() & Modifier.STATIC) == 0 && o != null) {
                     int size = (Assert.notEmpty(objs) ? objs.length : 0) + 1; // 1 内部类首参数是外部类实例
 
                     Class<?>[] clazzes = new Class<?>[size];
