@@ -646,6 +646,8 @@ public final class Android {
                 }
             }
 
+            Log.i(TAG, ">> [CPU]: %s", sCPUSerialNum);
+
             return sCPUSerialNum;
         }
 
@@ -679,6 +681,8 @@ public final class Android {
                     sCPUCoreNum = 1;
                 }
             }
+
+            Log.i(TAG, ">> [CPU]: %d", sCPUCoreNum);
 
             return sCPUCoreNum;
         }
@@ -732,6 +736,8 @@ public final class Android {
 
                 sTotalMemoryNum = initialMemory;// Byte转换为KB或者MB，内存大小规格化
             }
+
+            Log.i(TAG, ">> [Memory]: %d", sTotalMemoryNum);
 
             return sTotalMemoryNum;
         }
