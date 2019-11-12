@@ -614,8 +614,8 @@ public final class Android {
                     if (result.successMsg.endsWith("\n")) {
                         cpuSerial.deleteCharAt(cpuSerial.lastIndexOf("\n"));
                     }
-                    UUID uuid = UUID.nameUUIDFromBytes(cpuSerial.toString().getBytes(CHARSET_ENCODING));
-                    serial = uuid.toString();
+//                    UUID uuid = UUID.nameUUIDFromBytes(cpuSerial.toString().getBytes(CHARSET_ENCODING));
+                    serial = cpuSerial.toString();
                 }
             }
 
