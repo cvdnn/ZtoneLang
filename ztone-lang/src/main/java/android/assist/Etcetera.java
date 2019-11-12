@@ -20,7 +20,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 /**
  * Created by handy on 17-3-15.
  */
-
+@Deprecated
 public class Etcetera {
     public static final String DEFAULT_SERIAL_NUM = "0000000000000000";
 

@@ -1,16 +1,29 @@
 package android;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.assist.Assert;
 import android.assist.Shell;
 import android.content.Context;
+import android.log.Log;
 import android.os.Build.VERSION;
 import android.os.StrictMode;
 import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import static android.Const.CHARSET_ENCODING;
+import static android.Const.LINE_SEPARATOR;
+import static android.assist.PackageUtils.TAG;
+import static android.assist.Shell.CommandResult.SUCCESS;
+import static android.content.Context.ACTIVITY_SERVICE;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Enumeration of the currently known SDK version codes. These are the values that can be found in {@link VERSION#SDK}.
@@ -602,24 +615,125 @@ public final class Android {
     public static final int P = 28;
 
     public static class Build {
+        public static final String DEFAULT_SERIAL_NUM = "0000000000000000";
 
-        public static String getCPUSerial() {
-            String serial = "0000000000000000";
+        private static String sCPUSerialNum;
+        private static int sCPUCoreNum;
+        private static long sTotalMemoryNum;
 
-            Shell.CommandResult result = Shell.execute("cat /proc/cpuinfo | grep 'Serial'", true, true);
-            if (Shell.CommandResult.success(result) && Assert.notEmpty(result.successMsg)) {
-                int index = result.successMsg.indexOf(": "), msgLen = result.successMsg.length();
-                if (index > 0 && index + 2 < msgLen) {
-                    StringBuilder cpuSerial = new StringBuilder(result.successMsg).delete(0, index + 2);
-                    if (result.successMsg.endsWith("\n")) {
-                        cpuSerial.deleteCharAt(cpuSerial.lastIndexOf("\n"));
+        public static String uuid() {
+
+            return UUID.nameUUIDFromBytes(cpuSerial().getBytes(UTF_8)).toString();
+        }
+
+        public synchronized static String cpuSerial() {
+            if (Assert.isEmpty(sCPUSerialNum)) {
+                Shell.CommandResult result = Shell.execute("cat /proc/cpuinfo | grep 'Serial'", true, true);
+                if (Shell.CommandResult.success(result) && Assert.notEmpty(result.successMsg)) {
+                    int index = result.successMsg.indexOf(": "), msgLen = result.successMsg.length();
+                    if (index > 0 && index + 2 < msgLen) {
+                        StringBuilder cpuSerial = new StringBuilder(result.successMsg).delete(0, index + 2);
+                        if (result.successMsg.endsWith("\n")) {
+                            cpuSerial.deleteCharAt(cpuSerial.lastIndexOf("\n"));
+                        }
+
+                        sCPUSerialNum = cpuSerial.toString();
                     }
-//                    UUID uuid = UUID.nameUUIDFromBytes(cpuSerial.toString().getBytes(CHARSET_ENCODING));
-                    serial = cpuSerial.toString();
+                }
+
+                if (Assert.isEmpty(sCPUSerialNum)) {
+                    sCPUSerialNum = DEFAULT_SERIAL_NUM;
                 }
             }
 
-            return serial;
+            return sCPUSerialNum;
+        }
+
+        /**
+         * 获取cpu核数
+         *
+         * @return int cpu核数
+         */
+        public static int cpuCores() {
+            if (sCPUCoreNum == 0) {
+                try {
+                    // Get directory containing CPU info
+                    File dir = new File("/sys/devices/system/cpu/");
+                    // Filter to only list the devices we care about
+                    File[] files = dir.listFiles(new FileFilter() {
+
+                        @Override
+                        public boolean accept(File pathname) {
+
+                            return Pattern.matches("cpu[0-9]", pathname.getName());
+                        }
+                    });
+
+                    // Return the number of cores (virtual CPU devices)
+                    if (Assert.notEmpty(files)) {
+                        sCPUCoreNum = files.length;
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+
+                    sCPUCoreNum = 1;
+                }
+            }
+
+            return sCPUCoreNum;
+        }
+
+        /**
+         * 空闲内存，单位：K
+         *
+         * @param context
+         * @return
+         */
+        public static long freeMemory(Context context) {
+            long freeMemory = -1;
+
+            if (context != null) {
+                ActivityManager actMgr = (ActivityManager) context.getApplicationContext().getSystemService(ACTIVITY_SERVICE);
+                ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+                actMgr.getMemoryInfo(memoryInfo);
+
+                freeMemory = memoryInfo.availMem / 1024;
+            }
+
+            return freeMemory;
+        }
+
+        public static long totalMemory() {
+            if (sTotalMemoryNum == 0) {
+                long initialMemory = -1;
+                BufferedReader localBufferedReader = null;
+                try {
+                    localBufferedReader = new BufferedReader(new FileReader("/proc/meminfo"), 8192);
+                    String tempLine = localBufferedReader.readLine();
+
+                    if (tempLine != null) {
+                        String[] arrayOfString = tempLine.split("\\s+");
+                        if (Assert.notEmpty(arrayOfString)) {
+                            initialMemory = Integer.valueOf(arrayOfString[1]);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+
+                } finally {
+                    if (localBufferedReader != null) {
+                        try {
+                            localBufferedReader.close();
+                        } catch (IOException e) {
+                            Log.e(TAG, e);
+                        }
+                    }
+                }
+
+                sTotalMemoryNum = initialMemory;// Byte转换为KB或者MB，内存大小规格化
+            }
+
+            return sTotalMemoryNum;
         }
     }
 }
