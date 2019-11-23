@@ -8,8 +8,11 @@ import java.util.concurrent.TimeUnit;
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
     public ChokePoint<E> make(int key) {
-        ChokePoint<E> chokePoint = new ChokePoint<>();
-        put(key, chokePoint);
+        ChokePoint<E> chokePoint = get(key);
+        if (chokePoint == null) {
+            chokePoint = new ChokePoint<>();
+            put(key, chokePoint);
+        }
 
         return chokePoint;
     }
