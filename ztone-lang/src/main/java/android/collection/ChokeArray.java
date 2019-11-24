@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
-    public ChokePoint<E> make(int key) {
+    public synchronized ChokePoint<E> make(int key) {
         ChokePoint<E> chokePoint = get(key);
         if (chokePoint == null) {
             chokePoint = new ChokePoint<>();
@@ -17,12 +17,13 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return chokePoint;
     }
 
-    public boolean revert(int key, E e) {
+    public synchronized boolean revert(int key, E e) {
         boolean result = false;
 
         ChokePoint<E> chokePoint = get(key);
         if (chokePoint != null) {
             try {
+                remove(key);
                 chokePoint.put(e);
                 result = true;
             } catch (Exception exce) {
@@ -33,7 +34,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return result;
     }
 
-    public E poll(int key) {
+    public synchronized E poll(int key) {
         E e = null;
         try {
             e = make(key).poll();
@@ -43,7 +44,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public E poll(int key, long timeout, TimeUnit unit) {
+    public synchronized E poll(int key, long timeout, TimeUnit unit) {
         E e = null;
         try {
             e = make(key).poll(timeout, unit);
@@ -53,11 +54,11 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public boolean containKey(int key) {
+    public synchronized boolean containKey(int key) {
         return indexOfKey(key) >= 0;
     }
 
-    public boolean contain(int key) {
+    public synchronized boolean contain(int key) {
         return get(key) != null;
     }
 }
