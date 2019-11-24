@@ -52,4 +52,12 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
         return e;
     }
+
+    public boolean containKey(int key) {
+        return indexOfKey(key) >= 0;
+    }
+
+    public boolean contain(int key) {
+        return get(key) != null;
+    }
 }
