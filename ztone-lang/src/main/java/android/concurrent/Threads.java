@@ -1,6 +1,7 @@
 package android.concurrent;
 
 import android.assist.Assert;
+import android.os.SystemClock;
 import android.reflect.TrackingUtils;
 
 /**
@@ -19,7 +20,7 @@ public class Threads {
 
     public static Thread start(Runnable runnable) {
 
-        return start(runnable, "__THREAD_START");
+        return start(runnable, "__THREAD_START_" + System.currentTimeMillis());
     }
 
     public static Thread start(Runnable runnable, String threadName) {
