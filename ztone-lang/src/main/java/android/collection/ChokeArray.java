@@ -7,6 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
+    public ChokePoint<E> quemake(int key) {
+        ChokePoint<E> chokePoint = new ChokePoint<>();
+        put(key, chokePoint);
+
+        return chokePoint;
+    }
+
     public synchronized ChokePoint<E> make(int key) {
         ChokePoint<E> chokePoint = containKey(key) ? get(key) : null;
         if (chokePoint == null) {
@@ -50,6 +57,32 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         E e = null;
         try {
             e = make(key).poll(timeout, unit);
+        } catch (Exception exce) {
+        }
+
+        return e;
+    }
+
+    /**
+     * 唯一
+     *
+     * @param key
+     * @return
+     */
+    public synchronized E quepoll(int key) {
+        E e = null;
+        try {
+            e = quemake(key).poll();
+        } catch (Exception exce) {
+        }
+
+        return e;
+    }
+
+    public synchronized E quepoll(int key, long timeout, TimeUnit unit) {
+        E e = null;
+        try {
+            e = quemake(key).poll(timeout, unit);
         } catch (Exception exce) {
         }
 
