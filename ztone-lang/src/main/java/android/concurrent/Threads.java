@@ -20,7 +20,7 @@ public class Threads {
 
     public static Thread start(Runnable runnable) {
 
-        return start(runnable, "__THREAD_START_" + System.currentTimeMillis());
+        return start(runnable, null);
     }
 
     public static Thread start(Runnable runnable, String threadName) {
