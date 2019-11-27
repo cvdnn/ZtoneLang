@@ -14,7 +14,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return chokePoint;
     }
 
-    public synchronized ChokePoint<E> make(int key) {
+    public ChokePoint<E> make(int key) {
         ChokePoint<E> chokePoint = get(key);
         if (chokePoint == null) {
             chokePoint = new ChokePoint<>();
@@ -24,7 +24,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return chokePoint;
     }
 
-    public synchronized boolean revert(int key, E e) {
+    public boolean revert(int key, E e) {
         boolean result = false;
 
         ChokePoint<E> chokePoint = get(key);
@@ -41,7 +41,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return result;
     }
 
-    public synchronized E poll(int key) {
+    public E poll(int key) {
         E e = null;
         try {
             e = make(key).poll();
@@ -51,7 +51,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public synchronized E poll(int key, long timeout, TimeUnit unit) {
+    public E poll(int key, long timeout, TimeUnit unit) {
         E e = null;
         try {
             e = make(key).poll(timeout, unit);
@@ -67,7 +67,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
      * @param key
      * @return
      */
-    public synchronized E quepoll(int key) {
+    public E quepoll(int key) {
         E e = null;
         try {
             e = quemake(key).poll();
@@ -77,7 +77,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public synchronized E quepoll(int key, long timeout, TimeUnit unit) {
+    public E quepoll(int key, long timeout, TimeUnit unit) {
         E e = null;
         try {
             e = quemake(key).poll(timeout, unit);
@@ -87,7 +87,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public synchronized boolean contain(int key) {
+    public boolean contain(int key) {
         return get(key) != null;
     }
 }
