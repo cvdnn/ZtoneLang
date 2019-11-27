@@ -10,12 +10,17 @@ import android.reflect.TrackingUtils;
 
 public class Threads {
 
-    public static void sleepThread(long time) {
+    public static void sleep(long time) {
         try {
             Thread.sleep(time);
         } catch (Exception e) {
             // do nothing
         }
+    }
+
+    @Deprecated
+    public static void sleepThread(long time) {
+        sleep(time);
     }
 
     public static Thread start(Runnable runnable) {
