@@ -5,29 +5,20 @@ package android.concurrent;
  * Created by handy on 17-3-28.
  */
 
-public abstract class AsyncTask extends android.os.AsyncTask {
+public abstract class AsyncTask<Result> extends android.os.AsyncTask<Object, Integer, Result> {
 
     protected abstract void doInBackground();
 
-    protected void onPostExecute() {
-
-    }
-
     @Override
-    protected final Object doInBackground(Object[] params) {
+    protected final Result doInBackground(Object[] params) {
         doInBackground();
 
         return null;
     }
 
     @Override
-    protected final void onPostExecute(Object o) {
-        onPostExecute();
-    }
-
-    @Override
-    protected final void onCancelled(Object o) {
-        super.onCancelled(o);
+    protected final void onCancelled(Result r) {
+        super.onCancelled(r);
     }
 
     public final void start() {
