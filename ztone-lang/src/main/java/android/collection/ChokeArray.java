@@ -15,7 +15,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
     }
 
     public synchronized ChokePoint<E> make(int key) {
-        ChokePoint<E> chokePoint = containKey(key) ? get(key) : null;
+        ChokePoint<E> chokePoint = get(key);
         if (chokePoint == null) {
             chokePoint = new ChokePoint<>();
             put(key, chokePoint);
@@ -27,16 +27,14 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
     public synchronized boolean revert(int key, E e) {
         boolean result = false;
 
-        if (containKey(key)) {
-            ChokePoint<E> chokePoint = get(key);
-            if (chokePoint != null) {
-                try {
-                    remove(key);
-                    chokePoint.put(e);
-                    result = true;
-                } catch (Exception exce) {
-                    Log.e(exce);
-                }
+        ChokePoint<E> chokePoint = get(key);
+        if (chokePoint != null) {
+            try {
+                remove(key);
+                chokePoint.put(e);
+                result = true;
+            } catch (Exception exce) {
+                Log.e(exce);
             }
         }
 
@@ -89,11 +87,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
         return e;
     }
 
-    public synchronized boolean containKey(int key) {
-        return indexOfKey(key) >= 0;
-    }
-
     public synchronized boolean contain(int key) {
-        return indexOfKey(key) >= 0 && get(key) != null;
+        return get(key) != null;
     }
 }
