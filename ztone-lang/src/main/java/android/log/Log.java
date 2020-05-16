@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 public final class Log {
     private static String TAG = "FRAMEWORK_LOG";
@@ -22,7 +23,7 @@ public final class Log {
     private static final String SUFFIX_LOG_FILE = ".log";
     private static final String SUFFIX_TEMP_LOG_FILE = SUFFIX_LOG_FILE + ".tmp";
 
-    private static ArrayList<OnLoggingPrinter> mLoggingPrinter = new ArrayList<>();
+    private static HashSet<OnLoggingPrinter> mLoggingPrinter = new HashSet<>();
 
     public static void register(OnLoggingPrinter log) {
         if (log != null) {
