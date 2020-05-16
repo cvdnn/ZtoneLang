@@ -150,7 +150,7 @@ public final class Log {
         if (mLogHandle != null && Assert.notEmpty(mLoggingPrinter)) {
             for (OnLoggingPrinter log : mLoggingPrinter) {
                 if (log != null) {
-                    mLogHandle.post(() -> log.print(timeMillis, priority, tag, text));
+                    mLogHandle.post(() -> log.print(new LogMeta(timeMillis, priority, tag, text)));
                 }
             }
         }
