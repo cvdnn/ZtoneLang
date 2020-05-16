@@ -9,6 +9,7 @@ import android.math.Maths;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -343,5 +344,15 @@ public class JSONUtils {
         }
 
         return jsonObject;
+    }
+
+    public static <V> void put(JSONObject json, String name, V v) {
+        if (json != null && Assert.notEmpty(name)) {
+            try {
+                json.put(name, v);
+            } catch (Exception e) {
+                Log.e(TAG, e);
+            }
+        }
     }
 }
