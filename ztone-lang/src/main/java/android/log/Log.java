@@ -132,6 +132,8 @@ public final class Log {
     public static void println(int priority, String tag, String msg, Object... args) {
         String logMsg = msg;
 
+        long timeMillis = System.currentTimeMillis();
+
         if (Assert.notEmpty(msg) && msg.indexOf('%') >= 0 && Assert.notEmpty(args)) {
             try {
                 logMsg = String.format(msg, args);
@@ -148,7 +150,7 @@ public final class Log {
         if (mLogHandle != null && Assert.notEmpty(mLoggingPrinter)) {
             for (OnLoggingPrinter log : mLoggingPrinter) {
                 if (log != null) {
-                    mLogHandle.post(() -> log.print(tag, text));
+                    mLogHandle.post(() -> log.print(timeMillis, tag, text));
                 }
             }
         }
