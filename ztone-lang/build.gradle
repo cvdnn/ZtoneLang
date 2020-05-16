@@ -2,12 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode buildVersion()
-        versionName '0.3.49'
+        versionName '0.3.50'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -63,5 +64,5 @@ ext {
     gitUrl = 'https://github.com/handy001/ZtoneLang.git'
 }
 
-apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/pom_build.gradle'
-apply from: 'https://raw.githubusercontent.com/handy001/mvn-repo/master/bintray/push_to_bintray.gradle'
+apply from: 'pom_build.gradle'
+apply from: 'push_to_bintray.gradle'

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ztone-lang/ztone-lang.iml" filepath="$PROJECT_DIR$/ztone-lang/ztone-lang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" group="ZtoneLang" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZtoneLang/app" />
+      <module fileurl="file://$PROJECT_DIR$/ztone-lang/ztone-lang.iml" filepath="$PROJECT_DIR$/ztone-lang/ztone-lang.iml" group="ZtoneLang/ztone-lang" />
     </modules>
   </component>
 </project>

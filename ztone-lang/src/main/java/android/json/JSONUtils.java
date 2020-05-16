@@ -61,6 +61,10 @@ public class JSONUtils {
             }
         }
 
+        if (rObj == null) {
+            rObj = new JSONObject();
+        }
+
         return rObj;
     }
 
@@ -87,6 +91,10 @@ public class JSONUtils {
                     }
                 }
             }
+        }
+
+        if (rArray == null) {
+            rArray = new JSONArray();
         }
 
         return rArray;
@@ -304,17 +312,16 @@ public class JSONUtils {
             }
         }
 
+        if (jsonObject == null) {
+            jsonObject = new JSONObject();
+        }
+
         return jsonObject;
     }
 
     public static JSONObject getJSONObject(String absFilePath) {
-        JSONObject jsonObject = null;
 
-        if (Assert.notEmpty(absFilePath)) {
-            jsonObject = getJSONObject(new File(absFilePath));
-        }
-
-        return jsonObject;
+        return getJSONObject(new File(absFilePath));
     }
 
     public static JSONObject getJSONObject(File absFile) {
@@ -329,6 +336,10 @@ public class JSONUtils {
                     Log.e(TAG, e.getMessage(), e);
                 }
             }
+        }
+
+        if (jsonObject == null) {
+            jsonObject = new JSONObject();
         }
 
         return jsonObject;

@@ -34,7 +34,7 @@ public class StreamUtils {
     }
 
     public static String getContent(InputStream inStream, String charSet) {
-        String text = null;
+        String text = "";
 
         if (inStream != null) {
             BufferedInputStream binStream = null;
@@ -67,7 +67,7 @@ public class StreamUtils {
      * 获取流,获取完关闭流
      */
     public static byte[] getByteArray(InputStream inStream) {
-        byte[] byteArray = null;
+        byte[] byteArray = new byte[]{};
 
         if (inStream != null) {
             BufferedInputStream binStream = null;
