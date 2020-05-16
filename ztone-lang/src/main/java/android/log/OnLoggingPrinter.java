@@ -6,5 +6,5 @@ package android.log;
 
 public interface OnLoggingPrinter {
 
-    void print(String tag, String message, Throwable t);
+    void print(String tag, String message);
 }

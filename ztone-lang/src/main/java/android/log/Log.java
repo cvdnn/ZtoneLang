@@ -7,6 +7,8 @@ import android.assist.Shell.CommandResult;
 import android.concurrent.ThreadUtils;
 import android.io.FileUtils;
 import android.math.Maths;
+import android.os.Handler;
+import android.os.HandlerThread;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -24,6 +26,15 @@ public final class Log {
     private static final String SUFFIX_TEMP_LOG_FILE = SUFFIX_LOG_FILE + ".tmp";
 
     private static HashSet<OnLoggingPrinter> mLoggingPrinter = new HashSet<>();
+
+    private static Handler mLogHandle;
+
+    static {
+        HandlerThread ht = new HandlerThread("__LOG_THREAD");
+        ht.start();
+
+        mLogHandle = new Handler(ht.getLooper());
+    }
 
     public static void register(OnLoggingPrinter log) {
         if (log != null) {
@@ -47,8 +58,6 @@ public final class Log {
 
     public static void v(String tag, Throwable t) {
         v(tag, getMessage(t));
-
-        analytics(tag, t);
     }
 
     public static void v(String tag, String msg, Object... args) {
@@ -65,8 +74,6 @@ public final class Log {
 
     public static void d(String tag, Throwable t) {
         d(tag, getMessage(t));
-
-        analytics(tag, t);
     }
 
     public static void d(String tag, String msg, Object... args) {
@@ -83,8 +90,6 @@ public final class Log {
 
     public static void i(String tag, Throwable t) {
         i(tag, getMessage(t));
-
-        analytics(tag, t);
     }
 
     public static void i(String tag, String msg, Object... args) {
@@ -101,8 +106,6 @@ public final class Log {
 
     public static void w(String tag, Throwable t) {
         w(tag, getMessage(t));
-
-        analytics(tag, t);
     }
 
     public static void w(String tag, String msg, Object... args) {
@@ -120,8 +123,6 @@ public final class Log {
 
     public static void e(String tag, Throwable t) {
         e(tag, getMessage(t));
-
-        analytics(tag, t);
     }
 
     public static void e(String tag, String msg, Object... args) {
@@ -140,14 +141,14 @@ public final class Log {
             }
         }
 
-        android.util.Log.println(priority, tag, logMsg == null ? "" : logMsg);
-    }
+        String text = logMsg == null ? "" : logMsg;
 
-    private static void analytics(String tag, Throwable t) {
-        if (Assert.notEmpty(mLoggingPrinter)) {
+        android.util.Log.println(priority, tag, text);
+
+        if (mLogHandle != null && Assert.notEmpty(mLoggingPrinter)) {
             for (OnLoggingPrinter log : mLoggingPrinter) {
                 if (log != null) {
-                    log.print(tag, t != null ? t.getMessage() : "", t);
+                    mLogHandle.post(() -> log.print(tag, text));
                 }
             }
         }
