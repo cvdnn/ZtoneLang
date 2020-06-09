@@ -10,12 +10,15 @@ package android.math;
 import android.assist.Assert;
 import android.log.Log;
 
+import java.security.Provider;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import static android.Android.JELLY_BEAN_MR1;
 
 /**
  * AES加密解密算法
@@ -78,7 +81,16 @@ public class AES {
     }
 
     private static byte[] getRawKey(byte[] seed) throws Exception {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
+//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
+
+        SecureRandom sr = null;
+        if (android.os.Build.VERSION.SDK_INT >= JELLY_BEAN_MR1) {
+            sr = SecureRandom.getInstance("SHA1PRNG", new CryptoProvider());
+
+        } else {
+            sr = SecureRandom.getInstance("SHA1PRNG");
+        }
+
         sr.setSeed(seed);
 
         KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORITHM);
@@ -99,6 +111,17 @@ public class AES {
         cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(raw, KEY_ALGORITHM), new IvParameterSpec(new byte[cipher.getBlockSize()]));
 
         return cipher.doFinal(encrypted);
+    }
+
+    private static final class CryptoProvider extends Provider {
+        /**
+         * Creates a Provider and puts parameters
+         */
+        public CryptoProvider() {
+            super("Crypto", 1.0, "HARMONY (SHA1 digest; SecureRandom; SHA1withDSA signature)");
+            put("SecureRandom.SHA1PRNG", "org.apache.harmony.security.provider.crypto.SHA1PRNG_SecureRandomImpl");
+            put("SecureRandom.SHA1PRNG ImplementedIn", "Software");
+        }
     }
 
     private AES() {
