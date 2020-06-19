@@ -33,8 +33,10 @@ import static android.os.Build.VERSION.SDK_INT;
 public class AES {
     private static final String TAG = "AES";
 
+    private static final int KEY_LENGTH = 128;
+
     private final static String SHA1_PRNG = "SHA1PRNG";
-    private static final int KEY_SIZE = 32;
+    private static final int SALT_LENGTH = KEY_LENGTH / 8;
 
     // 密钥算法
     private static final String KEY_ALGORITHM = "AES";
@@ -60,7 +62,7 @@ public class AES {
             try {
                 byte[] raw = null;
                 if (SDK_INT >= P) {
-                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, KEY_SIZE);
+                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, SALT_LENGTH);
 
                 } else {
                     raw = getRawKey(seedArray);
@@ -94,7 +96,7 @@ public class AES {
             try {
                 byte[] raw = null;
                 if (SDK_INT >= P) {
-                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, KEY_SIZE);
+                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, SALT_LENGTH);
 
                 } else {
                     raw = getRawKey(seedArray);
@@ -121,7 +123,7 @@ public class AES {
         sr.setSeed(seed);
 
         KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORITHM);
-        kgen.init(128, sr); // 192 and 256 bits may not be available
+        kgen.init(KEY_LENGTH, sr); // 192 and 256 bits may not be available
 
         return kgen.generateKey().getEncoded();
     }
