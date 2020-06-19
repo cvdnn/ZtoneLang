@@ -9,6 +9,7 @@ package android.math;
 
 import android.assist.Assert;
 import android.log.Log;
+import android.math.key.InsecureSHA1PRNGKeyDerivator;
 
 import java.security.Provider;
 import java.security.SecureRandom;
@@ -19,6 +20,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import static android.Android.JELLY_BEAN_MR1;
+import static android.Android.P;
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * AES加密解密算法
@@ -29,6 +32,9 @@ import static android.Android.JELLY_BEAN_MR1;
  */
 public class AES {
     private static final String TAG = "AES";
+
+    private final static String SHA1_PRNG = "SHA1PRNG";
+    private static final int KEY_SIZE = 32;
 
     // 密钥算法
     private static final String KEY_ALGORITHM = "AES";
@@ -41,15 +47,26 @@ public class AES {
      *
      * @param seed
      * @param cleartext
+     *
      * @return
+     *
      * @throws Exception
      */
     public static String encrypt(String seed, String cleartext) {
         String result = null;
 
         if (Assert.notEmpty(seed) && Assert.notEmpty(cleartext)) {
+            byte[] seedArray = seed.getBytes();
             try {
-                result = Maths.toHex(encrypt(getRawKey(seed.getBytes()), cleartext.getBytes()));
+                byte[] raw = null;
+                if (SDK_INT >= P) {
+                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, KEY_SIZE);
+
+                } else {
+                    raw = getRawKey(seedArray);
+                }
+
+                result = Maths.toHex(encrypt(raw, cleartext.getBytes()));
             } catch (Exception e) {
                 Log.e(TAG, e);
             }
@@ -63,15 +80,27 @@ public class AES {
      *
      * @param seed
      * @param encrypted
+     *
      * @return
+     *
      * @throws Exception
      */
     public static String decrypt(String seed, String encrypted) {
         String result = null;
 
         if (Assert.notEmpty(seed) && Assert.notEmpty(encrypted)) {
+            byte[] seedArray = seed.getBytes();
+
             try {
-                result = new String(decrypt(getRawKey(seed.getBytes()), Maths.asByte(encrypted)));
+                byte[] raw = null;
+                if (SDK_INT >= P) {
+                    raw = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(seedArray, KEY_SIZE);
+
+                } else {
+                    raw = getRawKey(seedArray);
+                }
+
+                result = new String(decrypt(raw, Maths.asByte(encrypted)));
             } catch (Exception e) {
                 Log.e(TAG, e);
             }
@@ -81,14 +110,12 @@ public class AES {
     }
 
     private static byte[] getRawKey(byte[] seed) throws Exception {
-//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
-
         SecureRandom sr = null;
-        if (android.os.Build.VERSION.SDK_INT >= JELLY_BEAN_MR1) {
-            sr = SecureRandom.getInstance("SHA1PRNG", new CryptoProvider());
+        if (SDK_INT >= JELLY_BEAN_MR1) {
+            sr = SecureRandom.getInstance(SHA1_PRNG, new CryptoProvider());
 
         } else {
-            sr = SecureRandom.getInstance("SHA1PRNG");
+            sr = SecureRandom.getInstance(SHA1_PRNG);
         }
 
         sr.setSeed(seed);
@@ -125,6 +152,5 @@ public class AES {
     }
 
     private AES() {
-
     }
 }
