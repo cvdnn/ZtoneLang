@@ -33,7 +33,7 @@ import static android.os.Build.VERSION.SDK_INT;
 public class AES {
     private static final String TAG = "AES";
 
-    private static final int KEY_LENGTH = 128;
+    private static final int KEY_LENGTH = 256;
 
     private final static String SHA1_PRNG = "SHA1PRNG";
     private static final int SALT_LENGTH = KEY_LENGTH / 8;
