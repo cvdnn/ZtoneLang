@@ -7,6 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
+    public ChokeArray() {
+        this(32);
+    }
+
+    public ChokeArray(int capacity) {
+        super(capacity);
+    }
+
     public ChokePoint<E> quemake(int key) {
         ChokePoint<E> chokePoint = new ChokePoint<>();
         put(key, chokePoint);
@@ -65,6 +73,7 @@ public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
      * 唯一
      *
      * @param key
+     *
      * @return
      */
     public E quepoll(int key) {
