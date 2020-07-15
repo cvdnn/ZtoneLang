@@ -12,7 +12,6 @@ import android.os.HandlerThread;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -342,5 +341,43 @@ public final class Log {
     private static String getLogcatName(long time) {
 
         return DateFormatUtils.format(new Date(time), "HHmmss");
+    }
+
+    public static String stackTrace(Throwable t, String prefix) {
+        String text = "";
+
+        if (t != null && Assert.notEmpty(prefix)) {
+            StackTraceElement[] elms = t.getStackTrace();
+            for (StackTraceElement ste : elms) {
+                String name = ste.getClassName();
+                if (name.startsWith(prefix)) {
+                    text = String.format("%s: %d", findMsg(name, "."), ste.getLineNumber());
+
+                    break;
+                }
+            }
+        }
+
+
+        return text;
+    }
+
+    public static String cause(Throwable t) {
+        return t != null ? findMsg(t.getMessage(), ":") : "";
+    }
+
+    public static String findMsg(String msg, String symbol) {
+        String text = "";
+
+        if (Assert.notEmpty(msg) && Assert.notEmpty(symbol)) {
+            int index = msg.lastIndexOf(symbol);
+            if (index > -1) {
+                text = msg.substring(index + symbol.length());
+            } else {
+                text = msg;
+            }
+        }
+
+        return text;
     }
 }
