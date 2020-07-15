@@ -1,14 +1,16 @@
 package android.concurrent;
 
 import android.assist.Assert;
-import android.os.SystemClock;
 import android.reflect.TrackingUtils;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by handy on 17-3-15.
  */
 
 public class Threads {
+    private static final AtomicInteger ThreadNum = new AtomicInteger(1);
 
     public static void sleep(long time) {
         try {
@@ -32,7 +34,7 @@ public class Threads {
         Thread thread = null;
         if (runnable != null) {
             thread = new Thread(TrackingUtils.proxy(runnable), //
-                    Assert.notEmpty(threadName) ? threadName : "THREAD_" + System.currentTimeMillis());
+                    ((Assert.notEmpty(threadName) ? (threadName + "_") : "__THREAD_") + ThreadNum.incrementAndGet()));
             thread.start();
         }
 
