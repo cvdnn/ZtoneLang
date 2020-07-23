@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class ChokePoint<E> extends LinkedBlockingQueue<E> {
 
+    private static final String TAG = "ChokePoint";
     public ChokePoint() {
         super(1);
     }
@@ -19,7 +20,7 @@ public final class ChokePoint<E> extends LinkedBlockingQueue<E> {
         try {
             e = super.poll(timeout, unit);
         } catch (Exception exc) {
-            Log.e(exc);
+            Log.i(TAG, exc);
         }
 
         return e;
