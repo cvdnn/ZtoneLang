@@ -11,7 +11,7 @@ git commit -m "add README"
 git push -u origin master
 ```
 
-### Existing folder or Git repository
+### Existing folder or Git repositorygit
 
 ```
 cd existing_folder
@@ -25,5 +25,5 @@ git push -u origin master
 ### Maven
 
 ```
-./gradlew -q -p ztone.lang clean build uploadArchives
+./gradlew -q -p ztone-lang clean build uploadArchives
 ```

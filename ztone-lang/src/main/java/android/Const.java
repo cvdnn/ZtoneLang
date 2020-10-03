@@ -9,6 +9,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 
 public class Const {
+    public static final Void NIL = null, NULL = null;
+
     public static final int BUFFER_LENGTH = 2048;
 
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
