@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -59,8 +60,8 @@ ext {
 
     libraryDescription = 'Ztone Lang'
 
-    siteUrl = 'https://github.com/handy001/ZtoneLang'
-    gitUrl = 'https://github.com/handy001/ZtoneLang.git'
+    siteUrl = 'https://github.com/cvdnn/ZtoneLang'
+    gitUrl = 'https://github.com/cvdnn/ZtoneLang.git'
 }
 
 apply from: 'pom_build.gradle'

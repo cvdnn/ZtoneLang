@@ -1,7 +1,6 @@
 package android.collection;
 
 import android.assist.Assert;
-import android.math.Arrayz;
 import android.math.Maths;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -156,12 +155,7 @@ public final class ByteArray implements Parcelable {
     }
 
     protected ByteArray(Parcel in) {
-        int size = in.readInt();
-        if (size > 0) {
-            bytes = new byte[size];
-
-            in.readByteArray(bytes);
-        }
+        readFromParcel(in);
     }
 
     @Deprecated
@@ -175,6 +169,15 @@ public final class ByteArray implements Parcelable {
 
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    public void readFromParcel(Parcel in) {
+        int size = in.readInt();
+        if (size > 0) {
+            bytes = new byte[size];
+
+            in.readByteArray(bytes);
+        }
     }
 
     @Override
@@ -191,7 +194,7 @@ public final class ByteArray implements Parcelable {
         return 0;
     }
 
-    public static final Creator<ByteArray> CREATOR = new Creator<ByteArray>() {
+    public static final Parcelable.Creator<ByteArray> CREATOR = new Parcelable.Creator<ByteArray>() {
         @Override
         public ByteArray createFromParcel(Parcel in) {
             return new ByteArray(in);
