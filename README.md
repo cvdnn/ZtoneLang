@@ -25,5 +25,5 @@ git push -u origin master
 ### Maven
 
 ```
-./gradlew -q -p ztone-lang clean build uploadArchives
+./gradlew -q -p ztone-lang clean build bintrayUpload
 ```
