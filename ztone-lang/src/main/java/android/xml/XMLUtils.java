@@ -5,7 +5,7 @@
  * 
  * SILLAR PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package android.assist;
+package android.xml;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,11 +21,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * 
- * @author	sillar team
+ * @author	ztone team
  * @version	1.0.0
  * @since	1.0.0	Handy	2012-6-10
  */
-public final class DocUtils {
+public final class XMLUtils {
 	private static final String TAG = "DocumentHelper";
 	
 	private static DocumentBuilder documentBuilder;
@@ -100,7 +100,7 @@ public final class DocUtils {
 	
 	public static DocumentBuilder getDocumentBuilder(){
 		if(documentBuilder!=null){
-			synchronized (DocUtils.class) {
+			synchronized (XMLUtils.class) {
 				if(documentBuilder!=null){
 					try {
 						documentBuilder= DocumentBuilderFactory.newInstance().newDocumentBuilder();

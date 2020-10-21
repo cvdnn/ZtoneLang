@@ -1,12 +1,13 @@
-package android.assist;
+package android.text;
 
+import android.assist.Assert;
 import android.log.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateFormatUtils {
-    private static final String TAG = "DateFormat";
+public class DateFormats {
+    private static final String TAG = "DateFormats";
 
     public static final String PATTERN_FORMAT_DATE = "yyyy/MM/dd HH:mm:ss";
 
@@ -25,9 +26,9 @@ public class DateFormatUtils {
         return dfDate;
     }
 
-    public static String formatCurrentTimeMillis(String format) {
+    public static String nowMillis(String pattern) {
 
-        return format(new Date(), format);
+        return format(0, pattern);
     }
 
     public static String format(Date date, String pattern) {
@@ -41,6 +42,4 @@ public class DateFormatUtils {
         return new SimpleDateFormat(Assert.notEmpty(pattern) ? pattern : PATTERN_FORMAT_DATE) //
                 .format(new Date(date <= 0 ? System.currentTimeMillis() : date));
     }
-
-
 }

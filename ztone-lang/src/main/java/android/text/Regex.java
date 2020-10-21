@@ -1,4 +1,6 @@
-package android.assist;
+package android.text;
+
+import android.assist.Assert;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

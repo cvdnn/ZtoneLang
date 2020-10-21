@@ -1,7 +1,7 @@
 package android.log;
 
 import android.assist.Assert;
-import android.assist.DateFormatUtils;
+import android.text.DateFormats;
 import android.assist.Shell;
 import android.assist.Shell.CommandResult;
 import android.concurrent.ThreadUtils;
@@ -301,7 +301,7 @@ public final class Log {
                         }
                     }
 
-                    File nowDir = new File(logDir, DateFormatUtils.format(new Date(nowTime), "yyyyMMdd"));
+                    File nowDir = new File(logDir, DateFormats.format(new Date(nowTime), "yyyyMMdd"));
                     nowDir.mkdirs();
 
                     String logPath = new File(nowDir, mLoggingFileName + SUFFIX_TEMP_LOG_FILE).getAbsolutePath();
@@ -340,7 +340,7 @@ public final class Log {
 
     private static String getLogcatName(long time) {
 
-        return DateFormatUtils.format(new Date(time), "HHmmss");
+        return DateFormats.format(new Date(time), "HHmmss");
     }
 
     public static String stackTrace(Throwable t, String prefix) {

@@ -1,23 +1,25 @@
-package android.assist;
+package android.text;
 
-public class TextLinker {
+import android.assist.Assert;
+
+public class TextLink {
 	public static final String SEPARATOR_COMMA = ",";
 
 	private String mDefaultSeparator;
 	private final StringBuilder mTextBuffer;
 
-	private TextLinker(String separator) {
+	private TextLink(String separator) {
 		mDefaultSeparator = separator;
 
 		mTextBuffer = new StringBuilder();
 	}
 
-	public static TextLinker create() {
-		return new TextLinker(SEPARATOR_COMMA);
+	public static TextLink create() {
+		return new TextLink(SEPARATOR_COMMA);
 	}
 
-	public static TextLinker create(String separator) {
-		return new TextLinker(separator);
+	public static TextLink create(String separator) {
+		return new TextLink(separator);
 	}
 
 	public void clear() {
@@ -26,12 +28,12 @@ public class TextLinker {
 		}
 	}
 
-	public TextLinker append(String... args) {
+	public TextLink append(String... args) {
 
 		return append(args, mDefaultSeparator);
 	}
 
-	public TextLinker append(String[] args, String separator) {
+	public TextLink append(String[] args, String separator) {
 		if (Assert.notEmpty(args)) {
 			for (String a : args) {
 				if (mTextBuffer.length() == 0) {

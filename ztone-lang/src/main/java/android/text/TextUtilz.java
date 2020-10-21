@@ -1,7 +1,7 @@
-package android.assist;
+package android.text;
 
+import android.assist.Assert;
 import android.log.Log;
-import android.text.TextUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import static android.Const.BUFFER_LENGTH;
 import static android.Const.ENCODING;
 import static android.Const.SQL_ESCAPE;
 import static android.Const.SQL_WILDCARD;
-import static android.assist.TextLinker.SEPARATOR_COMMA;
+import static android.text.TextLink.SEPARATOR_COMMA;
 
 /**
  * TextUtilz和TextUtils区别开
