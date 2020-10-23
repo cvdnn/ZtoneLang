@@ -5,6 +5,7 @@ import android.util.SparseArray;
 
 import java.util.concurrent.TimeUnit;
 
+@Deprecated
 public class ChokeArray<E> extends SparseArray<ChokePoint<E>> {
 
     public ChokeArray() {
