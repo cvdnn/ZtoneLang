@@ -77,7 +77,7 @@ public class BlockingArray<E> extends SparseArray<BlockNode<E>> {
     }
 
     public BlockNode<E> deleteOff(int key) {
-        BlockNode<E> node = Clazz.invoke(SparseArray.class, this, "removeReturnOld", new Class[]{Integer.TYPE}, new Object[]{key});
+        BlockNode<E> node = Clazz.invoke(SparseArray.class, this, "removeReturnOld", key);
 
         return node;
     }
