@@ -52,15 +52,13 @@ public final class Clazz {
 
             try {
                 DexFile dexFile = new DexFile(apkPath);
-                if (dexFile != null) {
-                    Enumeration<String> entries = dexFile.entries();
-                    if (entries != null) {
-                        while (entries.hasMoreElements()) {
-                            String clazzName = entries.nextElement();
+                Enumeration<String> entries = dexFile.entries();
+                if (entries != null) {
+                    while (entries.hasMoreElements()) {
+                        String clazzName = entries.nextElement();
 
-                            if (clazzNameFilter == null || clazzNameFilter.accept(clazzName)) {
-                                clazzList.add(clazzName);
-                            }
+                        if (clazzNameFilter == null || clazzNameFilter.accept(clazzName)) {
+                            clazzList.add(clazzName);
                         }
                     }
                 }
@@ -76,23 +74,19 @@ public final class Clazz {
      * 获取包下类文件
      */
     public static ArrayMap<String, Class<?>> scanPackageClazz(Context context, ClazzFilter clazzFilter) {
-        ArrayMap<String, Class<?>> clazzMap = null;
+        ArrayMap<String, Class<?>> clazzMap = new ArrayMap<>();
 
         if (context != null) {
-            clazzMap = new ArrayMap<String, Class<?>>();
-
             try {
                 DexFile dexFile = new DexFile(context.getPackageCodePath());
-                if (dexFile != null) {
-                    Enumeration<String> entries = dexFile.entries();
-                    if (entries != null) {
-                        while (entries.hasMoreElements()) {
-                            String clazzName = entries.nextElement();
-                            if (Assert.notEmpty(clazzName)) {
-                                Class<?> clazz = Clazz.forName(clazzName);
-                                if (clazz != null && (clazz == null || clazzFilter.accept(clazzName, clazz))) {
-                                    clazzMap.put(clazzName, clazz);
-                                }
+                Enumeration<String> entries = dexFile.entries();
+                if (entries != null) {
+                    while (entries.hasMoreElements()) {
+                        String clazzName = entries.nextElement();
+                        if (Assert.notEmpty(clazzName)) {
+                            Class<?> clazz = Clazz.forName(clazzName);
+                            if (clazz != null && (clazzFilter == null || clazzFilter.accept(clazzName, clazz))) {
+                                clazzMap.put(clazzName, clazz);
                             }
                         }
                     }
@@ -108,19 +102,38 @@ public final class Clazz {
     /**
      * 获取参数类型
      */
-    public static Class<?>[] getParameterTypes(Object... objs) {
-        Class<?>[] parameterTypes = null;
+    public static Class<?>[] getClassTypes(Object... objs) {
+        Class<?>[] pTypes = null;
         if (Assert.notEmpty(objs)) {
-            parameterTypes = new Class<?>[objs.length];
+            pTypes = new Class<?>[objs.length];
             for (int i = 0; i < objs.length; i++) {
                 Object obj = objs[i];
                 if (obj != null) {
-                    parameterTypes[i] = obj.getClass();
+                    Class<?> type = obj.getClass();
+                    if (type == Integer.class) {
+                        pTypes[i] = Integer.TYPE;
+                    } else if (type == Long.class) {
+                        pTypes[i] = Long.TYPE;
+                    } else if (type == Boolean.class) {
+                        pTypes[i] = Boolean.TYPE;
+                    } else if (type == Float.class) {
+                        pTypes[i] = Float.TYPE;
+                    } else if (type == Short.class) {
+                        pTypes[i] = Short.TYPE;
+                    } else if (type == Byte.class) {
+                        pTypes[i] = Byte.TYPE;
+                    } else if (type == Double.class) {
+                        pTypes[i] = Double.TYPE;
+                    } else if (type == Character.class) {
+                        pTypes[i] = Character.TYPE;
+                    } else {
+                        pTypes[i] = type;
+                    }
                 }
             }
         }
 
-        return parameterTypes;
+        return pTypes;
     }
 
     /**
@@ -131,15 +144,7 @@ public final class Clazz {
 
         if (Assert.notEmpty(className)) {
             try {
-                Class<?> tempClazz = null;
-
-                ClassLoader classLoader = Clazz.class.getClassLoader();
-                if (classLoader != null) {
-                    tempClazz = classLoader.loadClass(className);
-                } else {
-                    tempClazz = Class.forName(className);
-                }
-
+                Class<?> tempClazz = Class.forName(className);
                 if (tempClazz != null) {
                     clazz = (Class<Z>) tempClazz;
                 }
@@ -215,7 +220,7 @@ public final class Clazz {
 
         if (clazz != null) {
             try {
-                Constructor<Z> constructor = clazz.getConstructor(getParameterTypes(objs));
+                Constructor<Z> constructor = clazz.getConstructor(getClassTypes(objs));
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
             } catch (Throwable t) {
                 Log.e(TAG, "class: " + clazz.getName());
@@ -259,7 +264,7 @@ public final class Clazz {
                     z = constructor != null ? constructor.newInstance(values) : clazz.newInstance();
 
                 } else {
-                    Constructor<Z> constructor = clazz.getConstructor(getParameterTypes(objs));
+                    Constructor<Z> constructor = clazz.getConstructor(getClassTypes(objs));
                     z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
 
                 }
@@ -496,7 +501,7 @@ public final class Clazz {
      */
     public static <O, V> V invoke(Class<?> clazz, O o, String methodName, Object... args) {
 
-        return invoke(clazz, o, methodName, getParameterTypes(args), args);
+        return invoke(clazz, o, methodName, getClassTypes(args), args);
     }
 
     /**

@@ -1,6 +1,7 @@
 package android.collection;
 
 import android.log.Log;
+import android.reflect.Clazz;
 import android.util.SparseArray;
 
 public class BlockingArray<E> extends SparseArray<BlockNode<E>> {
@@ -46,14 +47,13 @@ public class BlockingArray<E> extends SparseArray<BlockNode<E>> {
     public boolean signal(int key, E e) {
         boolean result = false;
 
-        BlockNode<E> node = get(key);
+        BlockNode<E> node = removeOff(key);
         if (node != null) {
             try {
-                remove(key);
                 node.put(e);
                 result = true;
-            } catch (Exception exce) {
-                Log.e(exce);
+            } catch (Exception exc) {
+                Log.e(exc);
             }
         }
 
@@ -62,5 +62,23 @@ public class BlockingArray<E> extends SparseArray<BlockNode<E>> {
 
     public boolean contain(int key) {
         return get(key) != null;
+    }
+
+    /**
+     * Alias for {@link #deleteOff(int)}.
+     *
+     * @param key
+     *
+     * @return
+     */
+    public BlockNode<E> removeOff(int key) {
+
+        return deleteOff(key);
+    }
+
+    public BlockNode<E> deleteOff(int key) {
+        BlockNode<E> node = Clazz.invoke(SparseArray.class, this, "removeReturnOld", new Class[]{Integer.TYPE}, new Object[]{key});
+
+        return node;
     }
 }
