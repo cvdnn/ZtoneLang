@@ -107,33 +107,43 @@ public final class Clazz {
         if (Assert.notEmpty(objs)) {
             pTypes = new Class<?>[objs.length];
             for (int i = 0; i < objs.length; i++) {
-                Object obj = objs[i];
-                if (obj != null) {
-                    Class<?> type = obj.getClass();
-                    if (type == Integer.class) {
-                        pTypes[i] = Integer.TYPE;
-                    } else if (type == Long.class) {
-                        pTypes[i] = Long.TYPE;
-                    } else if (type == Boolean.class) {
-                        pTypes[i] = Boolean.TYPE;
-                    } else if (type == Float.class) {
-                        pTypes[i] = Float.TYPE;
-                    } else if (type == Short.class) {
-                        pTypes[i] = Short.TYPE;
-                    } else if (type == Byte.class) {
-                        pTypes[i] = Byte.TYPE;
-                    } else if (type == Double.class) {
-                        pTypes[i] = Double.TYPE;
-                    } else if (type == Character.class) {
-                        pTypes[i] = Character.TYPE;
-                    } else {
-                        pTypes[i] = type;
-                    }
-                }
+                pTypes[i] = getClassType(objs[i]);
             }
         }
 
         return pTypes;
+    }
+
+    /**
+     * 获取参数类型
+     */
+    public static Class<?> getClassType(Object obj) {
+        Class<?> pType = null;
+
+        if (obj != null) {
+            Class<?> type = obj.getClass();
+            if (type == Integer.class) {
+                pType = Integer.TYPE;
+            } else if (type == Long.class) {
+                pType = Long.TYPE;
+            } else if (type == Boolean.class) {
+                pType = Boolean.TYPE;
+            } else if (type == Float.class) {
+                pType = Float.TYPE;
+            } else if (type == Short.class) {
+                pType = Short.TYPE;
+            } else if (type == Byte.class) {
+                pType = Byte.TYPE;
+            } else if (type == Double.class) {
+                pType = Double.TYPE;
+            } else if (type == Character.class) {
+                pType = Character.TYPE;
+            } else {
+                pType = type;
+            }
+        }
+
+        return pType;
     }
 
     /**
@@ -197,19 +207,8 @@ public final class Clazz {
      * 實例化
      */
     public static <Z> Z newInstance(String className, Object... objs) {
-        Z z = null;
 
-        Class<?> clazz = forName(className);
-        if (clazz != null) {
-            try {
-                z = newInstance((Class<Z>) clazz, objs);
-            } catch (Throwable t) {
-                Log.e(TAG, "class: " + className);
-                Log.e(TAG, t);
-            }
-        }
-
-        return z;
+        return newInstance(forName(className), objs);
     }
 
     /**
@@ -220,7 +219,7 @@ public final class Clazz {
 
         if (clazz != null) {
             try {
-                Constructor<Z> constructor = clazz.getConstructor(getClassTypes(objs));
+                Constructor<Z> constructor = clazz.getDeclaredConstructor(getClassTypes(objs));
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
             } catch (Throwable t) {
                 Log.e(TAG, "class: " + clazz.getName());
@@ -231,10 +230,25 @@ public final class Clazz {
         return z;
     }
 
+    public static <Z> Z newInstance(Class<Z> clazz, Class<?>[] ptypes, Object... objs) {
+        Z z = null;
+        if (clazz != null) {
+            try {
+                Constructor<Z> constructor = clazz.getDeclaredConstructor(ptypes);
+                z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
+            } catch (Throwable var4) {
+                Log.e("ClazzLoader", "class: " + clazz.getName(), new Object[0]);
+                Log.e("ClazzLoader", var4);
+            }
+        }
+
+        return z;
+    }
+
     /**
      * 實例化
      */
-    public static <O, Z> Z newInstance(O o, Class<Z> clazz, Object... objs) {
+    public static <O, Z> Z newInnerInstance(O o, Class<Z> clazz, Object... objs) {
         Z z = null;
 
         if (clazz != null) {
@@ -253,18 +267,17 @@ public final class Clazz {
                         for (int i = 0; i < objs.length; i++) {
                             Object obj = objs[i];
                             if (obj != null) {
-
-                                clazzes[i + 1] = obj.getClass();
+                                clazzes[i + 1] = getClassType(obj);
                                 values[i + 1] = obj;
                             }
                         }
                     }
 
-                    Constructor<Z> constructor = clazz.getConstructor(clazzes);
+                    Constructor<Z> constructor = clazz.getDeclaredConstructor(clazzes);
                     z = constructor != null ? constructor.newInstance(values) : clazz.newInstance();
 
                 } else {
-                    Constructor<Z> constructor = clazz.getConstructor(getClassTypes(objs));
+                    Constructor<Z> constructor = clazz.getDeclaredConstructor(getClassTypes(objs));
                     z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
 
                 }

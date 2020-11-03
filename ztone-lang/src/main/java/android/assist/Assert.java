@@ -2,6 +2,7 @@ package android.assist;
 
 import android.check.Validator;
 import android.collection.ByteArray;
+import android.concurrent.RunState;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -14,6 +15,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public final class Assert {
+    public static RunState Debug = new RunState(false);
 
     public static boolean as(int v, int make) {
 
@@ -418,6 +420,7 @@ public final class Assert {
      *
      * @param strBuilder
      * @param suffix
+     *
      * @return
      */
     public static boolean endsWith(StringBuilder strBuilder, String suffix) {
@@ -436,6 +439,7 @@ public final class Assert {
      *
      * @param strBuilder
      * @param suffix
+     *
      * @return
      */
     public static boolean startWith(StringBuilder strBuilder, String suffix) {
@@ -453,6 +457,7 @@ public final class Assert {
      *
      * @param strBuffer
      * @param suffix
+     *
      * @return
      */
     public static boolean endsWith(StringBuffer strBuffer, String suffix) {
@@ -471,6 +476,7 @@ public final class Assert {
      *
      * @param strBuffer
      * @param suffix
+     *
      * @return
      */
     public static boolean startWith(StringBuffer strBuffer, String suffix) {
