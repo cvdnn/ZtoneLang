@@ -11,6 +11,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <provider
+            android:name="android.log.service.AysLog"
+            android:authorities="${applicationId}.ayslog"
+            android:exported="false"
+            android:multiprocess="true" />
     </application>
 
 </manifest>

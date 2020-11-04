@@ -1,43 +1,34 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion app.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 28
-        versionCode aptVersionCode
-        versionName '0.5.5'
+        minSdkVersion app.minSdkVersion
+        targetSdkVersion app.targetSdkVersion
+        versionCode app.versionCode
+        versionName '0.1.0'
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
-        // dex 突破 65535 的限制
-        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
-            lintOptions {
-                abortOnError false
-            }
-
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':ztone-lang')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    api 'com.squareup.okio:okio:2.8.0'
+    implementation 'com.alibaba:fastjson:1.2.35'
+    implementation 'org.greenrobot:greendao:3.2.2'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -52,14 +43,14 @@ ext {
 
     bintrayOrg = 'cvdnn'
     // bintray中创建的package name
-    bintrayName = 'android-lang'
+    bintrayName = 'slog-aliyun'
 
-    libraryName = 'Android Lang'
+    libraryName = 'slog-aliyun'
     publishedGroupId = 'com.cvdnn'
-    artifact = 'android-lang'
+    artifact = 'slog-aliyun'
     libraryVersion = android.defaultConfig.versionName
 
-    libraryDescription = 'Android Lang'
+    libraryDescription = 'Slog Aliyun'
 
     siteUrl = 'https://github.com/cvdnn/ZtoneLang'
     gitUrl = 'https://github.com/cvdnn/ZtoneLang.git'

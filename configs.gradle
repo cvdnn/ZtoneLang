@@ -3,6 +3,16 @@ def aptBuildVersion() {
 }
 
 ext {
+    app = [compileSdkVersion: 28,
+           applicationId    : "com.ztone.rule",
+           minSdkVersion    : 24,
+           targetSdkVersion : 28,
+           versionCode      : aptBuildVersion(),
+           versionName      : "2.6.10",
+           buildToolsVersion: '29.0.3',]
+}
+
+ext {
     aptVersionCode = aptBuildVersion()
 
     // 默认 maven
