@@ -171,7 +171,7 @@ public class AysLog extends AbstractInitializer {
 
     @Override
     public boolean onCreate() {
-        Class slsClazz = Clazz.forName("com.aliyun.sls.android.sdk.SLSLog");
+        Class<?> slsClazz = Clazz.forName("com.aliyun.sls.android.sdk.SLSLog");
         if (slsClazz != null) {
             mLogClient = Clazz.newInstance("");
             if (mLogClient != null) {

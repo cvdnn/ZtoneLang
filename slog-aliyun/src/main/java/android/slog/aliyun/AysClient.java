@@ -83,13 +83,13 @@ public class AysClient implements AysLog.Client {
 //        注意：SDK 提供的 PlainTextAKSKCredentialProvider 只建议在测试环境或者用户可以保证阿里云主账号AK，SK安全的前提下使用。
 
 //        主账户使用方式
-        String AK = "LTAI4GAtfRuGbpzPc1e3oiYT";
-        String SK = "pD1Fd3U5XaWXHlrANGaD8p1RRIsK1S";
+        String AK = "LTAI4GAtfRuGbPc1e3o";
+        String SK = "pD1Fd3U5XaWXHlrANRRIsK1S";
         PlainTextAKSKCredentialProvider credentialProvider = new PlainTextAKSKCredentialProvider(AK, SK);
 
 //        STS使用方式
-//        String STS_AK = "LTAI4G5aWpV3BWmeJYVXCzw8";
-//        String STS_SK = "7UMCsSQtpFZgLfjQI7nDfn1wN0FOYt";
+//        String STS_AK = "LTApV3BWmeJYVX8";
+//        String STS_SK = "7UMCsFZgLfjQI7nDfFOYt";
 //        String STS_TOKEN = "******";
 //        StsTokenCredentialProvider credentialProvider = new StsTokenCredentialProvider(STS_AK, STS_SK, STS_TOKEN);
 
