@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZtoneLang/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" group="ZtoneLang/slog-aliyun" />
       <module fileurl="file://$PROJECT_DIR$/ztone-lang/ztone-lang.iml" filepath="$PROJECT_DIR$/ztone-lang/ztone-lang.iml" group="ZtoneLang/ztone-lang" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-network/ztone-network.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-network/ztone-network.iml" group="ZtoneLang/ztone-network" />
     </modules>
   </component>
 </project>

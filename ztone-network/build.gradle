@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion app.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion app.minSdkVersion
+        targetSdkVersion app.targetSdkVersion
+        versionCode app.versionCode
+        versionName "0.1.21"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':ztone-lang')
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    implementation "com.cvdnn:android-loople:${VERSION_ANDROID_LOOPLE}"
+
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}
+
+// push to bintray
+ext {
+    archiveSourceJar = false
+    archiveJavaDocJar = false
+    bintrayOverride = true
+
+    bintrayOrg = 'cvdnn'
+    // bintray中创建的package name
+    bintrayName = 'android-network'
+
+    libraryName = 'android-network'
+    publishedGroupId = 'com.cvdnn'
+    artifact = 'android-network'
+    libraryVersion = android.defaultConfig.versionName
+
+    libraryDescription = 'Android Network'
+
+    siteUrl = 'https://github.com/cvdnn/ZtoneNetwork'
+    gitUrl = 'https://github.com/cvdnn/ZtoneNetwork.git'
+}
+
+apply from: 'http://mvn.cvdnn.com/pom_build.gradle'
+apply from: 'http://mvn.cvdnn.com/push_to_bintray.gradle'

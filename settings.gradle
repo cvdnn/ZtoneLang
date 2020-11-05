@@ -1,1 +1,2 @@
+include ':ztone-network'
 include ':app', ':ztone-lang', ':slog-aliyun'

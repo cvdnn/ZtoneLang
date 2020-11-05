@@ -3,7 +3,7 @@ package android.log.service;
 import android.assist.Assert;
 import android.collection.Pairing;
 import android.content.Context;
-import android.frame.AbstractInitializer;
+import android.frame.AbstractProvider;
 import android.reflect.Clazz;
 
 import androidx.annotation.NonNull;
@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Map;
 
-public class AysLog extends AbstractInitializer {
+public class AysLog extends AbstractProvider {
     private static final String TAG = "AysLog";
 
     /** Priority constant for the println method; use Log.v. */

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import static android.net.Uri.EMPTY;
 
-public abstract class AbstractInitializer extends ContentProvider {
+public abstract class AbstractProvider extends ContentProvider {
 
     @Nullable
     @Override

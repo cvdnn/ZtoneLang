@@ -82,7 +82,7 @@ public class AysClient implements AysLog.Client {
 //        https://help.aliyun.com/document_detail/62681.html
 //        注意：SDK 提供的 PlainTextAKSKCredentialProvider 只建议在测试环境或者用户可以保证阿里云主账号AK，SK安全的前提下使用。
 
-//        主账户使用方式
+//        FIXME 主账户使用方式
         String AK = "LTAI4GAtfRuGbPc1e3o";
         String SK = "pD1Fd3U5XaWXHlrANRRIsK1S";
         PlainTextAKSKCredentialProvider credentialProvider = new PlainTextAKSKCredentialProvider(AK, SK);
