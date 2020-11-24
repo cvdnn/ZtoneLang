@@ -29,7 +29,7 @@ import dalvik.system.DexFile;
  * @since 1.0.0 Handy 2013-9-2
  */
 public final class Clazz {
-    private static final String TAG = "ClazzLoader";
+    private static final String TAG = "Clazz";
 
     /**
      * 获取包下类文件
@@ -159,7 +159,7 @@ public final class Clazz {
                     clazz = (Class<Z>) tempClazz;
                 }
             } catch (Throwable t) {
-                Log.e(TAG, t);
+                Log.d(TAG, t);
             }
         }
 
@@ -181,8 +181,8 @@ public final class Clazz {
                     clazz = (Class<Z>) tempClazz;
                 }
             } catch (Throwable t) {
-                Log.e(TAG, "class: " + className);
-                Log.e(TAG, t);
+                Log.e(TAG, "Not Found Exception: %s", className);
+                Log.d(TAG, t);
             }
         }
 
@@ -222,8 +222,8 @@ public final class Clazz {
                 Constructor<Z> constructor = clazz.getDeclaredConstructor(getClassTypes(objs));
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
             } catch (Throwable t) {
-                Log.e(TAG, "class: " + clazz.getName());
-                Log.e(TAG, t);
+                Log.e(TAG, "Not Found Exception: %s", clazz.getName());
+                Log.d(TAG, t);
             }
         }
 
@@ -236,9 +236,9 @@ public final class Clazz {
             try {
                 Constructor<Z> constructor = clazz.getDeclaredConstructor(ptypes);
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
-            } catch (Throwable var4) {
-                Log.e("ClazzLoader", "class: " + clazz.getName(), new Object[0]);
-                Log.e("ClazzLoader", var4);
+            } catch (Throwable t) {
+                Log.e(TAG, "Not Found Exception: %s", clazz.getName());
+                Log.d(TAG, t);
             }
         }
 
@@ -282,8 +282,8 @@ public final class Clazz {
 
                 }
             } catch (Throwable t) {
-                Log.i(TAG, "class: " + clazz.getName());
-                Log.e(TAG, t);
+                Log.e(TAG, "Not Found Exception: %s: ", clazz.getName());
+                Log.d(TAG, t);
             }
         }
 
@@ -315,8 +315,8 @@ public final class Clazz {
                         desClazz = desClazz.getSuperclass();
                     }
                 } catch (Throwable t) {
-                    Log.e(TAG, "fieldName: " + fieldName);
-                    Log.e(TAG, t);
+                    Log.e(TAG, "Not Found Exception: %s", fieldName);
+                    Log.d(TAG, t);
                 }
             }
         }
@@ -352,8 +352,8 @@ public final class Clazz {
                 try {
                     value = getFieldValue(o, desClazz.getDeclaredField(fieldName));
                 } catch (Throwable t) {
-                    Log.e(TAG, "fieldName: " + fieldName);
-                    Log.e(TAG, t);
+                    Log.e(TAG, "Not Found Exception: %s", fieldName);
+                    Log.d(TAG, t);
                 }
             }
         }
@@ -534,8 +534,8 @@ public final class Clazz {
                         v = (V) method.invoke(o, args);
                     }
                 } catch (Throwable t) {
-                    Log.e(TAG, "methodName: " + methodName);
-                    Log.e(TAG, t);
+                    Log.e(TAG, "Not Found Exception: %s", methodName);
+                    Log.d(TAG, t);
                 }
             }
         }

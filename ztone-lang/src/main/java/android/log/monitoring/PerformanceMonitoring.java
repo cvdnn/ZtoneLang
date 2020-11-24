@@ -8,7 +8,7 @@
 package android.log.monitoring;
 
 import android.assist.Assert;
-import android.concurrent.HandlerThreadWrapper;
+import android.concurrent.HandlerThread;
 import android.log.Log;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -34,10 +34,10 @@ public class PerformanceMonitoring {
 
     private SimpleDateFormat mDataFormat;
 
-    private final HandlerThreadWrapper mMonitorThreadWrapper;
+    private final HandlerThread mMonitorThreadWrapper;
 
     protected PerformanceMonitoring(String name) {
-        mMonitorThreadWrapper = new HandlerThreadWrapper(Assert.notEmpty(name) ? name : PERFORMANCE_MONITORING_NAME);
+        mMonitorThreadWrapper = new HandlerThread(Assert.notEmpty(name) ? name : PERFORMANCE_MONITORING_NAME);
 
         try {
             mDataFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS", Locale.getDefault());

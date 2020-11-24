@@ -7,7 +7,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode aptVersionCode
-        versionName '0.5.11'
+        versionName '0.5.31'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 

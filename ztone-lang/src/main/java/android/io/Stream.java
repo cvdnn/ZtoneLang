@@ -13,7 +13,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -28,13 +27,36 @@ import static android.Const.ENCODING;
  * @version 1.0.0
  * @since 1.0.0 Handy 2013-10-20
  */
-@Deprecated
-public class StreamUtils {
+public class Stream {
     private static String TAG = "StreamUtils";
+
+    public static String text(File file) {
+        String text = "";
+
+        try {
+            text = text(new FileInputStream(file), ENCODING);
+        } catch (Exception e) {
+            Log.e(e);
+        }
+
+        return text;
+    }
 
     public static String text(InputStream inStream) {
 
         return text(inStream, ENCODING);
+    }
+
+    public static String text(File file, String charSet) {
+        String text = "";
+
+        try {
+            text = text(new FileInputStream(file), charSet);
+        } catch (Exception e) {
+            Log.e(e);
+        }
+
+        return text;
     }
 
     public static String text(InputStream inStream, String charSet) {

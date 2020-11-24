@@ -9,7 +9,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 
 public class Const {
-    public static final Void NIL = null, NULL = null;
+    public static final Void NIL = new Void(), NULL = null;
 
     public static final int BUFFER_LENGTH = 2048;
 

@@ -7,7 +7,7 @@ android {
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
         versionCode app.versionCode
-        versionName "0.1.21"
+        versionName "0.1.22"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

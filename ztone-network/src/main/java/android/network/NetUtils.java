@@ -3,7 +3,8 @@ package android.network;
 import android.Args;
 import android.assist.Assert;
 import android.collection.Pairing;
-import android.concurrent.AsyncThread;
+import android.task.AsyncThread;
+import android.io.FileUtils;
 import android.log.Log;
 import android.log.service.AysLog;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.Map;
 
@@ -121,6 +123,29 @@ public class NetUtils {
         }
 
         return response;
+    }
+
+    public static boolean download(String url, @NonNull File file) {
+        boolean result = false;
+
+        if (file != null) {
+            if (file.exists()) {
+                file.delete();
+            }
+
+            try {
+                file.createNewFile();
+            } catch (Exception e) {
+                Log.e(e);
+            }
+
+            Response response = request(url);
+            if (NetUtils.success(response)) {
+                result = FileUtils.write(response.stream(), file.getAbsolutePath());
+            }
+        }
+
+        return result;
     }
 
     public static ArrayMap<String, String> map(String url) {

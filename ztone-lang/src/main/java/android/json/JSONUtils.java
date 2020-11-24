@@ -3,6 +3,7 @@ package android.json;
 import android.assist.Assert;
 import android.concurrent.ThreadPool;
 import android.io.FileUtils;
+import android.io.Stream;
 import android.io.StreamUtils;
 import android.log.Log;
 import android.math.Maths;
@@ -303,7 +304,7 @@ public class JSONUtils {
         JSONObject jsonObject = null;
 
         if (inStream != null) {
-            String strJson = StreamUtils.getContent(inStream);
+            String strJson = Stream.text(inStream);
             if (Assert.notEmpty(strJson)) {
                 try {
                     jsonObject = new JSONObject(strJson);
