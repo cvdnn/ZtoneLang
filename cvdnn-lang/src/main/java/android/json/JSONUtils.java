@@ -4,13 +4,11 @@ import android.assist.Assert;
 import android.concurrent.ThreadPool;
 import android.io.FileUtils;
 import android.io.Stream;
-import android.io.StreamUtils;
 import android.log.Log;
 import android.math.Maths;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;

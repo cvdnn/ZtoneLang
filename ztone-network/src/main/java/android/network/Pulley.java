@@ -1,9 +1,10 @@
 package android.network;
 
+import android.Loople;
 import android.Manifest;
 import android.assist.Assert;
 import android.concurrent.ThreadPool;
-import android.io.StreamUtils;
+import android.io.Stream;
 import android.log.Log;
 import android.math.Maths;
 import android.network.Follow.JSONFollow;
@@ -12,8 +13,6 @@ import android.network.Follow.StringFollow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
-
-import com.ztone.Loople;
 
 import org.json.JSONObject;
 
@@ -157,7 +156,7 @@ public class Pulley {
         } catch (Exception e) {
             Log.e(TAG, e);
         } finally {
-            StreamUtils.close(out);
+            Stream.close(out);
         }
 
         response.set(conn);

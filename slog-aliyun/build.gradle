@@ -23,7 +23,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':ztone-lang')
+    implementation project(':cvdnn-lang')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
 

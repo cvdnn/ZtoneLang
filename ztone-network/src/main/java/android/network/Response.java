@@ -1,7 +1,7 @@
 package android.network;
 
 import android.assist.Assert;
-import android.io.StreamUtils;
+import android.io.Stream;
 import android.json.JSONUtils;
 import android.log.Log;
 
@@ -26,7 +26,7 @@ public class Response {
 
         public String text() {
 
-            return StreamUtils.getContent(input);
+            return Stream.text(input);
         }
 
         public JSONObject json() {

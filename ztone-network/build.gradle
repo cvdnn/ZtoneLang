@@ -7,7 +7,7 @@ android {
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
         versionCode app.versionCode
-        versionName "0.1.22"
+        versionName "0.1.24"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -28,11 +28,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':ztone-lang')
+    implementation project(':cvdnn-lang')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
-    implementation "com.cvdnn:android-loople:${VERSION_ANDROID_LOOPLE}"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

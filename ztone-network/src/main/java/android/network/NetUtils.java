@@ -2,12 +2,12 @@ package android.network;
 
 import android.Args;
 import android.assist.Assert;
-import android.collection.Pairing;
-import android.task.AsyncThread;
 import android.io.FileUtils;
 import android.log.Log;
+import android.log.Pairing;
 import android.log.service.AysLog;
 import android.net.NetworkInfo;
+import android.task.AsyncTask;
 import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
@@ -43,7 +43,7 @@ public class NetUtils {
     }
 
     public static void request(final String url, final Request.Callback callback) {
-        new AsyncThread<Response>() {
+        new AsyncTask<Response>() {
 
             @Override
             protected Response doInBackground() {

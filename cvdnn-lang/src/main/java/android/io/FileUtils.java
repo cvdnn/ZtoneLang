@@ -26,7 +26,7 @@ import static android.Const.BUFFER_LENGTH;
 import static android.Const.CHARSET_ENCODING;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.io.StreamUtils.close;
+import static android.io.Stream.close;
 
 /**
  * 文件工具

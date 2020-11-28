@@ -28,7 +28,7 @@ import static android.Const.ENCODING;
  * @since 1.0.0 Handy 2013-10-20
  */
 public class Stream {
-    private static String TAG = "StreamUtils";
+    private static String TAG = "Stream";
 
     public static String text(File file) {
         String text = "";
