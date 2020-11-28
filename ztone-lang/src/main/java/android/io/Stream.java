@@ -36,7 +36,7 @@ public class Stream {
         try {
             text = text(new FileInputStream(file), ENCODING);
         } catch (Exception e) {
-            Log.e(e);
+            Log.d(e);
         }
 
         return text;
@@ -53,7 +53,7 @@ public class Stream {
         try {
             text = text(new FileInputStream(file), charSet);
         } catch (Exception e) {
-            Log.e(e);
+            Log.d(e);
         }
 
         return text;
@@ -79,7 +79,7 @@ public class Stream {
                 byteOutStream.flush();
                 text = byteOutStream.toString(charSet != null ? charSet : ENCODING);
             } catch (Exception e) {
-                Log.e(TAG, e);
+                Log.d(TAG, e);
             } finally {
                 close(byteOutStream);
                 close(binStream);
@@ -95,7 +95,7 @@ public class Stream {
         try {
             bytes = read(new FileInputStream(file));
         } catch (Exception e) {
-            Log.e(e);
+            Log.d(e);
         }
 
         return bytes;
@@ -124,7 +124,7 @@ public class Stream {
                 byteOutStream.flush();
                 byteArray = byteOutStream.toByteArray();
             } catch (Exception e) {
-                Log.e(TAG, e);
+                Log.d(TAG, e);
             } finally {
                 close(byteOutStream);
                 close(binStream);

@@ -1,21 +1,23 @@
 package android;
 
 import android.assist.Assert;
-import android.task.TaskPoolExecutor;
 import android.exception.OnMainThreadException;
+import android.log.Log;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
+import android.task.TaskPoolExecutor;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static android.Const.NIL;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -81,7 +83,7 @@ public class Loople {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage(), e);
+                    Log.e(TAG, e);
                 }
             }
 
@@ -92,24 +94,43 @@ public class Loople {
     public static class TaskHandle {
         public final TaskPoolExecutor Pool = new TaskPoolExecutor(TAG, 32);
 
-        public CompletableFuture allOf(List<Runnable> runnables) {
-            return Assert.notEmpty(runnables) ? CompletableFuture.allOf(runnables
-                    .stream()
-                    .map(r -> CompletableFuture.runAsync(r, Pool))
-                    .toArray(CompletableFuture[]::new)
-            ) : CompletableFuture.completedFuture(NIL);
+        public <E, R> CompletableFuture allOf(Collection<E> items, Function<? super E, ? extends R> action) {
+            CompletableFuture future = null;
+            if (Assert.notEmpty(items)) {
+                CompletableFuture[] arrays = items.stream().map(action).toArray(CompletableFuture[]::new);
+                if (Assert.check(arrays)) {
+                    future = CompletableFuture.allOf(arrays);
+                }
+            }
+
+            return future != null ? future : CompletableFuture.completedFuture(NIL);
         }
 
-        public <E> CompletableFuture allOf(List<E> items, @NonNull Consumer<E> c) {
-            return Assert.notEmpty(items) ? CompletableFuture.allOf(items
-                    .stream()
-                    .map(item -> CompletableFuture.runAsync(() -> {
-                        if (item != null && c != null) {
-                            c.accept(item);
+        public CompletableFuture allOf(Collection<Runnable> runnables) {
+
+            return allOf(runnables, (Function<? super Runnable, ? extends CompletableFuture<java.lang.Void>>)
+                    r -> CompletableFuture.runAsync(r, Pool));
+        }
+
+        public <E> CompletableFuture allOf(Collection<E> items, @NonNull Consumer<E> action) {
+
+            return allOf(items, (Function<? super E, ? extends CompletableFuture<java.lang.Void>>)
+                    item -> CompletableFuture.runAsync(() -> {
+                        if (item != null && action != null) {
+                            action.accept(item);
                         }
-                    }, Pool))
-                    .toArray(CompletableFuture[]::new)
-            ) : CompletableFuture.completedFuture(NIL);
+                    }, Pool));
+        }
+
+        public <E> Future<?> schedule(Collection<E> items, Consumer<? super E> action) {
+            Future<?> future = null;
+            if (Assert.notEmpty(items) && action != null) {
+                future = Pool.submit(() -> items.forEach(action));
+            } else {
+                future = CompletableFuture.completedFuture(NIL);
+            }
+
+            return future;
         }
 
         public final Future<?> schedule(Runnable r) {
@@ -128,46 +149,36 @@ public class Loople {
             return Pool.schedule(c, delayMillis, MILLISECONDS);
         }
 
-        /**
-         * 固定时间切片执行任务
-         *
-         * @param r
-         * @param delayMillis
-         */
-        public final void slice(Runnable r, long delayMillis) {
-            Pool.scheduleAtFixedRate(r, 0, delayMillis, MILLISECONDS);
+        public final Future<?> schedule(Runnable r, long delay, TimeUnit unit) {
+            return Pool.schedule(r, delay, unit);
+        }
+
+        public final <V> Future<V> schedule(Callable<V> c, long delay, TimeUnit unit) {
+            return Pool.schedule(c, delay, unit);
         }
 
         /**
          * 固定时间切片执行任务
          *
          * @param r
-         * @param initTime
-         * @param delayMillis
+         * @param initialDelay
+         * @param period
+         * @param unit
          */
-        public final void slice(Runnable r, long initTime, long delayMillis) {
-            Pool.scheduleAtFixedRate(r, initTime, delayMillis, MILLISECONDS);
+        public final void slice(Runnable r, long initialDelay, long period, TimeUnit unit) {
+            Pool.scheduleAtFixedRate(r, initialDelay, period, unit);
         }
 
         /**
          * 固定等待执行时间
          *
          * @param r
-         * @param delayMillis
+         * @param initialDelay
+         * @param period
+         * @param unit
          */
-        public final void chain(Runnable r, long delayMillis) {
-            Pool.scheduleWithFixedDelay(r, 0, delayMillis, MILLISECONDS);
-        }
-
-        /**
-         * 固定等待执行时间
-         *
-         * @param r
-         * @param initTime
-         * @param delayMillis
-         */
-        public final void chain(Runnable r, long initTime, long delayMillis) {
-            Pool.scheduleWithFixedDelay(r, initTime, delayMillis, MILLISECONDS);
+        public final void chain(Runnable r, long initialDelay, long period, TimeUnit unit) {
+            Pool.scheduleWithFixedDelay(r, initialDelay, period, unit);
         }
 
         public final Future<?> cancel(Future<?>... futures) {
@@ -179,7 +190,7 @@ public class Loople {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage(), e);
+                    Log.e(TAG, e);
                 }
             }
 

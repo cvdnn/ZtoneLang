@@ -1,7 +1,7 @@
 package android.log.service;
 
 import android.assist.Assert;
-import android.collection.Pairing;
+import android.log.Pairing;
 import android.content.Context;
 import android.frame.AbstractProvider;
 import android.reflect.Clazz;

@@ -1,8 +1,12 @@
-package android.collection;
+package android.log;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class Pairing extends HashMap<String, Object> {
+public class Pairing extends LinkedHashMap<String, Object> {
+    public static final String TAG_ACTION = "__action__";
+    public static final String TAG_MSG = "__msg__";
+    public static final String TAG_CAUSE = "__cause__";
+    public static final String TAG_STACK = "__stack__";
 
     public static Pairing kv() {
         return new Pairing();
@@ -14,13 +18,13 @@ public class Pairing extends HashMap<String, Object> {
     }
 
     public Pairing action(String event) {
-        super.put("__action__", event);
+        super.put(TAG_ACTION, event);
 
         return this;
     }
 
     public Pairing msg(Object value) {
-        super.put("__msg__", value);
+        super.put(TAG_ACTION, value);
 
         return this;
     }
@@ -38,8 +42,8 @@ public class Pairing extends HashMap<String, Object> {
     }
 
     public Pairing add(Throwable t) {
-        add("throwable_cause", android.log.Log.cause(t));
-        add("throwable_stack", android.log.Log.stackTrace(t, "com.ztone"));
+        add(TAG_CAUSE, android.log.Log.cause(t));
+        add(TAG_STACK, android.log.Log.stackTrace(t, "com.ztone"));
 
         return this;
     }

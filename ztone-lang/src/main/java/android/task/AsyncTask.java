@@ -6,13 +6,14 @@ import android.assist.Assert;
 import androidx.annotation.AnyThread;
 
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by handy on 17-3-28.
  */
 
 public abstract class AsyncTask<Result> implements Runnable, Canellation {
-    private Future mFuture;
+    private Future<?> mFuture;
     private Runnable mPostRunnable;
 
     protected abstract Result doInBackground();
@@ -22,17 +23,44 @@ public abstract class AsyncTask<Result> implements Runnable, Canellation {
     }
 
     @AnyThread
-    public final void execute() {
+    public final Future<?> execute() {
         cancel();
 
         mFuture = Loople.Task.schedule(this);
+
+        return mFuture;
     }
 
     @AnyThread
-    public final void execute(long millis) {
+    public final Future<?> execute(long millis) {
         cancel();
 
-        mFuture = Loople.Task.schedule(this, 0);
+        mFuture = Loople.Task.schedule(this, millis);
+
+        return mFuture;
+    }
+
+    @AnyThread
+    public final Future<?> execute(long delay, TimeUnit unit) {
+        cancel();
+
+        mFuture = Loople.Task.schedule(this, delay, unit);
+
+        return mFuture;
+    }
+
+    @AnyThread
+    public final void slice(long initialDelay, long period, TimeUnit unit) {
+        cancel();
+
+        Loople.Task.slice(this, initialDelay, period, unit);
+    }
+
+    @AnyThread
+    public final void chain(long initialDelay, long period, TimeUnit unit) {
+        cancel();
+
+        Loople.Task.chain(this, initialDelay, period, unit);
     }
 
     @Override

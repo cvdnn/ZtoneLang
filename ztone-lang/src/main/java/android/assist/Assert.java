@@ -382,6 +382,34 @@ public final class Assert {
         return v != null && v.check();
     }
 
+    public static <E> boolean check(E[] arrays) {
+        boolean result = notEmpty(arrays);
+        if (result) {
+            for (E e : arrays) {
+                if (e == null) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static <E> boolean check(Collection<E> collection) {
+        boolean result = notEmpty(collection);
+        if (result) {
+            for (E e : collection) {
+                if (e == null) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static boolean checkIndex(Collection<?> collection, int index) {
         return notEmpty(collection) && index >= 0 && collection.size() > index;
     }
@@ -409,6 +437,7 @@ public final class Assert {
         boolean result = false;
 
         if (notEmpty(array)) {
+            Arrays.sort(array);
             result = Arrays.binarySearch(array, 0, array.length, value) >= 0;
         }
 
