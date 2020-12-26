@@ -18,15 +18,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import static android.Const.CHARSET_ENCODING;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-@Deprecated
-public class JSONUtils {
+public class Json {
     private static final String TAG = "JSONUtils";
 
     private static final int LENGTH_BUFFER = 2048;
+
+    public interface Formatter {
+        JSONObject format();
+    }
 
     @NotNull
     public static JSONArray array(@RawRes int rawRes) {
@@ -390,13 +394,69 @@ public class JSONUtils {
         return jsonObject;
     }
 
-    public static <V> void put(JSONObject json, String name, V v) {
-        if (json != null && Assert.notEmpty(name)) {
-            try {
-                json.put(name, v);
-            } catch (Exception e) {
-                Log.e(TAG, e);
+    public static Builder make() {
+        return new Builder();
+    }
+
+    public static Builder make(JSONObject json) {
+        return new Builder(json);
+    }
+
+    public static <V> JSONObject put(JSONObject json, String name, V v) {
+
+        return new Json.Builder(json).put(name, v).build();
+    }
+
+    public static <V> void put(JSONArray array, V... vs) {
+        if (array != null && Assert.notEmpty(vs)) {
+            for (V v : vs) {
+                try {
+                    array.put(v);
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+                }
             }
+        }
+    }
+
+    //////////////////////
+    public static class Builder {
+        private final JSONObject json;
+
+        private Builder() {
+            json = new JSONObject();
+        }
+
+        private Builder(JSONObject json) {
+            this.json = json != null ? json : new JSONObject();
+        }
+
+        public final <V> Builder put(String name, V v) {
+            if (Assert.notEmpty(name)) {
+                try {
+                    json.put(name, v);
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+                }
+            }
+
+            return this;
+        }
+
+        public final <V> Builder put(String name, V... vs) {
+            if (Assert.notEmpty(name) && Assert.notEmpty(vs)) {
+                try {
+                    json.put(name, new JSONArray(Arrays.asList(vs)));
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+                }
+            }
+
+            return this;
+        }
+
+        public final JSONObject build() {
+            return json;
         }
     }
 }

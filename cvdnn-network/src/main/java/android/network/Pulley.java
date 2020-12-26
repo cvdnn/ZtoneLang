@@ -27,6 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static android.network.Pulley.Method.GET;
 import static android.network.Pulley.Method.POST;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Pulley {
     private static final String TAG = "Pulley";
@@ -136,9 +137,10 @@ public class Pulley {
         Response.Builder response = new Response.Builder();
 
         String text = json != null ? json.toString() : "";
+        byte[] bytes = text.getBytes(UTF_8);
 
         HttpURLConnection conn = createHttpURLConnection(POST, url);
-        conn.setRequestProperty("Content-Length", String.valueOf(text.length()));
+        conn.setRequestProperty("Content-Length", String.valueOf(bytes.length));
 
         if (Assert.notEmpty(headers)) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
@@ -151,7 +153,7 @@ public class Pulley {
         DataOutputStream out = null;
         try {
             out = new DataOutputStream(conn.getOutputStream());
-            out.writeBytes(text);
+            out.write(bytes);
             out.flush();
         } catch (Exception e) {
             Log.e(TAG, e);
@@ -173,9 +175,9 @@ public class Pulley {
         conn.setRequestMethod(method.name());
         conn.setDoInput(true);
         conn.setDoOutput(method == POST);
-        conn.setRequestProperty("User-Agent", "RB-Auto/1.0 (Android-21;)");
-        conn.setRequestProperty("Content-Type", method == GET ? "application/x-www-form-urlencoded" : "application/json; charset=UTF-8");
-        conn.setRequestProperty("Accept-Charset", "utf-8");
+        conn.setRequestProperty("User-Agent", "Cvdnn-Auto/1.0 (Android-X;)");
+        conn.setRequestProperty("Content-Type", method == GET ? "application/x-www-form-urlencoded; charset=UTF-8" : "application/json; charset=UTF-8");
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
         conn.setRequestProperty("Accept-Encoding", "gzip");
         conn.setInstanceFollowRedirects(true);
         conn.setConnectTimeout(mProperty.connectTimeout);

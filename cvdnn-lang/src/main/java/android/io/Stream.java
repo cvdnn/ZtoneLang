@@ -7,7 +7,10 @@
  */
 package android.io;
 
+import android.Args;
 import android.log.Log;
+
+import androidx.annotation.RawRes;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,6 +32,10 @@ import static android.Const.ENCODING;
  */
 public class Stream {
     private static String TAG = "Stream";
+
+    public static String text(@RawRes int rawRes) {
+        return text(Args.Env.Res.openRawResource(rawRes));
+    }
 
     public static String text(File file) {
         String text = "";
@@ -87,6 +94,10 @@ public class Stream {
         }
 
         return text;
+    }
+
+    public static byte[] read(@RawRes int rawRes) {
+        return read(Args.Env.Res.openRawResource(rawRes));
     }
 
     public static byte[] read(File file) {

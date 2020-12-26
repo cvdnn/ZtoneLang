@@ -4,9 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" group="ZtoneLang" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZtoneLang/app" />
-      <module fileurl="file://$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" filepath="$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" group="ZtoneLang/ztone-lang" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/cvdnn-dingtalk.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/cvdnn-dingtalk.iml" group="ZtoneLang/cvdnn-dingtalk" />
+      <module fileurl="file://$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" filepath="$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" group="ZtoneLang/cvdnn-lang" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-network/cvdnn-network.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-network/cvdnn-network.iml" group="ZtoneLang/cvdnn-network" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" group="ZtoneLang/slog-aliyun" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-network/ztone-network.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-network/ztone-network.iml" group="ZtoneLang/ztone-network" />
     </modules>
   </component>
 </project>

@@ -6,12 +6,14 @@
  */
 package android.io;
 
+import android.Loople;
 import android.assist.Assert;
 import android.log.Log;
 import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -137,13 +139,17 @@ public final class FileUtils {
         return result;
     }
 
+    public static boolean write(byte[] bytes, File file) {
+        return file != null && Assert.notEmpty(bytes) && write(new ByteArrayInputStream(bytes), file.getAbsolutePath());
+    }
+
     public static boolean write(InputStream in, String filePath) {
 
         return write(in, filePath, -1, null);
     }
 
-    public static boolean write(InputStream in, final String filePath, final long contentLength,
-                                final OnProgressChangeListener listener) {
+    public static boolean write(InputStream in, final String filePath,
+                                final long contentLength, final OnProgressChangeListener listener) {
         boolean result = false;
 
         if (in != null && Assert.notEmpty(filePath)) {
@@ -167,15 +173,11 @@ public final class FileUtils {
                         wroteLength += tempLen;
 
                         final long tempLength = wroteLength;
-//                        LoopUtils.post(new Runnable() { // FIXME LOOP
-//
-//                            @Override
-//                            public void run() {
-//                                if (listener != null) {
-//                                    listener.onProgressUpdate(filePath, contentLength, tempLength);
-//                                }
-//                            }
-//                        });
+                        Loople.Main.post(() -> {
+                            if (listener != null) {
+                                listener.onProgressUpdate(filePath, contentLength, tempLength);
+                            }
+                        });
                     }
                 }
 

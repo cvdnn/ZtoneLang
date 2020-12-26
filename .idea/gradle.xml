@@ -12,9 +12,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cvdnn-dingtalk" />
             <option value="$PROJECT_DIR$/cvdnn-lang" />
+            <option value="$PROJECT_DIR$/cvdnn-network" />
             <option value="$PROJECT_DIR$/slog-aliyun" />
-            <option value="$PROJECT_DIR$/ztone-network" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -18,10 +18,7 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import static android.Const.CHARSET_ENCODING;
-import static android.Const.LINE_SEPARATOR;
 import static android.assist.PackageUtils.TAG;
-import static android.assist.Shell.CommandResult.SUCCESS;
 import static android.content.Context.ACTIVITY_SERVICE;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -641,14 +638,14 @@ public final class Android {
                     }
                 }
 
-                if (Assert.isEmpty(sCPUSerialNum)) {
-                    sCPUSerialNum = DEFAULT_SERIAL_NUM;
-                }
+//                if (Assert.isEmpty(sCPUSerialNum)) {
+//                    sCPUSerialNum = DEFAULT_SERIAL_NUM;
+//                }
             }
 
 //            Log.i(TAG, ">> [CPU]: %s", sCPUSerialNum);
 
-            return sCPUSerialNum;
+            return Assert.notEmpty(sCPUSerialNum) ? sCPUSerialNum : DEFAULT_SERIAL_NUM;
         }
 
         /**
@@ -691,6 +688,7 @@ public final class Android {
          * 空闲内存，单位：K
          *
          * @param context
+         *
          * @return
          */
         public static long freeMemory(Context context) {

@@ -1,6 +1,6 @@
 package android.function;
 
-import androidx.arch.core.util.Function;
+import java.util.function.Function;
 
 public interface ToBooleanFunction<T> extends Function<T, Boolean> {
 

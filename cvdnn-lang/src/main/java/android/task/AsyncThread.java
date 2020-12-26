@@ -13,7 +13,7 @@ public abstract class AsyncThread extends AsyncTask<Void> {
 
     @Override
     protected final Void doInBackground() {
-        doInBackground();
+        onInBackground();
 
         return NIL;
     }

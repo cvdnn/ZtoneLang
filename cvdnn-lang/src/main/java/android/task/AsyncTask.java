@@ -5,46 +5,52 @@ import android.assist.Assert;
 
 import androidx.annotation.AnyThread;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Created by handy on 17-3-28.
  */
 
-public abstract class AsyncTask<Result> implements Runnable, Canellation {
+public abstract class AsyncTask<R> implements Runnable, Canellation {
     private Future<?> mFuture;
-    private Runnable mPostRunnable;
+    private Runnable mPreRunnable, mPostRunnable;
 
-    protected abstract Result doInBackground();
+    protected void onPreExecute() {
+    }
 
-    protected void onPostExecute(Result result) {
+    protected abstract R doInBackground();
+
+    protected void onPostExecute(R result) {
 
     }
 
     @AnyThread
     public final Future<?> execute() {
-        cancel();
 
-        mFuture = Loople.Task.schedule(this);
-
-        return mFuture;
+        return execute(0, MILLISECONDS);
     }
 
     @AnyThread
-    public final Future<?> execute(long millis) {
-        cancel();
+    public final Future<?> execute(long delay) {
 
-        mFuture = Loople.Task.schedule(this, millis);
-
-        return mFuture;
+        return execute(delay, MILLISECONDS);
     }
 
     @AnyThread
     public final Future<?> execute(long delay, TimeUnit unit) {
         cancel();
 
-        mFuture = Loople.Task.schedule(this, delay, unit);
+        mPreRunnable = () -> {
+            onPreExecute();
+
+            mFuture = Loople.Task.schedule(this, delay, unit);
+        };
+        Loople.Main.post(mPreRunnable);
 
         return mFuture;
     }
@@ -53,22 +59,21 @@ public abstract class AsyncTask<Result> implements Runnable, Canellation {
     public final void slice(long initialDelay, long period, TimeUnit unit) {
         cancel();
 
-        Loople.Task.slice(this, initialDelay, period, unit);
+        Loople.Task.slice(this::execute, initialDelay, period, unit);
     }
 
     @AnyThread
     public final void chain(long initialDelay, long period, TimeUnit unit) {
         cancel();
 
-        Loople.Task.chain(this, initialDelay, period, unit);
+        Loople.Task.chain(this::execute, initialDelay, period, unit);
     }
 
     @Override
     public final void run() {
-        Result result = doInBackground();
-
+        R rst = doInBackground();
         Loople.Main.post(mPostRunnable = () -> {
-            onPostExecute(result);
+            onPostExecute(rst);
 
             mPostRunnable = null;
         });
@@ -78,15 +83,14 @@ public abstract class AsyncTask<Result> implements Runnable, Canellation {
 
     @Override
     public final void cancel() {
+        mPreRunnable = Loople.Main.cancel(mPreRunnable);
+
         mFuture = Loople.Task.cancel(mFuture);
 
-        if (mPostRunnable != null) {
-            Loople.Main.removeCallbacks(mPostRunnable);
-
-            mPostRunnable = null;
-        }
+        mPostRunnable = Loople.Main.cancel(mPostRunnable);
     }
 
+    @Nullable
     public static AsyncTask cancel(AsyncTask... tasks) {
         if (Assert.notEmpty(tasks)) {
             for (AsyncTask at : tasks) {

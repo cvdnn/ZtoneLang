@@ -63,7 +63,7 @@ public final class Clazz {
                     }
                 }
             } catch (Exception e) {
-                Log.d(TAG, e);
+                Log.e(TAG, e.toString());
             }
         }
 
@@ -92,7 +92,7 @@ public final class Clazz {
                     }
                 }
             } catch (Exception e) {
-                Log.d(TAG, e);
+                Log.e(TAG, e.toString());
             }
         }
 
@@ -159,7 +159,7 @@ public final class Clazz {
                     clazz = (Class<Z>) tempClazz;
                 }
             } catch (Throwable t) {
-                Log.d(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
 
@@ -181,8 +181,7 @@ public final class Clazz {
                     clazz = (Class<Z>) tempClazz;
                 }
             } catch (Throwable t) {
-                Log.e(TAG, "Not Found Exception: %s", className);
-                Log.d(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
 
@@ -222,8 +221,7 @@ public final class Clazz {
                 Constructor<Z> constructor = clazz.getDeclaredConstructor(getClassTypes(objs));
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
             } catch (Throwable t) {
-                Log.e(TAG, "Not Found Exception: %s", clazz.getName());
-                Log.d(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
 
@@ -237,8 +235,7 @@ public final class Clazz {
                 Constructor<Z> constructor = clazz.getDeclaredConstructor(ptypes);
                 z = constructor != null ? constructor.newInstance(objs) : clazz.newInstance();
             } catch (Throwable t) {
-                Log.e(TAG, "Not Found Exception: %s", clazz.getName());
-                Log.d(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
 
@@ -282,8 +279,7 @@ public final class Clazz {
 
                 }
             } catch (Throwable t) {
-                Log.e(TAG, "Not Found Exception: %s: ", clazz.getName());
-                Log.d(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
 
@@ -315,8 +311,7 @@ public final class Clazz {
                         desClazz = desClazz.getSuperclass();
                     }
                 } catch (Throwable t) {
-                    Log.e(TAG, "Not Found Exception: %s", fieldName);
-                    Log.d(TAG, t);
+                    Log.e(TAG, t.toString());
                 }
             }
         }
@@ -352,8 +347,7 @@ public final class Clazz {
                 try {
                     value = getFieldValue(o, desClazz.getDeclaredField(fieldName));
                 } catch (Throwable t) {
-                    Log.e(TAG, "Not Found Exception: %s", fieldName);
-                    Log.d(TAG, t);
+                    Log.e(TAG, t.toString());
                 }
             }
         }
@@ -381,7 +375,7 @@ public final class Clazz {
 
                 value = (V) field.get(o);
             } catch (Throwable e) {
-                Log.v(TAG, e);
+                Log.e(TAG, e.toString());
             }
         }
 
@@ -412,7 +406,7 @@ public final class Clazz {
                 try {
                     setFieldValue(o, desClass.getDeclaredField(fieldName), v);
                 } catch (Throwable t) {
-                    Log.e(TAG, t);
+                    Log.e(TAG, t.toString());
                 }
             }
         }
@@ -458,7 +452,7 @@ public final class Clazz {
                     }
                 }
             } catch (Throwable t) {
-                Log.e(TAG, t);
+                Log.e(TAG, t.toString());
             }
         }
     }
@@ -534,8 +528,7 @@ public final class Clazz {
                         v = (V) method.invoke(o, args);
                     }
                 } catch (Throwable t) {
-                    Log.e(TAG, "Not Found Exception: %s", methodName);
-                    Log.d(TAG, t);
+                    Log.e(TAG, t.toString());
                 }
             }
         }

@@ -16,9 +16,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class NetUtils {
     private static final String TAG = "NetUtils";
@@ -215,11 +217,23 @@ public class NetUtils {
     }
 
     public static String urlEncode(String text) {
+
+        return urlEncode(text, UTF_8);
+    }
+
+    public static String urlEncode(String text, Charset charset) {
         String result = "";
-        try {
-            result = URLEncoder.encode(text, "UTF-8");
-        } catch (Exception e) {
-            Log.e(TAG, e);
+
+        if (Assert.notEmpty(text)) {
+            try {
+                result = URLEncoder.encode(text, (charset != null ? charset : UTF_8).name())
+                        .replace("+", "%20")
+                        .replace("*", "%2A")
+                        .replace("~", "%7E")
+                        .replace("/", "%2F");
+            } catch (Exception e) {
+                Log.e(TAG, e.getCause().toString());
+            }
         }
 
         return result;

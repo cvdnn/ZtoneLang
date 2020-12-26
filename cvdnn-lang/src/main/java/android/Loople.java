@@ -89,6 +89,22 @@ public class Loople {
 
             return result;
         }
+
+        public final Runnable cancel(Runnable... runs) {
+            if (runs != null) {
+                try {
+                    for (Runnable r : runs) {
+                        if (r != null) {
+                            removeCallbacks(r);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e);
+                }
+            }
+
+            return null;
+        }
     }
 
     public static class TaskHandle {
@@ -181,7 +197,43 @@ public class Loople {
             Pool.scheduleWithFixedDelay(r, initialDelay, period, unit);
         }
 
-        public final Future<?> cancel(Future<?>... futures) {
+        public final <R> R join(Future<R> f) {
+            return get(f);
+        }
+
+        public final <R> R get(Future<R> f) {
+            R r = null;
+
+            if (f != null) {
+                try {
+                    r = f.get();
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+
+            return r;
+        }
+
+        public final <R> R join(Future<R> f, long timeout, TimeUnit unit) {
+            return get(f, timeout, unit);
+        }
+
+        public final <R> R get(Future<R> f, long timeout, TimeUnit unit) {
+            R r = null;
+
+            if (f != null) {
+                try {
+                    r = f.get(timeout, unit);
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+
+            return r;
+        }
+
+        public final <O> Future<O> cancel(Future<O>... futures) {
             if (futures != null) {
                 try {
                     for (Future<?> f : futures) {

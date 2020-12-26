@@ -1,2 +1,3 @@
-include ':ztone-network'
+include ':cvdnn-dingtalk'
+include ':cvdnn-network'
 include ':app', ':cvdnn-lang', ':slog-aliyun'
