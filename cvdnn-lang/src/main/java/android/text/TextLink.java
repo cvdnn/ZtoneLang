@@ -5,7 +5,7 @@ import android.assist.Assert;
 public class TextLink {
 	public static final String SEPARATOR_COMMA = ",";
 
-	private String mDefaultSeparator;
+	private final String mDefaultSeparator;
 	private final StringBuilder mTextBuffer;
 
 	private TextLink(String separator) {

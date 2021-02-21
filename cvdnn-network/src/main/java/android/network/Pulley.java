@@ -16,7 +16,8 @@ import androidx.annotation.RequiresPermission;
 
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -149,17 +150,32 @@ public class Pulley {
         }
 
         conn.connect();
+        Stream.write(bytes, conn.getOutputStream());
 
-        DataOutputStream out = null;
-        try {
-            out = new DataOutputStream(conn.getOutputStream());
-            out.write(bytes);
-            out.flush();
-        } catch (Exception e) {
-            Log.e(TAG, e);
-        } finally {
-            Stream.close(out);
+        response.set(conn);
+        response.set(conn.getResponseCode());
+        response.message(conn.getResponseMessage());
+        response.setContentLength(Maths.valueOf(conn.getHeaderField("Content-Length"), -1));
+
+        return response.build();
+    }
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    public Response post(@NonNull String url, Map<String, String> headers, File file) throws Exception {
+        Response.Builder response = new Response.Builder();
+
+        HttpURLConnection conn = createHttpURLConnection(POST, url);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(file.length()));
+
+        if (Assert.notEmpty(headers)) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                conn.addRequestProperty(entry.getKey(), entry.getValue());
+            }
         }
+
+        conn.connect();
+        Stream.write(new FileInputStream(file), conn.getOutputStream());
 
         response.set(conn);
         response.set(conn.getResponseCode());

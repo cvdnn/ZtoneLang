@@ -241,13 +241,25 @@ public final class FileUtils {
                     for (File subFile : files) {
                         result &= delete(subFile, filter);
                     }
+                } else {
+                    deleteFile(file);
                 }
             } else {
-                try {
-                    result &= file.delete();
-                } catch (Exception e) {
-                    Log.d(TAG, e);
-                }
+                deleteFile(file);
+            }
+        }
+
+        return result;
+    }
+
+    private static boolean deleteFile(File file) {
+        boolean result = true;
+
+        if (exists(file)) {
+            try {
+                result = file.delete();
+            } catch (Exception e) {
+                Log.d(TAG, e);
             }
         }
 

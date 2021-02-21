@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" group="ZtoneLang" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZtoneLang/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/cvdnn-dingtalk.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/cvdnn-dingtalk.iml" group="ZtoneLang/cvdnn-dingtalk" />
-      <module fileurl="file://$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" filepath="$PROJECT_DIR$/cvdnn-lang/cvdnn-lang.iml" group="ZtoneLang/cvdnn-lang" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-network/cvdnn-network.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-network/cvdnn-network.iml" group="ZtoneLang/cvdnn-network" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/ztone-slog/slog-aliyun.iml" group="ZtoneLang/slog-aliyun" />
+      <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" />
     </modules>
   </component>
 </project>

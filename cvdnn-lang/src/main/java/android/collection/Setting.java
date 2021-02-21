@@ -4,6 +4,8 @@ import android.assist.Assert;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Map;
+
 public class Setting {
     private static final String TAG = "Setting";
 
@@ -107,6 +109,10 @@ public class Setting {
         }
 
         return this;
+    }
+
+    public Map<String, ?> map() {
+        return mPreferences.getAll();
     }
 
     public Setting edit() {

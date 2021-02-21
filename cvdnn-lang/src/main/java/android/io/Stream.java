@@ -8,14 +8,19 @@
 package android.io;
 
 import android.Args;
+import android.C;
+import android.assist.Assert;
 import android.log.Log;
 
 import androidx.annotation.RawRes;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -143,6 +148,71 @@ public class Stream {
         }
 
         return byteArray;
+    }
+
+    public static boolean write(byte[] bytes, String outFile) {
+        boolean result = false;
+
+        if (Assert.notEmpty(outFile)) {
+            result = write(bytes, new File(outFile));
+        }
+
+        return result;
+    }
+
+    public static boolean write(byte[] bytes, File outFile) {
+        boolean result = false;
+
+        if (Assert.notEmpty(bytes) && outFile != null) {
+            try {
+                result = write(new ByteArrayInputStream(bytes), new FileOutputStream(outFile));
+            } catch (Exception e) {
+            }
+        }
+
+        return result;
+    }
+
+    public static boolean write(byte[] bytes, OutputStream out) {
+        boolean result = false;
+
+        if (Assert.notEmpty(bytes) && out != null) {
+            result = write(new ByteArrayInputStream(bytes), out);
+        }
+
+        return result;
+    }
+
+    public static boolean write(InputStream in, OutputStream out) {
+        boolean result = false;
+
+        if (in != null && out != null) {
+            try {
+                if (in instanceof BufferedInputStream) {
+                    in = new BufferedInputStream(in);
+                }
+
+                if (out instanceof BufferedOutputStream) {
+                    out = new BufferedOutputStream(out);
+                }
+
+                int len = C.value.buffer_len;
+                byte[] bytes = new byte[C.value.buffer_len];
+                while ((len = in.read(bytes)) != -1) {
+                    out.write(bytes, 0, len);
+                }
+
+                out.flush();
+
+                result = true;
+            } catch (Exception e) {
+                Log.e(TAG, e);
+            } finally {
+                Stream.close(out);
+            }
+        }
+
+        return result;
     }
 
     public static void close(InputStream is) {

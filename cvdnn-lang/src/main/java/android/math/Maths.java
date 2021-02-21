@@ -15,6 +15,7 @@ import android.log.Log;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author sillar team
@@ -36,11 +37,17 @@ public class Maths {
 
     private final static char[] HEX_CHARS = HEX_NUMS.toCharArray();
 
+    public static String unique() {
+
+        return ShortDigest.encrypt(MD5.encrypt(UUID.randomUUID().toString()));
+    }
+
     /**
      * 线程安全,不用Random()避免线性可预测,另外在多线程下性能比较低
      *
      * @param min
      * @param max
+     *
      * @return
      */
     public static int random(int min, int max) {
@@ -186,9 +193,10 @@ public class Maths {
     /**
      * 字符串变换成ASCII码
      * 例：
-     *    0 -> 0x30, A -> 0x41 ...
+     * 0 -> 0x30, A -> 0x41 ...
      *
      * @param chars
+     *
      * @return
      */
     public static String toASCII(String chars) {
@@ -219,9 +227,10 @@ public class Maths {
     /**
      * 将十六进制字符串等同变换成十六进制byte数组
      * 例：
-     *    1234 -> {0x12, 0x34}
+     * 1234 -> {0x12, 0x34}
      *
      * @param hex
+     *
      * @return
      */
     public static byte[] asByte(String hex) {
@@ -268,6 +277,7 @@ public class Maths {
      * 字符串转换成十六进制字符串
      *
      * @param str String 待转换的ASCII字符串
+     *
      * @return String 每个Byte之间空格分隔，如: [61 6C 6B]
      */
     public static String toHexText(String str) {
@@ -289,6 +299,7 @@ public class Maths {
      * 十六进制字符串转换成 ASCII字符串
      *
      * @param hexStr String Byte字符串
+     *
      * @return String 对应的字符串
      */
     public static String formASCCII(String hexStr) {
@@ -387,6 +398,7 @@ public class Maths {
 
     /**
      * @param l
+     *
      * @return
      */
     public static byte[] toArray(long l) {
@@ -404,6 +416,7 @@ public class Maths {
 
     /**
      * @param i
+     *
      * @return
      */
     public static byte[] toArray(int i) {
@@ -426,6 +439,7 @@ public class Maths {
      *
      * @param year
      * @param month java日期月份(从0开始)
+     *
      * @return
      */
     public static int getDayInMonth(int year, int month) {

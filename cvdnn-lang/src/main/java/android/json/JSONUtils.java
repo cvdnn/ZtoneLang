@@ -8,9 +8,9 @@ import android.log.Log;
 import android.math.Maths;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RawRes;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,21 +24,21 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Deprecated
 public class JSONUtils {
-    private static final String TAG = "JSONUtils";
+    private static final String TAG = "Json";
 
     private static final int LENGTH_BUFFER = 2048;
 
-    @NotNull
+    @NonNull
     public static JSONArray array(@RawRes int rawRes) {
         return array(Stream.text(rawRes));
     }
 
-    @NotNull
+    @NonNull
     public static JSONArray array(File file) {
         return array(FileUtils.read(file, UTF_8));
     }
 
-    @NotNull
+    @NonNull
     public static JSONArray array(String json) {
         JSONArray jsonArray = null;
 
@@ -57,17 +57,17 @@ public class JSONUtils {
         return jsonArray;
     }
 
-    @NotNull
+    @NonNull
     public static JSONObject from(@RawRes int rawRes) {
         return from(Stream.text(rawRes));
     }
 
-    @NotNull
+    @NonNull
     public static JSONObject from(File file) {
         return from(FileUtils.read(file, UTF_8));
     }
 
-    @NotNull
+    @NonNull
     public static JSONObject from(String json) {
         JSONObject jsonObject = null;
 

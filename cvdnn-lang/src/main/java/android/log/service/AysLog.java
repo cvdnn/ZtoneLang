@@ -173,7 +173,7 @@ public class AysLog extends AbstractProvider {
     public boolean onCreate() {
         Class<?> slsClazz = Clazz.forName("com.aliyun.sls.android.sdk.SLSLog");
         if (slsClazz != null) {
-            mLogClient = Clazz.newInstance("");
+            mLogClient = Clazz.newInstance("android.slog.aliyun.AysClient");
             if (mLogClient != null) {
                 mLogClient.onSetup(getContext());
             }

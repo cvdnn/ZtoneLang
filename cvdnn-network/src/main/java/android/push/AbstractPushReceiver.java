@@ -5,7 +5,7 @@ import android.assist.Assert;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.json.JSONUtils;
+import android.json.Json;
 import android.log.Log;
 import android.math.Maths;
 import android.os.Bundle;
@@ -45,9 +45,9 @@ public abstract class AbstractPushReceiver extends BroadcastReceiver {
 
         Log.d(TAG, "[title]: %s, [message]: %s", title, message);
 
-        JSONObject extraJson = JSONUtils.from(bundle.getString(Pushing.JPUSH_EXTRA_EXTRA));
+        JSONObject extraJson = Json.from(bundle.getString(Pushing.JPUSH_EXTRA_EXTRA));
         if (extraJson != null && Assert.notEmpty(message)) {
-            Pushing.Action action = Pushing.Action.valueFrom(Maths.valueOf(JSONUtils.optString(extraJson, Pushing.JPath.ACTION), Pushing.Action.NONE.action));
+            Pushing.Action action = Pushing.Action.valueFrom(Maths.valueOf(Json.optString(extraJson, Pushing.JPath.ACTION), Pushing.Action.NONE.action));
 
             onHandleReceive(action, message, extraJson);
         }

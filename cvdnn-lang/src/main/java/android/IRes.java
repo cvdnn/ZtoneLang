@@ -2,7 +2,7 @@ package android;
 
 import android.assist.Assert;
 import android.io.Stream;
-import android.json.JSONUtils;
+import android.json.Json;
 import android.log.Log;
 
 import androidx.annotation.RawRes;
@@ -50,6 +50,6 @@ public final class IRes {
     }
 
     public static JSONObject openRawJson(@RawRes int rawId) {
-        return JSONUtils.from(Stream.text(IRes.openRawRes(rawId)));
+        return Json.from(Stream.text(IRes.openRawRes(rawId)));
     }
 }

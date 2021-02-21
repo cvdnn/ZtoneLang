@@ -11,13 +11,14 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static android.Const.NIL;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -110,36 +111,56 @@ public class Loople {
     public static class TaskHandle {
         public final TaskPoolExecutor Pool = new TaskPoolExecutor(TAG, 32);
 
-        public <E, R> CompletableFuture allOf(Collection<E> items, Function<? super E, ? extends R> action) {
+        public CompletableFuture allOf(Collection<Runnable> runnables) {
+
+            return allOf(Pool, runnables);
+        }
+
+        public CompletableFuture allOf(ExecutorService es, Collection<Runnable> runnables) {
             CompletableFuture future = null;
-            if (Assert.notEmpty(items)) {
-                CompletableFuture[] arrays = items.stream().map(action).toArray(CompletableFuture[]::new);
-                if (Assert.check(arrays)) {
-                    future = CompletableFuture.allOf(arrays);
+
+            if (Assert.notEmpty(runnables) && es != null && !es.isShutdown()) {
+                try {
+                    CompletableFuture[] arrays = runnables.stream().map(r -> CompletableFuture.runAsync(r, es)).toArray(CompletableFuture[]::new);
+                    if (Assert.check(arrays)) {
+                        future = CompletableFuture.allOf(arrays);
+                    }
+                } catch (Throwable t) {
+                    Log.e(TAG, t);
                 }
             }
 
             return future != null ? future : CompletableFuture.completedFuture(NIL);
         }
 
-        public CompletableFuture allOf(Collection<Runnable> runnables) {
-
-            return allOf(runnables, (Function<? super Runnable, ? extends CompletableFuture<java.lang.Void>>)
-                    r -> CompletableFuture.runAsync(r, Pool));
-        }
-
         public <E> CompletableFuture allOf(Collection<E> items, @NonNull Consumer<E> action) {
 
-            return allOf(items, (Function<? super E, ? extends CompletableFuture<java.lang.Void>>)
-                    item -> CompletableFuture.runAsync(() -> {
-                        if (item != null && action != null) {
+            return allOf(Pool, items, action);
+        }
+
+        public <E> CompletableFuture allOf(ExecutorService es, Collection<E> items, @NonNull Consumer<E> action) {
+            CompletableFuture future = null;
+
+            if (Assert.notEmpty(items) && action != null) {
+                try {
+                    future = allOf(es, Arrays.asList(items.stream().map(item -> (Runnable) () -> {
+                        try {
                             action.accept(item);
+                        } catch (Throwable t) {
+                            Log.e(TAG, t);
                         }
-                    }, Pool));
+                    }).toArray(Runnable[]::new)));
+                } catch (Throwable t) {
+                    Log.e(TAG, t);
+                }
+            }
+
+            return future != null ? future : CompletableFuture.completedFuture(NIL);
         }
 
         public <E> Future<?> schedule(Collection<E> items, Consumer<? super E> action) {
             Future<?> future = null;
+
             if (Assert.notEmpty(items) && action != null) {
                 future = Pool.submit(() -> items.forEach(action));
             } else {

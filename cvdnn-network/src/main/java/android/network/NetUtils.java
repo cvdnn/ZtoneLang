@@ -90,22 +90,8 @@ public class NetUtils {
     }
 
     public static Response post(String url, JSONObject json) {
-        Response response = null;
 
-        try {
-            Log.i(TAG, url);
-
-            response = Pulley.impl().post(url, null, json);
-        } catch (Exception e) {
-            response = new Response.Builder()
-                    .set(-HTTP_BAD_REQUEST)
-                    .message(e.getMessage())
-                    .build();
-
-            Log.e(e);
-        }
-
-        return response;
+        return post(url, null, json);
     }
 
     public static Response post(String url, Map<String, String> headers, JSONObject json) {
@@ -122,6 +108,32 @@ public class NetUtils {
                     .build();
 
             Log.e(e);
+        }
+
+        return response;
+    }
+
+    public static Response post(String url, File file) {
+
+        return post(url, null, file);
+    }
+
+    public static Response post(String url, Map<String, String> headers, File file) {
+        Response response = null;
+
+        if (Assert.exists(file)) {
+            try {
+                Log.i(TAG, url);
+
+                response = Pulley.impl().post(url, headers, file);
+            } catch (Exception e) {
+                response = new Response.Builder()
+                        .set(-HTTP_BAD_REQUEST)
+                        .message(e.getMessage())
+                        .build();
+
+                Log.e(e);
+            }
         }
 
         return response;

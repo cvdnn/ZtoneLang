@@ -2,7 +2,7 @@ package android.network;
 
 import android.assist.Assert;
 import android.io.Stream;
-import android.json.JSONUtils;
+import android.json.Json;
 import android.log.Log;
 
 import org.json.JSONObject;
@@ -30,7 +30,7 @@ public class Response {
         }
 
         public JSONObject json() {
-            return JSONUtils.getJSONObject(input);
+            return Json.getJSONObject(input);
         }
     }
 
