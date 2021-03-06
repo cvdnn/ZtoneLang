@@ -24,6 +24,7 @@ public class TextUtilz {
      * 文本裁剪，不可逆
      *
      * @param text
+     *
      * @return
      */
     public static native String toTrim(String text);
@@ -32,6 +33,7 @@ public class TextUtilz {
      * 默认文本加密
      *
      * @param text
+     *
      * @return
      */
     public static native String toFake(String text);
@@ -40,6 +42,7 @@ public class TextUtilz {
      * 默认文本解密
      *
      * @param text
+     *
      * @return
      */
     public static native String fromFake(String text);
@@ -48,6 +51,7 @@ public class TextUtilz {
      * 默认二进制加密
      *
      * @param ba
+     *
      * @return
      */
     public static native byte[] toMix(byte[] ba);
@@ -56,6 +60,7 @@ public class TextUtilz {
      * 默认二进制解密
      *
      * @param ba
+     *
      * @return
      */
     public static native byte[] fromMix(byte[] ba);
@@ -64,6 +69,7 @@ public class TextUtilz {
      * 救值, 空字符串返回"null"
      *
      * @param value
+     *
      * @return
      */
     public static String nullTo(String value) {
@@ -75,6 +81,7 @@ public class TextUtilz {
      * value to string
      *
      * @param v
+     *
      * @return
      */
     public static <V> String toString(V v) {
@@ -87,6 +94,7 @@ public class TextUtilz {
      *
      * @param streamData
      * @param charsetName 编码
+     *
      * @return
      */
     public static String toString(InputStream streamData, String charsetName) {
@@ -125,6 +133,7 @@ public class TextUtilz {
      * 输入流转变成字符串，默认utf-8
      *
      * @param streamData
+     *
      * @return
      */
     public static String toString(InputStream streamData) {
@@ -155,6 +164,7 @@ public class TextUtilz {
      * 替换sql中的参数通陪符
      *
      * @param param
+     *
      * @return
      */
     public static String escapeSQLWildcard(String param) {
@@ -172,6 +182,7 @@ public class TextUtilz {
      * 字符串按照分割符分组
      *
      * @param text
+     *
      * @return
      */
     public static String[] blockSort(String text) {
@@ -184,6 +195,7 @@ public class TextUtilz {
      *
      * @param text
      * @param boundary
+     *
      * @return
      */
     public static String[] blockSort(String text, String boundary) {

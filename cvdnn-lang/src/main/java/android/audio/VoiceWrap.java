@@ -1,5 +1,6 @@
 package android.audio;
 
+import android.Loople;
 import android.assist.Assert;
 import android.log.Log;
 import android.media.MediaPlayer;
@@ -46,6 +47,10 @@ public class VoiceWrap {
     public VoiceWrap play() {
 
         return reset().start();
+    }
+
+    public void async() {
+        Loople.Task.schedule(() -> reset().start());
     }
 
     public VoiceWrap start() {

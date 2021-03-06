@@ -1,7 +1,6 @@
 package android.log;
 
 import android.assist.Assert;
-import android.text.DateFormats;
 import android.assist.Shell;
 import android.assist.Shell.CommandResult;
 import android.concurrent.ThreadUtils;
@@ -9,6 +8,7 @@ import android.io.FileUtils;
 import android.math.Maths;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.text.DateFormats;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -360,6 +360,17 @@ public final class Log {
 
 
         return text;
+    }
+
+
+    public static void p(String tag, Throwable t) {
+        String text = "";
+
+        if (t != null) {
+            text = t.getMessage();
+        }
+
+        e(tag, text);
     }
 
     public static String cause(Throwable t) {
