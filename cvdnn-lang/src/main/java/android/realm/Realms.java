@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -39,6 +40,8 @@ public class Realms implements RealmMigration {
                 .allowWritesOnUiThread(true)
                 .build());
     }
+
+    public static final HashSet<Class<? extends RealmModel>> Mdl = new HashSet<>();
 
     ///////////////////////////////////
     //
@@ -76,6 +79,7 @@ public class Realms implements RealmMigration {
                 .directory(file.getParentFile())
                 .name(file.getName())
                 .encryptionKey(Stream.read(Args.Env.Res.openRawResource(R.raw.realm_seeds)))
+                .modules(Realm.getDefaultModule(), Mdl.toArray())
                 .migration(this)
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
@@ -93,12 +97,12 @@ public class Realms implements RealmMigration {
 
     public final <O extends RealmModel> int count(Class<O> clazz) {
 
-        return execute(realm -> (int) realm.where(clazz).count());
+        return call(realm -> (int) realm.where(clazz).count());
     }
 
     public final <O extends RealmModel> int count0(Class<O> clazz) {
 
-        return execute(realm -> {
+        return call(realm -> {
             RealmQuery<O> query = realm.where(clazz);
             return query != null && query.isValid() ? (int) query.count() : 0;
         });
@@ -106,7 +110,7 @@ public class Realms implements RealmMigration {
 
     public final <O extends RealmModel> List<O> findAll(Class<O> clazz) {
 
-        return execute(realm -> {
+        return call(realm -> {
             return new ArrayList<>(realm.where(clazz).findAll());
         });
     }
@@ -125,7 +129,7 @@ public class Realms implements RealmMigration {
         boolean result = false;
 
         if (clazz != null && from != null) {
-            result = executeTransaction(realm -> from.execute(rlm -> {
+            result = executeTransaction(realm -> from.call(rlm -> {
                 realm.insertOrUpdate(rlm.where(clazz).findAll());
                 return true;
             }));
@@ -154,7 +158,7 @@ public class Realms implements RealmMigration {
         return result;
     }
 
-    public final <R> R execute(Function<Realm, R> fun) {
+    public final <R> R call(Function<Realm, R> fun) {
         R r = null;
 
         if (fun != null) {
