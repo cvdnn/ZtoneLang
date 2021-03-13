@@ -52,16 +52,13 @@ public final class ClazzLoader {
             clazzList = new ArrayList<>();
 
             try {
-                DexFile dexFile = new DexFile(apkPath);
-                if (dexFile != null) {
-                    Enumeration<String> entries = dexFile.entries();
-                    if (entries != null) {
-                        while (entries.hasMoreElements()) {
-                            String clazzName = entries.nextElement();
+                Enumeration<String> entries = new DexFile(apkPath).entries();
+                if (entries != null) {
+                    while (entries.hasMoreElements()) {
+                        String clazzName = entries.nextElement();
 
-                            if (clazzNameFilter == null || clazzNameFilter.accept(clazzName)) {
-                                clazzList.add(clazzName);
-                            }
+                        if (clazzNameFilter == null || clazzNameFilter.accept(clazzName)) {
+                            clazzList.add(clazzName);
                         }
                     }
                 }
