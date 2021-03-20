@@ -6,6 +6,7 @@ import android.io.Stream;
 import android.lang.R;
 import android.log.Log;
 import android.math.MD5;
+import android.math.Maths;
 import android.math.ShortDigest;
 
 import androidx.annotation.AnyThread;
@@ -25,7 +26,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmModel;
-import io.realm.RealmQuery;
 
 import static android.Args.context;
 
@@ -88,7 +88,9 @@ public class Realms implements RealmMigration {
 
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+        Log.e(TAG, ">>: %d -> %d", oldVersion, newVersion);
 
+        DefaultMigration.migrate(realm);
     }
 
     public final Realm open() {
@@ -97,22 +99,12 @@ public class Realms implements RealmMigration {
 
     public final <O extends RealmModel> int count(Class<O> clazz) {
 
-        return call(realm -> (int) realm.where(clazz).count());
-    }
-
-    public final <O extends RealmModel> int count0(Class<O> clazz) {
-
-        return call(realm -> {
-            RealmQuery<O> query = realm.where(clazz);
-            return query != null && query.isValid() ? (int) query.count() : 0;
-        });
+        return Maths.intValue(call(realm -> (int) realm.where(clazz).count()));
     }
 
     public final <O extends RealmModel> List<O> findAll(Class<O> clazz) {
 
-        return call(realm -> {
-            return new ArrayList<>(realm.where(clazz).findAll());
-        });
+        return call(realm -> new ArrayList<>(realm.where(clazz).findAll().freeze()));
     }
 
     @AnyThread
@@ -125,13 +117,12 @@ public class Realms implements RealmMigration {
         return executeTransaction(realm -> realm.insertOrUpdate(datas));
     }
 
-    public final <O extends RealmModel> boolean copyFrom(Class<O> clazz, Realms from) {
+    public final <O extends RealmModel> boolean copyFrom(Realms from, Class<O> clazz) {
         boolean result = false;
 
         if (clazz != null && from != null) {
-            result = executeTransaction(realm -> from.call(rlm -> {
+            result = executeTransaction(realm -> from.execute(rlm -> {
                 realm.insertOrUpdate(rlm.where(clazz).findAll());
-                return true;
             }));
         }
 
