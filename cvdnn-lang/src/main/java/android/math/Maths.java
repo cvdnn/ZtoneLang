@@ -7,7 +7,9 @@
  */
 package android.math;
 
+import android.Android;
 import android.assist.Assert;
+import android.crypto.Crypto;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.log.Log;
@@ -37,9 +39,33 @@ public class Maths {
 
     private final static char[] HEX_CHARS = HEX_NUMS.toCharArray();
 
+    /**
+     * uuid
+     *
+     * @return
+     */
+    public static String uuid() {
+        return UUID.randomUUID().toString();
+    }
+
+    /**
+     * 32未唯一编码
+     *
+     * @return
+     */
     public static String unique() {
 
-        return ShortDigest.encrypt(MD5.encrypt(UUID.randomUUID().toString()));
+        return Crypto.toMD5(Android.Build.cpuSerial() + uuid() + System.currentTimeMillis());
+    }
+
+    /**
+     * 短编码，区分大小写
+     *
+     * @return
+     */
+    public static String shorts() {
+
+        return ShortDigest.encrypt(unique());
     }
 
     /**
@@ -64,25 +90,24 @@ public class Maths {
         boolean result = defValue;
 
         if (value != null) {
-            if (value instanceof String) {
-                String stringValue = (String) value;
-
-                if ("true".equalsIgnoreCase(stringValue) || "1".equals(stringValue)) {
-                    result = true;
-                }
-
-            } else if (value instanceof Integer || value instanceof Long) {
-                int intValue = (Integer) value;
-
-                result = (1 == intValue);
-
-            } else if (value instanceof Boolean) {
+            if (value instanceof Boolean) {
                 result = (Boolean) value;
+
+            } else if (value instanceof String) {
+                result = "true".equalsIgnoreCase((String) value) || "1".equals((String) value);
+
+            } else if (value instanceof Number) {
+                result = (1 == ((Number) value).intValue());
 
             }
         }
 
         return result;
+    }
+
+    public static int intValue(Object obtValue) {
+
+        return valueOf(obtValue, 0, DEC);
     }
 
     public static int valueOf(Object obtValue, int defValue) {
@@ -94,8 +119,8 @@ public class Maths {
         int value = defValue;
 
         if (obtValue != null) {
-            if (obtValue instanceof Integer) {
-                value = (Integer) obtValue;
+            if (obtValue instanceof Number) {
+                value = ((Number) obtValue).intValue();
 
             } else if (obtValue instanceof String && Assert.notEmpty((String) obtValue)) {
                 try {
@@ -109,6 +134,11 @@ public class Maths {
         return value;
     }
 
+    public static long longValue(Object objLong) {
+
+        return valueOf(objLong, 0l, DEC);
+    }
+
     public static long valueOf(Object objLong, long defValue) {
 
         return valueOf(objLong, defValue, DEC);
@@ -118,8 +148,8 @@ public class Maths {
         long value = defValue;
 
         if (objValue != null) {
-            if (objValue instanceof Long) {
-                value = (Long) objValue;
+            if (objValue instanceof Number) {
+                value = ((Number) objValue).longValue();
 
             } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
@@ -133,12 +163,16 @@ public class Maths {
         return value;
     }
 
+    public static short shortValue(Object objValue) {
+        return valueOf(objValue, (short) 0);
+    }
+
     public static short valueOf(Object objValue, short defValue) {
         short value = defValue;
 
         if (objValue != null) {
-            if (objValue instanceof Short) {
-                value = (Short) objValue;
+            if (objValue instanceof Number) {
+                value = ((Number) objValue).shortValue();
 
             } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
@@ -152,12 +186,16 @@ public class Maths {
         return value;
     }
 
+    public static float floatValue(Object objValue) {
+        return valueOf(objValue, 0f);
+    }
+
     public static float valueOf(Object objValue, float defValue) {
         float value = defValue;
 
         if (objValue != null) {
-            if (objValue instanceof Float) {
-                value = (Float) objValue;
+            if (objValue instanceof Number) {
+                value = ((Number) objValue).floatValue();
 
             } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
@@ -171,12 +209,16 @@ public class Maths {
         return value;
     }
 
+    public static double doubleValue(Object objValue) {
+        return valueOf(objValue, 0d);
+    }
+
     public static double valueOf(Object objValue, double defValue) {
         double value = defValue;
 
         if (objValue != null) {
-            if (objValue instanceof Double) {
-                value = (Double) objValue;
+            if (objValue instanceof Number) {
+                value = ((Number) objValue).doubleValue();
 
             } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
