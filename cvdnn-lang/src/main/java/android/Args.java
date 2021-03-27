@@ -6,6 +6,7 @@ import android.app.Application;
 import android.assist.Assert;
 import android.collection.Datum;
 import android.collection.Setting;
+import android.concurrent.RunState;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -15,6 +16,7 @@ import android.io.FilePaths;
 import android.log.Log;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.reflect.Clazz;
 
 import androidx.annotation.NonNull;
@@ -72,6 +74,8 @@ public class Args {
 
     public final FilePaths Paths;
 
+    public final RunState NetState = new RunState(true);
+
     private Args(@NonNull Loader ldr) {
         assert ldr == null;
 
@@ -91,6 +95,9 @@ public class Args {
         Stors = new Datum(context, "");
 
         Paths = new FilePaths(findRootPath());
+
+        NetworkInfo networkInfo = Cnn.getActiveNetworkInfo();
+        NetState.set(networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected());
     }
 
     public final ApplicationInfo getApplicationInfo(String packageName) {
