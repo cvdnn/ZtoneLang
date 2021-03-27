@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,11 +27,14 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmModel;
+import io.realm.Sort;
 
 import static android.Args.context;
 
 public class Realms implements RealmMigration {
     private static final String TAG = "Realms";
+
+    public static final int PAGE_SIZE = 20;
 
     static {
         Realm.init(context);
@@ -102,9 +106,47 @@ public class Realms implements RealmMigration {
         return Maths.intValue(call(realm -> (int) realm.where(clazz).count()));
     }
 
-    public final <O extends RealmModel> List<O> findAll(Class<O> clazz) {
+    public final <O extends FleeModel> List<O> findAll(Class<O> clazz) {
+        return call(realm -> {
+            ArrayList<O> metaList = new ArrayList<>();
 
-        return call(realm -> new ArrayList<>(realm.where(clazz).findAll().freeze()));
+            realm.where(clazz).findAll().forEach(item -> metaList.add(item.flee()));
+
+            return metaList;
+        });
+    }
+
+    public final <O extends FleeModel> Collection<O> findList(Class<O> clazz, int pageNum) {
+        return call(realm -> {
+            ArrayList<O> metaList = new ArrayList<>();
+
+            ListIterator<O> results = realm
+                    .where(clazz)
+                    .findAll()
+                    .listIterator(PAGE_SIZE * pageNum);
+            for (int i = 0, size = PAGE_SIZE; i < size && results.hasNext(); i++) {
+                metaList.add(results.next().flee());
+            }
+
+            return metaList;
+        });
+    }
+
+    public final <O extends FleeModel> Collection<O> findList(Class<O> clazz, int pageNum, String fieldName, Sort sortOrder) {
+        return call(realm -> {
+            ArrayList<O> metaList = new ArrayList<>();
+
+            ListIterator<O> results = realm
+                    .where(clazz)
+                    .sort(fieldName, sortOrder)
+                    .findAll()
+                    .listIterator(PAGE_SIZE * pageNum);
+            for (int i = 0, size = PAGE_SIZE; i < size && results.hasNext(); i++) {
+                metaList.add(results.next().flee());
+            }
+
+            return metaList;
+        });
     }
 
     @AnyThread
@@ -113,8 +155,8 @@ public class Realms implements RealmMigration {
     }
 
     @AnyThread
-    public final boolean insertOrUpdate(Collection<? extends RealmModel> datas) {
-        return executeTransaction(realm -> realm.insertOrUpdate(datas));
+    public final boolean insertOrUpdate(Collection<? extends RealmModel> list) {
+        return executeTransaction(realm -> realm.insertOrUpdate(list));
     }
 
     public final <O extends RealmModel> boolean copyFrom(Realms from, Class<O> clazz) {
