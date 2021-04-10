@@ -7,9 +7,12 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public abstract class DelayRunnable implements Runnable, Delayed {
 
+    public long start;
     public long millis;
 
     public DelayRunnable(long m) {
+        start = System.currentTimeMillis();
+
         millis = m;
     }
 
@@ -21,6 +24,6 @@ public abstract class DelayRunnable implements Runnable, Delayed {
 
     @Override
     public long getDelay(TimeUnit unit) {
-        return unit.convert(millis, MILLISECONDS);
+        return unit.convert(start + millis - System.currentTimeMillis(), MILLISECONDS);
     }
 }

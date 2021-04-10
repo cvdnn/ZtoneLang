@@ -17,7 +17,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -27,7 +26,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmModel;
-import io.realm.Sort;
+import io.realm.RealmResults;
 
 import static android.Args.context;
 
@@ -50,10 +49,10 @@ public class Realms implements RealmMigration {
     ///////////////////////////////////
     //
 
-    public final RealmConfiguration mRealmCfg;
+    public final RealmConfiguration Config;
 
     public Realms() {
-        mRealmCfg = new RealmConfiguration.Builder()
+        Config = new RealmConfiguration.Builder()
                 .inMemory()
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
@@ -74,11 +73,11 @@ public class Realms implements RealmMigration {
             builder.migration(this);
         }
 
-        mRealmCfg = builder.build();
+        Config = builder.build();
     }
 
     public Realms(@NotNull File file, long version) {
-        mRealmCfg = new RealmConfiguration.Builder()
+        Config = new RealmConfiguration.Builder()
                 .schemaVersion(version)
                 .directory(file.getParentFile())
                 .name(file.getName())
@@ -98,59 +97,71 @@ public class Realms implements RealmMigration {
     }
 
     public final Realm open() {
-        return Realm.getInstance(mRealmCfg);
+        return Realm.getInstance(Config);
     }
 
-    public final <O extends RealmModel> int count(Class<O> clazz) {
+    public final <E extends RealmModel> int count(Class<E> clazz) {
 
         return Maths.intValue(call(realm -> (int) realm.where(clazz).count()));
     }
 
-    public final <O extends FleeModel> List<O> findAll(Class<O> clazz) {
-        return call(realm -> {
-            ArrayList<O> metaList = new ArrayList<>();
-
-            realm.where(clazz).findAll().forEach(item -> metaList.add(item.flee()));
-
-            return metaList;
-        });
+    public final <E extends FleeModel> Collection<E> fleeList(Function<Realm, Collection<E>> function) {
+        return fleeList(function, null);
     }
 
-    public final <O extends FleeModel> Collection<O> findList(Class<O> clazz, int pageNum) {
+    public final <E extends FleeModel, R> Collection<R> fleeList(Function<Realm, Collection<E>> function, Function<E, R> mapper) {
         return call(realm -> {
-            ArrayList<O> metaList = new ArrayList<>();
+            ArrayList<R> metaList = new ArrayList<>();
 
-            ListIterator<O> results = realm
-                    .where(clazz)
-                    .findAll()
-                    .listIterator(PAGE_SIZE * pageNum);
-            for (int i = 0, size = PAGE_SIZE; i < size && results.hasNext(); i++) {
-                metaList.add(results.next().flee());
+            Collection<E> list = function.apply(realm);
+            if (Assert.notEmpty(list)) {
+                list.forEach(item -> {
+                    if (item != null) {
+                        metaList.add(mapper != null ? mapper.apply(item) : item.flee());
+                    }
+                });
             }
 
             return metaList;
         });
     }
 
-    public final <O extends FleeModel> Collection<O> findList(Class<O> clazz, int pageNum, String fieldName, Sort sortOrder) {
-        return call(realm -> {
-            ArrayList<O> metaList = new ArrayList<>();
+    public final <E extends FleeModel> Collection<E> fleeList(int pageNum, Function<Realm, RealmResults<E>> function) {
+        return fleeList(pageNum, function, null);
+    }
 
-            ListIterator<O> results = realm
-                    .where(clazz)
-                    .sort(fieldName, sortOrder)
-                    .findAll()
-                    .listIterator(PAGE_SIZE * pageNum);
-            for (int i = 0, size = PAGE_SIZE; i < size && results.hasNext(); i++) {
-                metaList.add(results.next().flee());
+    public final <E extends FleeModel, R> Collection<R> fleeList(int pageNum, Function<Realm, RealmResults<E>> function, Function<E, R> mapper) {
+        return call(realm -> {
+            ArrayList<R> metaList = new ArrayList<>();
+
+            if (pageNum >= 0 && function != null) {
+                RealmResults<E> result = function.apply(realm);
+                if (Assert.notEmpty(result) && result.size() >= PAGE_SIZE * pageNum) {
+                    ListIterator<E> it = result.listIterator(PAGE_SIZE * pageNum);
+                    for (int i = 0; i < PAGE_SIZE && it.hasNext(); i++) {
+                        E e = it.next();
+                        if (e != null) {
+                            metaList.add(mapper != null ? mapper.apply(e) : e.flee());
+                        }
+
+                    }
+                }
             }
 
             return metaList;
         });
+    }
+
+    public final <E extends FleeModel> Collection<E> findAll(Class<E> clazz) {
+        return fleeList(realm -> realm.where(clazz).findAll());
+    }
+
+    public final <E extends FleeModel> Collection<E> findList(Class<E> clazz, int pageNum) {
+        return fleeList(pageNum, realm -> realm.where(clazz).limit(PAGE_SIZE).findAll());
     }
 
     @AnyThread
-    public final <O extends RealmModel> boolean insertOrUpdate(O data) {
+    public final <E extends RealmModel> boolean insertOrUpdate(E data) {
         return executeTransaction(realm -> realm.insertOrUpdate(data));
     }
 
@@ -159,7 +170,7 @@ public class Realms implements RealmMigration {
         return executeTransaction(realm -> realm.insertOrUpdate(list));
     }
 
-    public final <O extends RealmModel> boolean copyFrom(Realms from, Class<O> clazz) {
+    public final <E extends RealmModel> boolean copyFrom(Realms from, Class<E> clazz) {
         boolean result = false;
 
         if (clazz != null && from != null) {
