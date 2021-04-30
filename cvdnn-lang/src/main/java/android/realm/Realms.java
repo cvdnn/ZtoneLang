@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import io.realm.DynamicRealm;
 import io.realm.Realm;
@@ -111,15 +112,19 @@ public class Realms implements RealmMigration {
 
     public final <E extends FleeModel, R> Collection<R> fleeList(Function<Realm, Collection<E>> function, Function<E, R> mapper) {
         return call(realm -> {
-            ArrayList<R> metaList = new ArrayList<>();
+            final ArrayList<R> metaList = new ArrayList<>();
 
             Collection<E> list = function.apply(realm);
             if (Assert.notEmpty(list)) {
-                list.forEach(item -> {
-                    if (item != null) {
-                        metaList.add(mapper != null ? mapper.apply(item) : item.flee());
-                    }
-                });
+                if (mapper != null) {
+                    metaList.addAll(list.stream().map(mapper).collect(Collectors.toList()));
+                } else {
+                    list.forEach(item -> {
+                        if (item != null) {
+                            metaList.add((R) item.flee());
+                        }
+                    });
+                }
             }
 
             return metaList;
@@ -157,7 +162,7 @@ public class Realms implements RealmMigration {
     }
 
     public final <E extends FleeModel> Collection<E> findList(Class<E> clazz, int pageNum) {
-        return fleeList(pageNum, realm -> realm.where(clazz).limit(PAGE_SIZE).findAll());
+        return fleeList(pageNum, realm -> realm.where(clazz).findAll());
     }
 
     @AnyThread
