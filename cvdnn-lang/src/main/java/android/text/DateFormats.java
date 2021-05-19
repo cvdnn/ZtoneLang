@@ -9,7 +9,7 @@ import java.util.Date;
 public class DateFormats {
     private static final String TAG = "DateFormats";
 
-    public static final String PATTERN_FORMAT_DATE = "yyyy/MM/dd HH:mm:ss";
+    public static final String PATTERN_FORMAT_DATE = "yyyy/MM/dd HH:mm:ss.SSS";
 
     public static Date parse(String date, String pattern) {
         Date dfDate = null;
@@ -24,6 +24,11 @@ public class DateFormats {
         }
 
         return dfDate;
+    }
+
+    public static String nowMillis() {
+
+        return format(0, "");
     }
 
     public static String nowMillis(String pattern) {

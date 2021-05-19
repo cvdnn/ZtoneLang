@@ -35,26 +35,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-// push to bintray
+// push to maven
 ext {
-    archiveSourceJar = false
-    archiveJavaDocJar = false
-    bintrayOverride = true
+    mvn = [
+            repo      : 'file:////Users/xiot/workon/m2/nexus',
 
-    bintrayOrg = 'cvdnn'
-    // bintray中创建的package name
-    bintrayName = 'slog-aliyun'
-
-    libraryName = 'slog-aliyun'
-    publishedGroupId = 'com.cvdnn'
-    artifact = 'slog-aliyun'
-    libraryVersion = android.defaultConfig.versionName
-
-    libraryDescription = 'Slog Aliyun'
-
-    siteUrl = 'https://github.com/cvdnn/ZtoneLang'
-    gitUrl = 'https://github.com/cvdnn/ZtoneLang.git'
+            groupId   : 'com.cvdnn',
+            artifactId: 'slog-aliyun',
+            version   : android.defaultConfig.versionName
+    ]
 }
 
-apply from: 'http://mvn.cvdnn.com/pom_build.gradle'
-apply from: 'http://mvn.cvdnn.com/push_to_bintray.gradle'
+apply from: 'http://mvn.cvdnn.com/maven_deploy.gradle'
