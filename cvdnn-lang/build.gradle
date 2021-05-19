@@ -7,7 +7,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode app.versionCode
-        versionName '0.5.43'
+        versionName '0.5.44'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
