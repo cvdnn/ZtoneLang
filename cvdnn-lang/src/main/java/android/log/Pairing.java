@@ -1,12 +1,19 @@
 package android.log;
 
+import android.Android;
+
 import java.util.LinkedHashMap;
 
 public class Pairing extends LinkedHashMap<String, Object> {
     public static final String TAG_ACTION = "__action__";
+    public static final String TAG_SN = "__sn__";
     public static final String TAG_MSG = "__msg__";
     public static final String TAG_CAUSE = "__cause__";
     public static final String TAG_STACK = "__stack__";
+
+    private Pairing() {
+        add(TAG_SN, Android.Build.cpuSerial());
+    }
 
     public static Pairing kv() {
         return new Pairing();

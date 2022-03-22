@@ -2,18 +2,15 @@ package android.math;
 
 import android.assist.Assert;
 
+import java.util.Arrays;
+
 public final class Arrayz {
 
     public static int indexOf(byte[] original, int from, int to, byte key) {
         int index = -1;
 
         if (Assert.notEmpty(original) && from >= 0 && to >= from && original.length - from >= to - from) {
-            for (int i = from; i < to; i++) {
-                if (original[i] == key) {
-                    index = i;
-                    break;
-                }
-            }
+            index = Arrays.binarySearch(original, from, to, key);
         }
 
         return index;
@@ -33,6 +30,7 @@ public final class Arrayz {
      *
      * @param arr object array
      * @param <T> object type
+     *
      * @return the reversed object array
      */
     public static <T> T[] reverse(T[] arr) {
@@ -51,6 +49,7 @@ public final class Arrayz {
      * Reverse the int array.
      *
      * @param arr int array
+     *
      * @return the reversed int array
      */
     public static boolean[] reverse(boolean[] arr) {
@@ -69,6 +68,7 @@ public final class Arrayz {
      * Reverse the byte array.
      *
      * @param arr byte array
+     *
      * @return the reversed byte array
      */
     public static byte[] reverse(byte[] arr) {
@@ -87,6 +87,7 @@ public final class Arrayz {
      * Reverse the short array.
      *
      * @param arr short array
+     *
      * @return the reversed short array
      */
     public static short[] reverse(short[] arr) {
@@ -105,6 +106,7 @@ public final class Arrayz {
      * Reverse the int array.
      *
      * @param arr int array
+     *
      * @return the reversed int array
      */
     public static int[] reverse(int[] arr) {
@@ -123,6 +125,7 @@ public final class Arrayz {
      * Reverse the long array.
      *
      * @param arr long array
+     *
      * @return the reversed long array
      */
     public static long[] reverse(long[] arr) {
@@ -141,6 +144,7 @@ public final class Arrayz {
      * Reverse the double array.
      *
      * @param arr double array
+     *
      * @return the reversed double array
      */
     public static double[] reverse(double[] arr) {
@@ -159,6 +163,7 @@ public final class Arrayz {
      * Reverse the char array.
      *
      * @param arr char array
+     *
      * @return the reversed char array
      */
     public static char[] reverse(char[] arr) {

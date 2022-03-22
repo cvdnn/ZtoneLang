@@ -6,8 +6,6 @@ android {
     defaultConfig {
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
-        versionCode app.versionCode
-        versionName "0.1.25"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -21,8 +19,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -36,7 +34,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
@@ -52,4 +50,4 @@ ext {
     ]
 }
 
-apply from: 'http://mvn.cvdnn.com/maven_deploy.gradle'
+apply from: 'https://gitee.com/cvdnn/nexus/raw/maven/gradle/maven_deploy.gradle'

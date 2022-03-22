@@ -4,9 +4,11 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath "io.realm:realm-gradle-plugin:10.3.1"
     }
 }
 
@@ -14,6 +16,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
 
         maven {
             url 'https://gitee.com/cvdnn/nexus/raw/maven'

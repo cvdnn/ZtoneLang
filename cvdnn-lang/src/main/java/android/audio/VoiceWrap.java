@@ -4,6 +4,7 @@ import android.Loople;
 import android.assist.Assert;
 import android.log.Log;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import androidx.annotation.RawRes;
 
@@ -15,6 +16,7 @@ public class VoiceWrap {
     public MediaPlayer Player = null;
 
     private int mRawId;
+    private Uri mUri;
     private boolean mIsLoop;
 
     public VoiceWrap(int rawId) {
@@ -28,17 +30,29 @@ public class VoiceWrap {
         reset();
     }
 
+    public VoiceWrap(Uri uri) {
+        this(uri, false);
+    }
+
+    public VoiceWrap(Uri uri, boolean loop) {
+        mUri = uri;
+        mIsLoop = loop;
+
+        reset();
+    }
+
+
     public VoiceWrap reset() {
         release();
 
         try {
-            Player = MediaPlayer.create(context, mRawId);
+            Player = mRawId != 0 ? MediaPlayer.create(context, mRawId) : MediaPlayer.create(context, mUri);
             Player.setLooping(mIsLoop);
             if (!mIsLoop) {
                 Player.setOnCompletionListener(mp -> release());
             }
         } catch (Throwable t) {
-            Log.e(t);
+            Log.v(t);
         }
 
         return this;
@@ -55,7 +69,11 @@ public class VoiceWrap {
 
     public VoiceWrap start() {
         if (Player != null && !Player.isPlaying()) {
-            Player.start();
+            try {
+//                Player.prepare();
+                Player.start();
+            } catch (Throwable t) {
+            }
         }
 
         return this;

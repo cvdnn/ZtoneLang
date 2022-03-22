@@ -6,8 +6,6 @@ android {
     defaultConfig {
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
-        versionCode app.versionCode
-        versionName '0.1.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -23,14 +21,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':cvdnn-lang')
+    implementation "com.cvdnn:android-lang:${VERSION_ANDROID_LANG}"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation 'com.alibaba:fastjson:1.2.35'
     implementation 'org.greenrobot:greendao:3.2.2'
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
@@ -46,4 +44,4 @@ ext {
     ]
 }
 
-apply from: 'http://mvn.cvdnn.com/maven_deploy.gradle'
+apply from: 'https://gitee.com/cvdnn/nexus/raw/maven/gradle/maven_deploy.gradle'

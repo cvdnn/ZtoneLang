@@ -1,0 +1,10 @@
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: mvn.repo)
+        pom.groupId = mvn.groupId
+        pom.artifactId = mvn.artifactId
+        pom.version = mvn.version
+    }
+}
