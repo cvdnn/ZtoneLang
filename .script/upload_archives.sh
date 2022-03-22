@@ -9,7 +9,7 @@ git push github master
 git push gitee master
 
 if (( $# == 0 )) || [[ -z $1 ]]; then
-    ./gradlew -q -p cvdnn-lang clean build install bintrayUpload
+    ./gradlew -q -p cvdnn-lang clean build bintrayUpload
 
 else
     _MODULE_NAME=$1
