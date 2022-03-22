@@ -9,12 +9,12 @@ git push github master
 git push gitee master
 
 if (( $# == 0 )) || [[ -z $1 ]]; then
-    ./gradlew -q -p cvdnn-lang clean build bintrayUpload
+    ./gradlew -q -p cvdnn-lang clean build uploadArchives
 
 else
     _MODULE_NAME=$1
 
-    ./gradlew -q -p ${_MODULE_NAME} clean build install bintrayUpload
+    ./gradlew -q -p ${_MODULE_NAME} clean build uploadArchives
 fi
 
 #git -C ${_PROJECT_PATH} status
