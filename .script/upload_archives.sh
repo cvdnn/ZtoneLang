@@ -8,7 +8,7 @@ git commit -m "ZTONE_LANG"
 git push origin master
 
 if (( $# == 0 )) || [[ -z $1 ]]; then
-    ./gradlew -q -p ztone-lang clean build install bintrayUpload
+    ./gradlew -q -p cvdnn-lang clean build install bintrayUpload
 
 else
     _MODULE_NAME=$1
