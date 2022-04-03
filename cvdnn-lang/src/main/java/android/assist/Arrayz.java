@@ -86,11 +86,15 @@ public final class Arrayz {
         return copy;
     }
 
+    public static int copy(byte[] src, byte[] dst) {
+        return copy(src, dst, 0);
+    }
+
     public static int copy(byte[] src, byte[] dst, int dstPos) {
         int len = 0;
         if (Assert.check(src) && Assert.check(dst) && dst.length > dstPos) {
             try {
-                int temp = Maths.min(dst.length - dstPos, src.length);
+                int temp = Maths.min(src.length, dst.length - dstPos);
                 System.arraycopy(src, 0, dst, dstPos, temp);
 
                 len = temp;

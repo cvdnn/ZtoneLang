@@ -7,6 +7,8 @@
  */
 package android.math;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import android.Android;
 import android.assist.Assert;
 import android.crypto.Crypto;
@@ -37,6 +39,7 @@ public class Maths {
     public static final int R62 = 62;
     public static final int R64 = 64;
 
+    public static final int LEN_BYTE = Byte.BYTES;
     public static final int LEN_SHORT = Short.BYTES;
     public static final int LEN_INT = Integer.BYTES;
     public static final int LEN_LONG = Long.BYTES;
@@ -70,8 +73,24 @@ public class Maths {
      * @return
      */
     public static String shorts() {
+        return ShortDigest.encrypt(unique().getBytes(UTF_8));
+    }
 
-        return ShortDigest.encrypt(unique());
+    public static long hashCode(byte... bytes) {
+        long hashCode = 0, seed = 31; // 31 131 1313 13131 131313 etc..
+
+        // BKDR Hash
+        if (Assert.check(bytes)) {
+            for (int i = 0; i < bytes.length; i++) {
+                hashCode = (seed * hashCode + bytes[i]) & Long.MAX_VALUE;
+            }
+        }
+
+        return hashCode;
+    }
+
+    public static byte[] unicode() {
+        return Maths.toBytes(Maths.random(1, 0xFFFF + 1), LEN_SHORT);
     }
 
     /**
@@ -80,7 +99,7 @@ public class Maths {
      * @param min
      * @param max
      *
-     * @return
+     * @return [min, max)
      */
     public static int random(int min, int max) {
 

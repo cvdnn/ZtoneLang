@@ -4,7 +4,6 @@ import android.check.Validator;
 import android.collection.ByteArray;
 import android.concurrent.RunState;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.SparseArray;
 
 import org.json.JSONArray;
@@ -48,7 +47,7 @@ public final class Assert {
      * @param text
      */
     public static boolean isEmpty(CharSequence text) {
-        return TextUtils.isEmpty(text);
+        return text == null || text.length() == 0;
     }
 
     /**
@@ -91,14 +90,13 @@ public final class Assert {
     }
 
     /**
-     * 判断是否不包含子字符串
+     * 判断是否包含子字符串
      *
      * @param textToSearch
      * @param substring
      */
-    public static boolean doesNotContain(String textToSearch, String substring) {
-        return !TextUtils.isEmpty(textToSearch) && !TextUtils.isEmpty(substring)
-                && textToSearch.indexOf(substring) != -1;
+    public static boolean contains(String textToSearch, String substring) {
+        return notEmpty(textToSearch) && notEmpty(substring) && textToSearch.contains(substring);
     }
 
     /**
