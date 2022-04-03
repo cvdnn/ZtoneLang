@@ -382,6 +382,18 @@ public final class Assert {
         return v != null && v.check();
     }
 
+    public static <E> boolean check(byte[] arrays) {
+        return Assert.notEmpty(arrays) && arrays.length > 0;
+    }
+
+    public static <E> boolean check(int[] arrays) {
+        return Assert.notEmpty(arrays) && arrays.length > 0;
+    }
+
+    public static <E> boolean check(long[] arrays) {
+        return Assert.notEmpty(arrays) && arrays.length > 0;
+    }
+
     public static <E> boolean check(E[] arrays) {
         boolean result = notEmpty(arrays);
         if (result) {

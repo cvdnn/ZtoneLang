@@ -14,6 +14,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.log.Log;
 
+import androidx.annotation.NonNull;
+
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Locale;
@@ -34,6 +36,10 @@ public class Maths {
 
     public static final int R62 = 62;
     public static final int R64 = 64;
+
+    public static final int LEN_SHORT = Short.BYTES;
+    public static final int LEN_INT = Integer.BYTES;
+    public static final int LEN_LONG = Long.BYTES;
 
     private final static String HEX_NUMS = "0123456789ABCDEF";
 
@@ -81,6 +87,81 @@ public class Maths {
         return new SecureRandom().nextInt(max - min + 1) + min;
     }
 
+    public static int min(@NonNull int... array) {
+        int value = Integer.MIN_VALUE;
+
+        if (Assert.notEmpty(array)) {
+            if (array.length == 2) {
+                value = Math.min(array[0], array[1]);
+            } else if (array.length > 2) {
+                Arrays.sort(array);
+
+                value = array[0];
+            } else {
+                value = array[0];
+            }
+        }
+
+
+        return value;
+    }
+
+    public static int max(@NonNull int... array) {
+        int value = Integer.MAX_VALUE;
+
+        if (Assert.notEmpty(array)) {
+            if (array.length == 2) {
+                value = Math.max(array[0], array[1]);
+            } else if (array.length > 2) {
+                Arrays.sort(array);
+
+                value = array[array.length - 1];
+            } else {
+                value = array[0];
+            }
+        }
+
+
+        return value;
+    }
+
+    public static long min(@NonNull long... array) {
+        long value = Long.MIN_VALUE;
+
+        if (Assert.notEmpty(array)) {
+            if (array.length == 2) {
+                value = Math.min(array[0], array[1]);
+            } else if (array.length > 2) {
+                Arrays.sort(array);
+
+                value = array[0];
+            } else {
+                value = array[0];
+            }
+        }
+
+
+        return value;
+    }
+
+    public static long max(@NonNull long... array) {
+        long value = Long.MAX_VALUE;
+
+        if (Assert.notEmpty(array)) {
+            if (array.length == 2) {
+                value = Math.max(array[0], array[1]);
+            } else if (array.length > 2) {
+                Arrays.sort(array);
+
+                value = array[array.length - 1];
+            } else {
+                value = array[0];
+            }
+        }
+
+        return value;
+    }
+
     public static boolean valueOf(String strBoolean) {
 
         return valueOf(strBoolean, false);
@@ -125,7 +206,7 @@ public class Maths {
             } else if (objValue instanceof byte[]) {
                 byte[] b = (byte[]) objValue;
                 if (Assert.notEmpty(b)) {
-                    int lenInt = Math.min(b.length, 4);
+                    int lenInt = Math.min(b.length, LEN_INT);
                     for (int i = 0; i < lenInt; i++) {
                         value |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
                     }
@@ -167,7 +248,7 @@ public class Maths {
             } else if (objValue instanceof byte[]) {
                 byte[] b = (byte[]) objValue;
                 if (Assert.notEmpty(b)) {
-                    int lenInt = Math.min(b.length, 8);
+                    int lenInt = Math.min(b.length, LEN_LONG);
                     for (int i = 0; i < lenInt; i++) {
                         value |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
                     }
@@ -198,7 +279,7 @@ public class Maths {
         short v = 0;
 
         if (Assert.notEmpty(b)) {
-            int lenInt = Math.min(b.length, 2);
+            int lenInt = Math.min(b.length, LEN_SHORT);
             for (int i = 0; i < lenInt; i++) {
                 v |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
             }
@@ -434,35 +515,47 @@ public class Maths {
         }
     }
 
-    /**
-     * @param l
-     *
-     * @return
-     */
-    public static byte[] toBytes(long l) {
+    public static byte[] toBytes(long v, int len) {
+        len = Math.min(len, LEN_LONG);
+
+        byte[] bytes = new byte[len];
+        for (int i = 0; i < len; i++) {
+            bytes[i] = (byte) ((v >> 8 * (len - 1 - i)) & 0xFF);
+        }
+
+        return bytes;
+    }
+
+    public static byte[] toBytes(long v) {
         return new byte[]{
-                (byte) ((l >> 56) & 0xFF),
-                (byte) ((l >> 48) & 0xFF),
-                (byte) ((l >> 40) & 0xFF),
-                (byte) ((l >> 32) & 0xFF),
-                (byte) ((l >> 24) & 0xFF),
-                (byte) ((l >> 16) & 0xFF),
-                (byte) ((l >> 8) & 0xFF),
-                (byte) (l & 0xFF)
+                (byte) ((v >> 56) & 0xFF),
+                (byte) ((v >> 48) & 0xFF),
+                (byte) ((v >> 40) & 0xFF),
+                (byte) ((v >> 32) & 0xFF),
+                (byte) ((v >> 24) & 0xFF),
+                (byte) ((v >> 16) & 0xFF),
+                (byte) ((v >> 8) & 0xFF),
+                (byte) (v & 0xFF)
         };
     }
 
-    /**
-     * @param i
-     *
-     * @return
-     */
-    public static byte[] toBytes(int i) {
+    public static byte[] toBytes(int v, int len) {
+        len = Math.min(len, LEN_INT);
+
+        byte[] bytes = new byte[len];
+        for (int i = 0; i < len; i++) {
+            bytes[i] = (byte) ((v >> 8 * (len - 1 - i)) & 0xFF);
+        }
+
+        return bytes;
+    }
+
+    public static byte[] toBytes(int v) {
         return new byte[]{
-                (byte) ((i >> 24) & 0xFF),
-                (byte) ((i >> 16) & 0xFF),
-                (byte) ((i >> 8) & 0xFF),
-                (byte) (i & 0xFF)
+                (byte) ((v >> 24) & 0xFF),
+                (byte) ((v >> 16) & 0xFF),
+                (byte) ((v >> 8) & 0xFF),
+                (byte) (v & 0xFF)
         };
     }
 
@@ -470,6 +563,31 @@ public class Maths {
         return new byte[]{
                 (byte) ((s >> 8) & 0xFF),
                 (byte) (s & 0xFF)};
+    }
+
+    public static byte xor(byte... bytes) {
+        byte result = 0x00;
+
+        if (Assert.check(bytes)) {
+            for (byte b : bytes) {
+                result ^= b;
+            }
+        }
+
+        return result;
+    }
+
+    public static byte xor(byte[] bytes, int from, int to) {
+        byte result = 0x00;
+
+        if (Assert.check(bytes)) {
+            int len = min(bytes.length, to - from);
+            for (int i = from; i < len; i++) {
+                result ^= bytes[i];
+            }
+        }
+
+        return result;
     }
 
     /**
