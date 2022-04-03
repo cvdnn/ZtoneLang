@@ -44,7 +44,7 @@ public final class ByteArray implements Parcelable {
     /**
      * @param original
      * @return
-     * @see android.collection.ByteArray.write();
+//     * @see android.collection.ByteArray.write();
      */
     @Deprecated
     public ByteArray appendFrom(byte[] original) {
@@ -56,7 +56,7 @@ public final class ByteArray implements Parcelable {
      * @param offset
      * @param len
      * @return
-     * @see android.collection.ByteArray.write(byte[] original, int offset, int len);
+//     * @see android.collection.ByteArray.write(byte[] original, int offset, int len);
      */
     @Deprecated
     public ByteArray appendFrom(byte[] original, int offset, int len) {
@@ -127,27 +127,27 @@ public final class ByteArray implements Parcelable {
     }
 
     public ByteArray write(short s) {
-        return write(Maths.toArray(s));
+        return write(Maths.toBytes(s));
     }
 
     public ByteArray lowWrite(short s) {
-        return lowWrite(Maths.toArray(s));
+        return lowWrite(Maths.toBytes(s));
     }
 
     public ByteArray write(int i) {
-        return write(Maths.toArray(i));
+        return write(Maths.toBytes(i));
     }
 
     public ByteArray lowWrite(int i) {
-        return lowWrite(Maths.toArray(i));
+        return lowWrite(Maths.toBytes(i));
     }
 
     public ByteArray write(long l) {
-        return write(Maths.toArray(l));
+        return write(Maths.toBytes(l));
     }
 
     public ByteArray lowWrite(long l) {
-        return lowWrite(Maths.toArray(l));
+        return lowWrite(Maths.toBytes(l));
     }
 
     public void clear() {

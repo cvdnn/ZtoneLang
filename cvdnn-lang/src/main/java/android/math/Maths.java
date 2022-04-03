@@ -115,16 +115,29 @@ public class Maths {
         return valueOf(obtValue, defValue, DEC);
     }
 
-    public static int valueOf(Object obtValue, int defValue, int radix) {
+    public static int valueOf(Object objValue, int defValue, int radix) {
         int value = defValue;
 
-        if (obtValue != null) {
-            if (obtValue instanceof Number) {
-                value = ((Number) obtValue).intValue();
+        if (objValue != null) {
+            if (objValue instanceof Number) {
+                value = ((Number) objValue).intValue();
 
-            } else if (obtValue instanceof String && Assert.notEmpty((String) obtValue)) {
+            } else if (objValue instanceof byte[]) {
+                byte[] b = (byte[]) objValue;
+                if (Assert.notEmpty(b)) {
+                    int lenInt = Math.min(b.length, 4);
+                    for (int i = 0; i < lenInt; i++) {
+                        value |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
+                    }
+                }
+
+//                value = b[3] & 0xFF |
+//                        (b[2] & 0xFF) << 8 |
+//                        (b[1] & 0xFF) << 16 |
+//                        (b[0] & 0xFF) << 24;
+            } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
-                    value = Integer.parseInt((String) obtValue, radix);
+                    value = Integer.parseInt((String) objValue, radix);
                 } catch (Exception e) {
                     Log.d(TAG, e);
                 }
@@ -151,6 +164,24 @@ public class Maths {
             if (objValue instanceof Number) {
                 value = ((Number) objValue).longValue();
 
+            } else if (objValue instanceof byte[]) {
+                byte[] b = (byte[]) objValue;
+                if (Assert.notEmpty(b)) {
+                    int lenInt = Math.min(b.length, 8);
+                    for (int i = 0; i < lenInt; i++) {
+                        value |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
+                    }
+                }
+
+//                value = (long) (b[7] & 0xFF) |
+//                        (long) (b[6] & 0xFF) << 8 |
+//                        (long) (b[5] & 0xFF) << 16 |
+//                        (long) (b[4] & 0xFF) << 24 |
+//                        (long) (b[3] & 0xFF) << 32 |
+//                        (long) (b[2] & 0xFF) << 40 |
+//                        (long) (b[1] & 0xFF) << 48 |
+//                        (long) (b[0] & 0xFF) << 56;
+
             } else if (objValue instanceof String && Assert.notEmpty((String) objValue)) {
                 try {
                     value = Long.parseLong((String) objValue, radix);
@@ -161,6 +192,21 @@ public class Maths {
         }
 
         return value;
+    }
+
+    public static short shortValue(byte[] b) {
+        short v = 0;
+
+        if (Assert.notEmpty(b)) {
+            int lenInt = Math.min(b.length, 2);
+            for (int i = 0; i < lenInt; i++) {
+                v |= (b[lenInt - 1 - i] & 0xFF) << 8 * i;
+            }
+        }
+
+//        v = (short) (b[1] & 0xFF | (b[0] & 0xFF) << 8);
+
+        return v;
     }
 
     public static short shortValue(Object objValue) {
@@ -232,39 +278,15 @@ public class Maths {
         return value;
     }
 
-    /**
-     * 字符串变换成ASCII码
-     * 例：
-     * 0 -> 0x30, A -> 0x41 ...
-     *
-     * @param chars
-     *
-     * @return
-     */
-    public static String toASCII(String chars) {
-        String strHex = null;
-        if (Assert.notEmpty(chars)) {
-            strHex = toHex(chars.getBytes());
-        }
-
-        return strHex;
-    }
-
-    @Deprecated
-    public static String toHex(String chars) {
-
-        return toASCII(chars);
-    }
-
-    public static String fromHex(String hex) {
-        String strHex = null;
-
-        if (Assert.notEmpty(hex)) {
-            strHex = new String(asByte(hex));
-        }
-
-        return strHex;
-    }
+//    public static String fromHex(String hex) {
+//        String strHex = null;
+//
+//        if (Assert.notEmpty(hex)) {
+//            strHex = new String(asByte(hex));
+//        }
+//
+//        return strHex;
+//    }
 
     /**
      * 将十六进制字符串等同变换成十六进制byte数组
@@ -294,13 +316,13 @@ public class Maths {
         return result;
     }
 
-    public static String toHex(byte... buf) {
+    public static String format(byte... buf) {
         String strHex = null;
 
         if (buf != null) {
             StringBuffer result = new StringBuffer(2 * buf.length);
             for (int i = 0; i < buf.length; i++) {
-                appendHex(result, buf[i]);
+                append(result, buf[i]);
             }
 
             strHex = result.toString();
@@ -309,32 +331,28 @@ public class Maths {
         return strHex;
     }
 
-    private static void appendHex(StringBuffer sb, byte b) {
+    private static void append(StringBuffer sb, byte b) {
         if (sb != null) {
             sb.append(HEX_NUMS.charAt((b >> 4) & 0x0f)).append(HEX_NUMS.charAt(b & 0x0f));
         }
     }
 
     /**
-     * 字符串转换成十六进制字符串
+     * 字符串变换成ASCII码
+     * 例：
+     * 0 -> 0x30, A -> 0x41 ...
      *
-     * @param str String 待转换的ASCII字符串
+     * @param chars
      *
-     * @return String 每个Byte之间空格分隔，如: [61 6C 6B]
+     * @return 每个Byte之间空格分隔，如: [30 41]
      */
-    public static String toHexText(String str) {
-        StringBuilder sb = new StringBuilder();
-
-        if (Assert.notEmpty(str)) {
-            byte[] bs = str.getBytes();
-
-            for (int i = 0; i < bs.length; i++) {
-                sb.append(HEX_CHARS[(bs[i] & 0xFF) >> 4]);
-                sb.append(HEX_CHARS[bs[i] & 0x0F]);
-            }
+    public static String formatToASCIIHexText(String chars) {
+        String strHex = null;
+        if (Assert.notEmpty(chars)) {
+            strHex = format(chars.getBytes());
         }
 
-        return sb.toString().trim();
+        return strHex;
     }
 
     /**
@@ -366,7 +384,7 @@ public class Maths {
         return new String(bytes);
     }
 
-    public static String toIntText(int a) {
+    public static String formatByBinary(int a) {
         String sr = "";
         String sc = "";
         int count = 0;        //二进制长度
@@ -416,34 +434,12 @@ public class Maths {
         }
     }
 
-    public static short toShort(byte[] b) {
-        return (short) (b[1] & 0xFF | (b[0] & 0xFF) << 8);
-    }
-
-    public static int toInt(byte[] b) {
-        return b[3] & 0xFF |
-                (b[2] & 0xFF) << 8 |
-                (b[1] & 0xFF) << 16 |
-                (b[0] & 0xFF) << 24;
-    }
-
-    public static long toLong(byte[] b) {
-        return (long) (b[7] & 0xFF) |
-                (long) (b[6] & 0xFF) << 8 |
-                (long) (b[5] & 0xFF) << 16 |
-                (long) (b[4] & 0xFF) << 24 |
-                (long) (b[3] & 0xFF) << 32 |
-                (long) (b[2] & 0xFF) << 40 |
-                (long) (b[1] & 0xFF) << 48 |
-                (long) (b[0] & 0xFF) << 56;
-    }
-
     /**
      * @param l
      *
      * @return
      */
-    public static byte[] toArray(long l) {
+    public static byte[] toBytes(long l) {
         return new byte[]{
                 (byte) ((l >> 56) & 0xFF),
                 (byte) ((l >> 48) & 0xFF),
@@ -461,7 +457,7 @@ public class Maths {
      *
      * @return
      */
-    public static byte[] toArray(int i) {
+    public static byte[] toBytes(int i) {
         return new byte[]{
                 (byte) ((i >> 24) & 0xFF),
                 (byte) ((i >> 16) & 0xFF),
@@ -470,7 +466,7 @@ public class Maths {
         };
     }
 
-    public static byte[] toArray(short s) {
+    public static byte[] toBytes(short s) {
         return new byte[]{
                 (byte) ((s >> 8) & 0xFF),
                 (byte) (s & 0xFF)};

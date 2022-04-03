@@ -61,7 +61,7 @@ public class Crypto {
         String result = "";
         byte[] bytes = digest(text, secret, algorithm);
         if (Assert.notEmpty(bytes)) {
-            result = Maths.toHex(bytes);
+            result = Maths.format(bytes);
         }
 
         return result != null ? result : "";

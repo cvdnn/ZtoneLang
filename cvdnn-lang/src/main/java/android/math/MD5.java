@@ -51,7 +51,7 @@ public class MD5 {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 md5.update(str.getBytes());
-                result = Maths.toHex(md5.digest());
+                result = Maths.format(md5.digest());
             } catch (Exception e) {
                 Log.e(TAG, e);
             }
@@ -88,7 +88,7 @@ public class MD5 {
                     md5.update(buffer, 0, numRead);
                 }
 
-                hash = Maths.toHex(md5.digest());
+                hash = Maths.format(md5.digest());
             } catch (Exception e) {
                 Log.e(TAG, e);
             } finally {

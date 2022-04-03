@@ -68,7 +68,7 @@ public class AES {
                     raw = getRawKey(seedArray);
                 }
 
-                result = Maths.toHex(encrypt(raw, cleartext.getBytes()));
+                result = Maths.format(encrypt(raw, cleartext.getBytes()));
             } catch (Exception e) {
                 Log.e(TAG, e);
             }

@@ -1,6 +1,7 @@
 package android.math;
 
 import android.assist.Assert;
+import android.log.Log;
 
 import java.util.Arrays;
 
@@ -10,7 +11,11 @@ public final class Arrayz {
         int index = -1;
 
         if (Assert.notEmpty(original) && from >= 0 && to >= from && original.length - from >= to - from) {
-            index = Arrays.binarySearch(original, from, to, key);
+            try {
+                index = Arrays.binarySearch(original, from, to, key);
+            } catch (Exception e) {
+                Log.d(e);
+            }
         }
 
         return index;

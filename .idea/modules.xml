@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myapplication/ZtoneLang.myapplication.iml" filepath="$PROJECT_DIR$/.idea/modules/myapplication/ZtoneLang.myapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" />
     </modules>
   </component>
