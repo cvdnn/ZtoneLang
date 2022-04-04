@@ -123,6 +123,15 @@ public final class Arrayz {
         return len;
     }
 
+    public static byte[] stack(byte[] a, byte[] b) {
+        byte[] array = new byte[a.length + b.length];
+
+        System.arraycopy(a, 0, array, 0, a.length);
+        System.arraycopy(b, 0, array, a.length, b.length);
+
+        return array;
+    }
+
     /**
      * Reverse the object array.
      *

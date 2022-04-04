@@ -392,6 +392,20 @@ public final class Assert {
         return Assert.notEmpty(arrays) && arrays.length > 0;
     }
 
+    public static <E> boolean check(E[] arrays, int len) {
+        boolean result = arrays != null && arrays.length == len;
+        if (result) {
+            for (E e : arrays) {
+                if (e == null) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static <E> boolean check(E[] arrays) {
         boolean result = notEmpty(arrays);
         if (result) {

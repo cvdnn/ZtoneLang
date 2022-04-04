@@ -249,7 +249,7 @@ public class Maths {
 
     public static long longValue(Object objLong) {
 
-        return valueOf(objLong, 0l, DEC);
+        return valueOf(objLong, 0L, DEC);
     }
 
     public static long valueOf(Object objLong, long defValue) {
@@ -446,7 +446,7 @@ public class Maths {
      *
      * @return 每个Byte之间空格分隔，如: [30 41]
      */
-    public static String formatToASCIIHexText(String chars) {
+    public static String formatByASCII(String chars) {
         String strHex = null;
         if (Assert.notEmpty(chars)) {
             strHex = format(chars.getBytes());
@@ -458,17 +458,17 @@ public class Maths {
     /**
      * 十六进制字符串转换成 ASCII字符串
      *
-     * @param hexStr String Byte字符串
+     * @param hex String Byte字符串
      *
      * @return String 对应的字符串
      */
-    public static String formASCCII(String hexStr) {
+    public static String asciiValue(String hex) {
         byte[] bytes = null;
-        if (Assert.notEmpty(hexStr)) {
-            hexStr = hexStr.toString().trim().replace(" ", "").toUpperCase(Locale.US);
+        if (Assert.notEmpty(hex)) {
+            hex = hex.toString().trim().replace(" ", "").toUpperCase(Locale.US);
 
-            char[] hexs = hexStr.toCharArray();
-            bytes = new byte[hexStr.length() / 2];
+            char[] hexs = hex.toCharArray();
+            bytes = new byte[hex.length() / 2];
 
             int iTmp = 0x00;
 
@@ -532,6 +532,38 @@ public class Maths {
             }
             return sc;
         }
+    }
+
+    public static byte[] toASCII(int v) {
+        return toBytes(String.valueOf(v));
+    }
+
+    public static int intASCII(byte[] bytes) {
+        return intASCII(bytes, 0);
+    }
+
+    public static int intASCII(byte[] bytes, int def) {
+        return Assert.check(bytes) ? Maths.intValue(new String(bytes)) : def;
+    }
+
+    public static long longASCII(byte[] bytes) {
+        return longASCII(bytes, 0L);
+    }
+
+    public static long longASCII(byte[] bytes, long def) {
+        return Assert.check(bytes) ? Maths.longValue(new String(bytes)) : def;
+    }
+
+    public static byte[] toASCII(long v) {
+        return toBytes(String.valueOf(v));
+    }
+
+    public static byte[] toASCII(short v) {
+        return toBytes(String.valueOf(v));
+    }
+
+    public static byte[] toBytes(String text) {
+        return Assert.notEmpty(text) ? text.getBytes(UTF_8) : new byte[0];
     }
 
     public static byte[] toBytes(long v, int len) {
@@ -643,9 +675,9 @@ public class Maths {
         if (src != null) {
             des = new Rect(src);
 
-            float round = isRounded ? 0.5f : 0.0f;
+            float round = isRounded ? 0.5F : 0.0F;
 
-            if (scale != 1.0f) {
+            if (scale != 1.0F) {
                 des.left = (int) (src.left * scale + round);
                 des.top = (int) (src.top * scale + round);
                 des.right = (int) (src.right * scale + round);
@@ -678,7 +710,7 @@ public class Maths {
         if (src != null) {
             des = new RectF(src);
 
-            if (scale != 1.0f) {
+            if (scale != 1.0F) {
                 des.left = src.left * scale;
                 des.top = src.top * scale;
                 des.right = src.right * scale;
@@ -734,7 +766,7 @@ public class Maths {
         if (src != null) {
             des = new RectF(src);
 
-            if (stretch != 0.0f) {
+            if (stretch != 0.0F) {
                 des.left = src.left - stretch;
                 des.top = src.top - stretch;
                 des.right = src.right + stretch;
