@@ -39,6 +39,7 @@ public class Maths {
     public static final int R62 = 62;
     public static final int R64 = 64;
 
+    public static final int LEN_BITS = Byte.SIZE;
     public static final int LEN_BYTE = Byte.BYTES;
     public static final int LEN_SHORT = Short.BYTES;
     public static final int LEN_INT = Integer.BYTES;
@@ -635,6 +636,65 @@ public class Maths {
             int len = min(bytes.length, to - from);
             for (int i = from; i < len; i++) {
                 result ^= bytes[i];
+            }
+        }
+
+        return result;
+    }
+
+    public static byte[] enwiden(byte... bytes) {
+        byte[] result = new byte[0];
+
+        if (Assert.check(bytes)) {
+            int len = bytes.length << 1;
+            result = new byte[len];
+            for (int i = 0; i < bytes.length; i++) {
+                result[i * 2] = (byte) ((bytes[i] & 0xF0) >> 4);
+                result[i * 2 + 1] = (byte) (bytes[i] & 0x0F);
+            }
+        }
+
+        return result;
+    }
+
+    public static byte[] enwiden(byte[] bytes, int from, int to) {
+        byte[] result = new byte[0];
+
+        if (Assert.check(bytes)) {
+            int size = bytes.length - from - (bytes.length - to);
+            int len = size << 1;
+            result = new byte[len];
+            for (int i = 0; i < size; i++) {
+                result[i * 2] = (byte) ((bytes[from + i] & 0xF0) >> 4);
+                result[i * 2 + 1] = (byte) (bytes[from + i] & 0x0F);
+            }
+        }
+
+        return result;
+    }
+
+    public static byte[] dewiden(byte... bytes) {
+        byte[] result = new byte[0];
+
+        if (Assert.check(bytes)) {
+            int len = bytes.length >> 1;
+            result = new byte[len];
+            for (int i = 0; i < len; i++) {
+                result[i] = (byte) (((bytes[i * 2] & 0x0F) << 4) | (bytes[i * 2 + 1] & 0x0F));
+            }
+        }
+
+        return result;
+    }
+
+    public static byte[] dewiden(byte[] bytes, int from, int to) {
+        byte[] result = new byte[0];
+
+        if (Assert.check(bytes)) {
+            int len = (bytes.length - from - (bytes.length - to)) >> 1;
+            result = new byte[len];
+            for (int i = 0; i < len; i++) {
+                result[i] = (byte) (((bytes[from + i * 2] & 0x0F) << 4) | (bytes[from + i * 2 + 1] & 0x0F));
             }
         }
 
