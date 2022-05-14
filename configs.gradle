@@ -3,13 +3,13 @@ def aptBuildVersion() {
 }
 
 ext {
-    app = [compileSdkVersion: 31,
+    app = [compileSdkVersion: 30,
            applicationId    : "com.ztone.rule",
            minSdkVersion    : 24,
-           targetSdkVersion : 31,
+           targetSdkVersion : 30,
            versionCode      : aptBuildVersion(),
            versionName      : "0.7.1",
-           buildToolsVersion: '31.0.0',]
+           buildToolsVersion: '32.0.0',]
 }
 
 ext {
