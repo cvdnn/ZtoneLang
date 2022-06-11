@@ -40,7 +40,7 @@ public class NetUtils {
         return result;
     }
 
-    public static final boolean success(Response response) {
+    public static boolean success(Response response) {
         return response != null && response.success();
     }
 

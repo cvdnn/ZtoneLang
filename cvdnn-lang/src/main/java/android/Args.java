@@ -1,5 +1,14 @@
 package android;
 
+import static android.C.file.app_root_path;
+import static android.C.properties.root_path;
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Context.ALARM_SERVICE;
+import static android.content.Context.AUDIO_SERVICE;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.content.pm.PackageManager.GET_META_DATA;
+
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -19,22 +28,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.reflect.Clazz;
 
-import androidx.annotation.NonNull;
-
-import static android.C.file.app_root_path;
-import static android.C.properties.root_path;
-import static android.content.Context.ACTIVITY_SERVICE;
-import static android.content.Context.ALARM_SERVICE;
-import static android.content.Context.AUDIO_SERVICE;
-import static android.content.Context.CONNECTIVITY_SERVICE;
-import static android.content.pm.PackageManager.GET_META_DATA;
-
 public class Args {
     private static final String TAG = "Args";
 
     public static final Class AtCls = Clazz.forName("android.app.ActivityThread");
 
     public static final Application App;
+
+    @SuppressLint("StaticFieldLeak")
     public static final Context context;
 
     private static String mProcessName;
@@ -76,9 +77,7 @@ public class Args {
 
     public final RunState NetState = new RunState(true);
 
-    private Args(@NonNull Loader ldr) {
-        assert ldr == null;
-
+    private Args(Loader ldr) {
         Res = context.getResources();
 
         Pmgr = context.getPackageManager();
@@ -149,9 +148,6 @@ public class Args {
     private static class Loader {
 
         public Args load() {
-            assert App == null;
-            assert context == null;
-
             return new Args(this);
         }
     }

@@ -1,16 +1,15 @@
 package android.task;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 import android.Loople;
 import android.assist.Assert;
 
 import androidx.annotation.AnyThread;
-
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Created by handy on 17-3-28.

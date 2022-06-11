@@ -77,8 +77,8 @@ public final class Arrayz {
         return index;
     }
 
-    public static byte[] copyOf(byte[] original, int from, int len) {
-        int newLength = Maths.min(original.length - from, len);
+    public static byte[] copyOf(byte[] original, int from, int to) {
+        int newLength = Maths.min(original.length - from, to - from);
 
         byte[] copy = new byte[newLength];
         System.arraycopy(original, from, copy, 0, newLength);
@@ -123,11 +123,32 @@ public final class Arrayz {
         return len;
     }
 
-    public static byte[] stack(byte[] a, byte[] b) {
-        byte[] array = new byte[a.length + b.length];
+    public static int size(byte[]... as) {
+        int size = 0;
+        if (Assert.check(as)) {
+            for (byte[] a : as) {
+                size += a.length;
+            }
+        }
 
-        System.arraycopy(a, 0, array, 0, a.length);
-        System.arraycopy(b, 0, array, a.length, b.length);
+        return size;
+    }
+
+    public static byte[] stack(byte[]... as) {
+        byte[] array = new byte[0];
+
+        int len = size(as);
+        if (len > 0) {
+            array = new byte[len];
+
+            int index = 0;
+            for (byte[] a : as) {
+                System.arraycopy(a, 0, array, index, a.length);
+
+                index += a.length;
+            }
+
+        }
 
         return array;
     }

@@ -4,10 +4,25 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZtoneLang.iml" filepath="$PROJECT_DIR$/ZtoneLang.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZtoneLang.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-dingtalk/ZtoneLang.cvdnn-dingtalk.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-lang/ZtoneLang.cvdnn-lang.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cvdnn-network/ZtoneLang.cvdnn-network.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.main.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/slog-aliyun/ZtoneLang.slog-aliyun.unitTest.iml" />
     </modules>
   </component>
 </project>

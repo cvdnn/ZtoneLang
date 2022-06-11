@@ -1,5 +1,7 @@
 package android.realm;
 
+import static android.Args.context;
+
 import android.Args;
 import android.assist.Assert;
 import android.io.Stream;
@@ -10,8 +12,7 @@ import android.math.Maths;
 import android.math.ShortDigest;
 
 import androidx.annotation.AnyThread;
-
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,8 +29,6 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
-
-import static android.Args.context;
 
 public class Realms implements RealmMigration {
     private static final String TAG = "Realms";
@@ -60,7 +59,7 @@ public class Realms implements RealmMigration {
                 .build();
     }
 
-    public Realms(@NotNull File file, boolean delete) {
+    public Realms(@NonNull File file, boolean delete) {
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
                 .directory(file.getParentFile())
                 .name(file.getName())
@@ -77,7 +76,7 @@ public class Realms implements RealmMigration {
         Config = builder.build();
     }
 
-    public Realms(@NotNull File file, long version) {
+    public Realms(@NonNull File file, long version) {
         Config = new RealmConfiguration.Builder()
                 .schemaVersion(version)
                 .directory(file.getParentFile())

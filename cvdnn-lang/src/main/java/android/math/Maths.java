@@ -622,7 +622,7 @@ public class Maths {
 
         if (Assert.check(bytes)) {
             for (byte b : bytes) {
-                result ^= b;
+                result = (byte) (result ^ b);
             }
         }
 
@@ -634,8 +634,8 @@ public class Maths {
 
         if (Assert.check(bytes)) {
             int len = min(bytes.length, to - from);
-            for (int i = from; i < len; i++) {
-                result ^= bytes[i];
+            for (int i = 0; i < len; i++) {
+                result = (byte) (result ^ bytes[from + i]);
             }
         }
 
@@ -661,7 +661,7 @@ public class Maths {
         byte[] result = new byte[0];
 
         if (Assert.check(bytes)) {
-            int size = bytes.length - from - (bytes.length - to);
+            int size = to - from;
             int len = size << 1;
             result = new byte[len];
             for (int i = 0; i < size; i++) {
@@ -691,7 +691,7 @@ public class Maths {
         byte[] result = new byte[0];
 
         if (Assert.check(bytes)) {
-            int len = (bytes.length - from - (bytes.length - to)) >> 1;
+            int len = (to - from) >> 1;
             result = new byte[len];
             for (int i = 0; i < len; i++) {
                 result[i] = (byte) (((bytes[from + i * 2] & 0x0F) << 4) | (bytes[from + i * 2 + 1] & 0x0F));
